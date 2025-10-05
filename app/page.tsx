@@ -9,6 +9,7 @@ export default function Home() {
       <HeroPage/>
       <FeaturePage/>
       {/* <PricingPage/> */}
+      
       <TestimonialPage/>
       <CtaPage/>
       
