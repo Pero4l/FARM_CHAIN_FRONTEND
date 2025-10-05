@@ -16,14 +16,14 @@ const Button = ({ onClose }: ButtonProps) => {
       {/* BUTTONS */}
       <div className="flex  justify-center lg:flex relative lg:left-10">
         <Link
-          href="/authentication/register"
+          href="/auth/register"
           className="bg-green-600 text-white lg:px-12 md:px-5 px-12 py-3 rounded-l-full hover:bg-green-700 transition"
           onClick={onClose}
         >
           Sign Up
         </Link>
         <Link
-          href="/authentication/login"
+          href="/auth/login"
           className="border border-green-600 text-green-600 lg:px-12 md:px-5 px-10 py-3 rounded-full hover:bg-green-600 hover:text-white transition bg-white relative md:right-4 lg:right-7 right-7"
           onClick={onClose}
         >
