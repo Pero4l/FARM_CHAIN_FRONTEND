@@ -31,19 +31,19 @@ const Navbar = () => {
                     </div>
         
                     <nav className="hidden md:flex items-center space-x-8"> 
-                       <Link href="#home" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                       <Link href="/#home" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
                           Home
                         </Link>
-                        <Link href="#features" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                        <Link href="/#features" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
                           Features
                         </Link>
-                        <Link href="#marketplace" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                        <Link href="/#marketplace" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
                           Marketplace
                         </Link>
-                        <Link href="#pricing" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                        <Link href="/#pricing" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
                           Pricing
                         </Link>
-                        <Link href="#testimonials" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                        <Link href="/#testimonials" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
                           Stories
                         </Link>
                       
@@ -63,15 +63,15 @@ const Navbar = () => {
                     <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
                       <div className="flex flex-col space-y-4 pt-4">
                         <Link
-                        href="#home"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
-                      >
-                        Home
-                      </Link>
+                          href="/#home"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                        >
+                          Home
+                        </Link>
 
                       <Link
-                        href="#features"
+                        href="/#features"
                         onClick={() => setIsMenuOpen(false)}
                         className="text-gray-700 hover:text-green-600 font-medium transition-colors"
                       >
@@ -79,7 +79,7 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        href="#marketplace"
+                        href="/#marketplace"
                         onClick={() => setIsMenuOpen(false)}
                         className="text-gray-700 hover:text-green-600 font-medium transition-colors"
                       >
@@ -87,7 +87,7 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        href="#pricing"
+                        href="/#pricing"
                         onClick={() => setIsMenuOpen(false)}
                         className="text-gray-700 hover:text-green-600 font-medium transition-colors"
                       >
@@ -95,7 +95,7 @@ const Navbar = () => {
                       </Link>
 
                       <Link
-                        href="#testimonials"
+                        href="/#testimonials"
                         onClick={() => setIsMenuOpen(false)}
                         className="text-gray-700 hover:text-green-600 font-medium transition-colors"
                       >
