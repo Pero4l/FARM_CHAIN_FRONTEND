@@ -4,7 +4,7 @@ import Button from '../atoms/button';
 import { 
   Menu, X
 } from 'lucide-react'; 
-
+import Link from 'next/link';
 
 
 const Navbar = () => {
@@ -30,14 +30,24 @@ const Navbar = () => {
                       </div>
                     </div>
         
-                    <nav className="hidden md:flex items-center space-x-8">
-                      <a href="#home" className="text-gray-700 hover:text-green-600 font-medium transition-colors">Home</a>
-                      <a href="#features" className="text-gray-700 hover:text-green-600 font-medium transition-colors">Features</a>
-                      <a href="#marketplace" className="text-gray-700 hover:text-green-600 font-medium transition-colors">Marketplace</a>
-                      <a href="#pricing" className="text-gray-700 hover:text-green-600 font-medium transition-colors">Pricing</a>
-                      <a href="#testimonials" className="text-gray-700 hover:text-green-600 font-medium transition-colors">Stories</a>
+                    <nav className="hidden md:flex items-center space-x-8"> 
+                       <Link href="#home" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                          Home
+                        </Link>
+                        <Link href="#features" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                          Features
+                        </Link>
+                        <Link href="#marketplace" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                          Marketplace
+                        </Link>
+                        <Link href="#pricing" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                          Pricing
+                        </Link>
+                        <Link href="#testimonials" className="text-gray-700 hover:text-green-600 font-medium transition-colors">
+                          Stories
+                        </Link>
                       
-                      <Button/>
+                       <Button/>
                     </nav>
         
                     <button
@@ -52,12 +62,47 @@ const Navbar = () => {
                   {isMenuOpen && (
                     <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
                       <div className="flex flex-col space-y-4 pt-4">
-                        <a onClick={() => setIsMenuOpen(false)} href="#home" className="text-gray-700 hover:text-green-600 font-medium">Home</a>
-                        <a onClick={() => setIsMenuOpen(false)} href="#features" className="text-gray-700 hover:text-green-600 font-medium">Features</a>
-                        <a onClick={() => setIsMenuOpen(false)} href="#marketplace" className="text-gray-700 hover:text-green-600 font-medium">Marketplace</a>
-                        <a onClick={() => setIsMenuOpen(false)} href="#pricing" className="text-gray-700 hover:text-green-600 font-medium">Pricing</a>
-                        <a onClick={() => setIsMenuOpen(false)} href="#testimonials" className="text-gray-700 hover:text-green-600 font-medium">Stories</a>
-                        <Button/>
+                        <Link
+                        href="#home"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                      >
+                        Home
+                      </Link>
+
+                      <Link
+                        href="#features"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                      >
+                        Features
+                      </Link>
+
+                      <Link
+                        href="#marketplace"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                      >
+                        Marketplace
+                      </Link>
+
+                      <Link
+                        href="#pricing"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                      >
+                        Pricing
+                      </Link>
+
+                      <Link
+                        href="#testimonials"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="text-gray-700 hover:text-green-600 font-medium transition-colors"
+                      >
+                        Stories
+                      </Link>
+
+                      <Button />
                       </div>
                     </div>
                   )}
