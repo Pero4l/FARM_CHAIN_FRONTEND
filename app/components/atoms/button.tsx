@@ -23,7 +23,7 @@ const Button = ({ onClose }: ButtonProps) => {
           Sign Up
         </Link>
         <Link
-          href="/auth/login"
+          href="/auth/register"
           className="border border-green-600 text-green-600 lg:px-12 md:px-5 px-10 py-3 rounded-full hover:bg-green-600 hover:text-white transition bg-white relative md:right-4 lg:right-7 right-7"
           onClick={onClose}
         >
