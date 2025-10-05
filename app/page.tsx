@@ -8,7 +8,7 @@ export default function Home() {
     <div className="">
       <HeroPage/>
       <FeaturePage/>
-      <PricingPage/>
+      {/* <PricingPage/> */}
       <TestimonialPage/>
       <CtaPage/>
       
