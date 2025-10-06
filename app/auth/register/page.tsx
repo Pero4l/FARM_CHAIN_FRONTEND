@@ -2,7 +2,7 @@
 import LoginPage from '@/app/components/loginChain';
 import RegisterChain from '@/app/components/registerChain';
 import React, { useState } from 'react';
-import { FaGoogle } from "react-icons/fa6";
+import { FaGoogle, FaFacebookF } from "react-icons/fa6";
 
 const FarmChainAuth = () => {
   
