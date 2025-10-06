@@ -82,7 +82,7 @@ const FarmChainAuth = () => {
                 type="button"
                 className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
-                <span className="mr-2">📘</span>
+                <span className="mr-2"><FaFacebookF/></span>
                 Facebook
               </button>
             </div>
