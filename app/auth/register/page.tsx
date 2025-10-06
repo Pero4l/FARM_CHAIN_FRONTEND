@@ -2,7 +2,7 @@
 import LoginPage from '@/app/components/loginChain';
 import RegisterChain from '@/app/components/registerChain';
 import React, { useState } from 'react';
-import { FaGoogle, FaFacebookF } from "react-icons/fa6";
+// import { FaGoogle, FaFacebookF } from "react-icons/fa6";
 
 const FarmChainAuth = () => {
   
@@ -75,14 +75,14 @@ const FarmChainAuth = () => {
                 type="button"
                 className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
-                <span className="mr-2"><FaGoogle/></span>
+                {/* <span className="mr-2"><FaGoogle/></span> */}
                 Google
               </button>
               <button
                 type="button"
                 className="flex items-center justify-center px-4 py-3 border border-gray-300 rounded-xl text-gray-700 font-medium hover:bg-gray-50 transition-colors"
               >
-                <span className="mr-2"><FaFacebookF/></span>
+                {/* <span className="mr-2"><FaFacebookF/></span> */}
                 Facebook
               </button>
             </div>
