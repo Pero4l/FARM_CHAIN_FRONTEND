@@ -8,6 +8,15 @@ const CtaPage = () => {
     <div>
           {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 relative overflow-hidden">
+           <div
+          className="absolute inset-0 mb-3 mt-3 opacity-100 lg:bg-cover bg-center"
+          style={{
+            backgroundImage: "url('/Farmer-image.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          aria-hidden="true"
+        />
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="absolute top-0 left-0 w-full h-full">
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-pulse"></div>
@@ -21,7 +30,7 @@ const CtaPage = () => {
               <br />
               Your Farm's Future?
             </h2>
-            <p className="text-xl lg:text-2xl text-green-100 leading-relaxed">
+            <p className="text-xl lg:text-2xl text-white leading-relaxed">
               Join thousands of farmers who are already growing smarter, trading better, 
               and building stronger communities through Farm Chain.
             </p>

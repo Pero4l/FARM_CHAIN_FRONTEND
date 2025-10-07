@@ -27,7 +27,7 @@ const Navbar = () => {
               </div>
             </div>
 
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden lg:flex items-center space-x-8">
               <Link
                 href="/#home"
                 className="text-gray-700 hover:text-green-600 font-medium transition-colors"
@@ -64,7 +64,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 text-gray-700 hover:text-green-600"
+              className="lg:hidden p-2 text-gray-700 hover:text-green-600"
             >
               {isMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -76,7 +76,7 @@ const Navbar = () => {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-gray-100">
+            <div className="lg:hidden mt-4 pb-4 border-t border-gray-100">
               <div className="flex flex-col space-y-4 pt-4">
                 <Link
                   href="/#home"
