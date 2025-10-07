@@ -69,7 +69,7 @@ const HeroPage = () => {
         {/* Background Elements: use public/farmers.jpg as the hero background with a gradient overlay */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/farmers.jpg')" }}
+          style={{ backgroundImage: "url('/farmers.jp')" }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-green-700/10 to-blue-700/6" />
