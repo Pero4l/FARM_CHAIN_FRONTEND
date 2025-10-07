@@ -1,67 +1,85 @@
-'use client'
-import React from 'react'
-import { useState, useEffect } from 'react';
-import { 
-  ArrowRight, Play, Zap, Star, MessageCircle, Heart, Share,
-} from 'lucide-react';
+"use client";
+import React from "react";
+import { useState, useEffect } from "react";
+import {
+  ArrowRight,
+  Play,
+  Zap,
+  Star,
+  MessageCircle,
+  Heart,
+  Share,
+} from "lucide-react";
 
 const HeroPage = () => {
+  const [stats, setStats] = useState({ farmers: 0, trades: 0, communities: 0 });
 
-      const [stats, setStats] = useState({ farmers: 0, trades: 0, communities: 0 });
+  useEffect(() => {
+    const animateStats = () => {
+      const targetStats = { farmers: 25000, trades: 150000, communities: 500 };
+      const duration = 2000;
+      const steps = 60;
+      const increment = duration / steps;
 
-      useEffect(() => {
-          const animateStats = () => {
-            const targetStats = { farmers: 25000, trades: 150000, communities: 500 };
-            const duration = 2000;
-            const steps = 60;
-            const increment = duration / steps;
-      
-            let current = { farmers: 0, trades: 0, communities: 0 };
-            
-            const timer = setInterval(() => {
-              current.farmers = Math.min(current.farmers + targetStats.farmers / steps, targetStats.farmers);
-              current.trades = Math.min(current.trades + targetStats.trades / steps, targetStats.trades);
-              current.communities = Math.min(current.communities + targetStats.communities / steps, targetStats.communities);
-              
-              setStats({
-                farmers: Math.floor(current.farmers),
-                trades: Math.floor(current.trades),
-                communities: Math.floor(current.communities)
-              });
-      
-              if (current.farmers >= targetStats.farmers) {
-                clearInterval(timer);
-              }
-            }, increment);
-          };
-      
-          const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              animateStats();
-              observer.disconnect();
-            }
-          });
-      
-          const statsElement = document.getElementById('stats-section');
-          if (statsElement) observer.observe(statsElement);
-      
-          return () => observer.disconnect();
-        }, []);
-      
+      let current = { farmers: 0, trades: 0, communities: 0 };
+
+      const timer = setInterval(() => {
+        current.farmers = Math.min(
+          current.farmers + targetStats.farmers / steps,
+          targetStats.farmers
+        );
+        current.trades = Math.min(
+          current.trades + targetStats.trades / steps,
+          targetStats.trades
+        );
+        current.communities = Math.min(
+          current.communities + targetStats.communities / steps,
+          targetStats.communities
+        );
+
+        setStats({
+          farmers: Math.floor(current.farmers),
+          trades: Math.floor(current.trades),
+          communities: Math.floor(current.communities),
+        });
+
+        if (current.farmers >= targetStats.farmers) {
+          clearInterval(timer);
+        }
+      }, increment);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        animateStats();
+        observer.disconnect();
+      }
+    });
+
+    const statsElement = document.getElementById("stats-section");
+    if (statsElement) observer.observe(statsElement);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div>
-        {/* Hero Section */}
+      {/* Hero Section */}
       <section className="pt-24 pb-16 relative overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50"></div>
+        {/* Background Elements: use public/farmers.jpg as the hero background with a gradient overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/farmers.jpg')" }}
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-green-700/10 to-blue-700/6" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-200/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-blue-200/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        
+
         {/* Floating Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {[...Array(15)].map((_, i) => (
-            <div 
+            <div
               suppressHydrationWarning
               key={i}
               className="absolute animate-float opacity-60"
@@ -72,7 +90,11 @@ const HeroPage = () => {
                 fontSize: `${20 + Math.random() * 20}px`,
               }}
             >
-              {['🌱', '🌾', '🚜', '🌽', '🍃', '☀️', '💧'][Math.floor(Math.random() * 7)]}
+              {
+                ["🌱", "🌾", "🚜", "🌽", "🍃", "☀️", "💧"][
+                  Math.floor(Math.random() * 7)
+                ]
+              }
             </div>
           ))}
         </div>
@@ -95,8 +117,9 @@ const HeroPage = () => {
                   Thrive.
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
-                  Join the world's largest farming community where knowledge flows freely, 
-                  trades happen securely, and every harvest brings us closer together.
+                  Join the world's largest farming community where knowledge
+                  flows freely, trades happen securely, and every harvest brings
+                  us closer together.
                 </p>
               </div>
 
@@ -113,15 +136,20 @@ const HeroPage = () => {
 
               <div className="flex items-center space-x-8 pt-4">
                 <div className="flex -space-x-3">
-                  {['SJ', 'MR', 'AS', 'GV', 'TC'].map((avatar, index) => (
-                    <div key={index} className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold border-4 border-white shadow-lg">
+                  {["SJ", "MR", "AS", "GV", "TC"].map((avatar, index) => (
+                    <div
+                      key={index}
+                      className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold border-4 border-white shadow-lg"
+                    >
                       {avatar}
                     </div>
                   ))}
                 </div>
                 <div>
                   <p className="text-gray-900 font-bold">25,000+ farmers</p>
-                  <p className="text-gray-600 text-sm">already growing together</p>
+                  <p className="text-gray-600 text-sm">
+                    already growing together
+                  </p>
                 </div>
               </div>
             </div>
@@ -144,7 +172,9 @@ const HeroPage = () => {
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-lg font-semibold">Welcome to Farm Chain! 👋</p>
+                    <p className="text-lg font-semibold">
+                      Welcome to Farm Chain! 👋
+                    </p>
                     <p className="text-green-100">Your farm is thriving</p>
                   </div>
                 </div>
@@ -157,11 +187,18 @@ const HeroPage = () => {
                         MR
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900">Miguel Rodriguez</p>
-                        <p className="text-xs text-gray-500">Texas, USA • 2 hours ago</p>
+                        <p className="font-semibold text-gray-900">
+                          Miguel Rodriguez
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          Texas, USA • 2 hours ago
+                        </p>
                       </div>
                     </div>
-                    <p className="text-gray-800 mb-3">🌽 Amazing harvest this season! My companion planting technique increased yield by 40%...</p>
+                    <p className="text-gray-800 mb-3">
+                      🌽 Amazing harvest this season! My companion planting
+                      technique increased yield by 40%...
+                    </p>
                     <div className="flex space-x-4 text-sm">
                       <button className="flex items-center space-x-1 text-gray-500 hover:text-red-500">
                         <Heart className="w-4 h-4" />
@@ -193,12 +230,16 @@ const HeroPage = () => {
                   <div className="border border-gray-200 rounded-2xl p-4 hover:shadow-md transition-shadow">
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <p className="font-semibold text-gray-900">Organic Wheat - 2000 lbs</p>
+                        <p className="font-semibold text-gray-900">
+                          Organic Wheat - 2000 lbs
+                        </p>
                         <p className="text-green-600 font-bold text-lg">$800</p>
                       </div>
                       <Star className="w-5 h-5 text-yellow-500 fill-current" />
                     </div>
-                    <p className="text-sm text-gray-600">Green Valley Farm • Nebraska</p>
+                    <p className="text-sm text-gray-600">
+                      Green Valley Farm • Nebraska
+                    </p>
                   </div>
                 </div>
               </div>
@@ -210,7 +251,7 @@ const HeroPage = () => {
                   <p className="text-xs text-gray-600">Success Rate</p>
                 </div>
               </div>
-              
+
               <div className="absolute -bottom-8 -left-8 bg-white rounded-2xl shadow-xl p-4 border border-gray-100">
                 <div className="text-center">
                   <p className="text-2xl font-black text-blue-600">24/7</p>
@@ -223,17 +264,28 @@ const HeroPage = () => {
       </section>
 
       {/* Stats Section */}
-      <section id="stats-section" className="py-16 bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600">
+      <section
+        id="stats-section"
+        className="py-16 bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600"
+      >
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
             <div className="space-y-2">
-              <p className="text-5xl font-black">{stats.farmers.toLocaleString()}+</p>
-              <p className="text-green-100 text-lg font-medium">Active Farmers</p>
+              <p className="text-5xl font-black">
+                {stats.farmers.toLocaleString()}+
+              </p>
+              <p className="text-green-100 text-lg font-medium">
+                Active Farmers
+              </p>
               <p className="text-green-200 text-sm">Growing every day</p>
             </div>
             <div className="space-y-2">
-              <p className="text-5xl font-black">{stats.trades.toLocaleString()}+</p>
-              <p className="text-green-100 text-lg font-medium">Successful Trades</p>
+              <p className="text-5xl font-black">
+                {stats.trades.toLocaleString()}+
+              </p>
+              <p className="text-green-100 text-lg font-medium">
+                Successful Trades
+              </p>
               <p className="text-green-200 text-sm">Trusted marketplace</p>
             </div>
             <div className="space-y-2">
@@ -245,7 +297,7 @@ const HeroPage = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default HeroPage
+export default HeroPage;
