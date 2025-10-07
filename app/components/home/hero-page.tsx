@@ -147,7 +147,7 @@ const HeroPage = () => {
                 </div>
                 <div>
                   <p className="text-gray-100 font-bold">25,000+ farmers</p>
-                  <p className="text-gray-100 font-bold text-sm">
+                  <p className="text-gray-100 font-medium text-sm">
                     already growing together
                   </p>
                 </div>
