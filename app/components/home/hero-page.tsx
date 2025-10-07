@@ -68,8 +68,8 @@ const HeroPage = () => {
       <section className="pt-24 pb-16 relative overflow-hidden">
         {/* Background Elements: use public/farmers.jpg as the hero background with a gradient overlay */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/farmers.jp')" }}
+          className="absolute inset-0 mt-5 lg:bg-cover bg-center"
+          style={{ backgroundImage: "url('/sustainability-farms-1.webp')" }}
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-gradient-to-br from-black/10 via-green-700/10 to-blue-700/6" />
@@ -107,7 +107,7 @@ const HeroPage = () => {
                   <Zap className="w-4 h-4" />
                   <span>Revolutionizing Agriculture</span>
                 </div>
-                <h1 className="text-5xl lg:text-7xl font-black text-gray-900 leading-tight">
+                <h1 className="text-5xl lg:text-7xl font-black text-white leading-tight">
                   Connect.
                   <br />
                   <span className="bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 bg-clip-text text-transparent">
@@ -116,7 +116,7 @@ const HeroPage = () => {
                   <br />
                   Thrive.
                 </h1>
-                <p className="text-xl text-gray-600 leading-relaxed max-w-xl">
+                <p className="text-xl text-white leading-relaxed font-medium max-w-xl">
                   Join the world's largest farming community where knowledge
                   flows freely, trades happen securely, and every harvest brings
                   us closer together.
@@ -128,7 +128,7 @@ const HeroPage = () => {
                   <span>Start Growing Today</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
-                <button className="group flex items-center justify-center space-x-3 px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl font-bold text-lg hover:border-green-500 hover:text-green-600 transition-all duration-300 hover:scale-105">
+                <button className="group flex items-center justify-center space-x-3 px-8 py-4 border-2 border-gray-300 text-gray-100 rounded-2xl font-bold text-lg hover:border-green-500 hover:text-green-600 transition-all duration-300 hover:scale-105">
                   <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   <span>Watch Demo</span>
                 </button>
@@ -146,8 +146,8 @@ const HeroPage = () => {
                   ))}
                 </div>
                 <div>
-                  <p className="text-gray-900 font-bold">25,000+ farmers</p>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-100 font-bold">25,000+ farmers</p>
+                  <p className="text-gray-100 font-bold text-sm">
                     already growing together
                   </p>
                 </div>
