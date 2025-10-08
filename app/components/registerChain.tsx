@@ -51,7 +51,7 @@ const RegisterChain = () => {
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      First Name *
+                      First Name <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="text"
@@ -62,7 +62,7 @@ const RegisterChain = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Last Name *
+                      Last Name <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="text"
@@ -71,9 +71,21 @@ const RegisterChain = () => {
                     />
                   </div>
 
+                   <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Gender <span className='text-red-500'>*</span>
+                    </label>
+                    <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none bg-white">
+                      <option value="">Select your gender</option>
+                      <option value="us">Male</option>
+                      <option value="ca">Female</option>
+                      <option value="other">Unkonwn</option>
+                    </select>
+                  </div>
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email Address *
+                      Email Address <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="email"
@@ -84,7 +96,7 @@ const RegisterChain = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Phone Number *
+                      Phone Number <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="tel"
@@ -108,7 +120,7 @@ const RegisterChain = () => {
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Address *
+                      Address <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="text"
@@ -119,7 +131,7 @@ const RegisterChain = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      State/Province *
+                      State/Province <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="text"
@@ -130,7 +142,7 @@ const RegisterChain = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Country *
+                      Country <span className='text-red-500'>*</span>
                     </label>
                     <select className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none bg-white">
                       <option value="">Select your country</option>
