@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-   Home, Users, MessageCircle, Store, Cloud, Bell, Search, Plus, 
+  Home, Users, MessageCircle, Store, Cloud, Bell, Search, Plus, 
   Heart, MessageSquare, Share, TrendingUp, MapPin, Thermometer,
   Droplets, Wind, Sun, User, Settings, LogOut, Filter, Star,
   Calendar, DollarSign, Truck, Leaf, Award, BarChart3, Camera,
@@ -8,59 +8,6 @@ import {
   CheckCircle, AlertCircle, Clock, Eye, Bookmark, PieChart
 } from "lucide-react";
 
-// /* ================= TYPES ================= */
-// type Post = {
-//   id: number;
-//   farmer: string;
-//   location: string;
-//   avatar: string;
-//   time: string;
-//   verified: boolean;
-//   farmSize: string;
-//   content: string;
-//   images?: string[];
-//   video?: boolean;
-//   likes: number;
-//   comments: number;
-//   shares: number;
-//   type: string;
-//   price?: string;
-//   tags?: string[];
-//   category: string;
-// };
-
-// type Message = {
-//   id: number;
-//   sender: string;
-//   avatar: string;
-//   lastMessage: string;
-//   time: string;
-//   unread: boolean;
-//   online: boolean;
-// };
-
-// type MarketplaceItem = {
-//   id: number;
-//   title: string;
-//   quantity?: string;
-//   price: string;
-//   pricePerUnit?: string;
-//   seller: string;
-//   location: string;
-//   rating: number;
-//   image: string;
-//   certified?: string;
-//   harvestDate?: string;
-//   category: string;
-//   condition?: string;
-//   shipping?: string;
-//   specifications?: string;
-//   availability?: string;
-//   verified?: boolean;
-//   insurance?: string;
-// };
-
-// type WeatherDay = {
 /* ================= TYPES ================= */
 type Post = {
   id: number;
@@ -111,6 +58,13 @@ type MarketplaceItem = {
   availability?: string;
   verified?: boolean;
   insurance?: string;
+  varieties?: string;
+  readyDate?: string;
+  organic?: boolean;
+  guarantee?: string;
+  flowerSource?: string;
+  tested?: string;
+  wholesale?: boolean;
 };
 
 type WeatherDay = {
@@ -163,7 +117,7 @@ type AnalyticsData = {
 /* ================ SMALL COMPONENTS ================ */
 const TabButton: React.FC<{
   id: string;
-  icon: React.ComponentType<any>;
+  icon: React.ComponentType<{ className?: string }>;
   label: string;
   isActive: boolean;
   onClick: (id: string) => void;
@@ -178,9 +132,9 @@ const TabButton: React.FC<{
     }`}
   >
     <Icon className="w-5 h-5" />
-    <span className="font-medium">{label}</span>
-    {badge && (
-      <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+    <span className="font-semibold">{label}</span>
+    {badge && badge > 0 && (
+      <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
         {badge}
       </span>
     )}
@@ -188,30 +142,23 @@ const TabButton: React.FC<{
 );
 
 const PostCard: React.FC<{ post: Post }> = ({ post }) => (
-  <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
-    <div className="p-6 pb-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-4">
+  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
+    <div className="p-6">
+      <div className="flex items-start justify-between mb-4">
+        <div className="flex items-start space-x-4">
           <div className="relative">
-            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
               {post.avatar}
             </div>
             {post.verified && (
               <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
             )}
           </div>
+
           <div className="flex-1">
             <div className="flex items-center space-x-2 mb-1">
-              <h3 className="font-bold text-gray-900 text-lg">{post.farmer}</h3>
-              <span
-                className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                  post.category === "commercial"
-                    ? "bg-blue-100 text-blue-700"
-                    : post.category === "cooperative"
-                    ? "bg-purple-100 text-purple-700"
-                    : "bg-green-100 text-green-700"
-                }`}
-              >
+              <h3 className="font-bold text-lg text-gray-900">{post.farmer}</h3>
+              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
                 {post.category === "commercial"
                   ? "Commercial"
                   : post.category === "cooperative"
@@ -219,14 +166,15 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
                   : "Small Scale"}
               </span>
             </div>
-            <div className="flex items-center text-sm text-gray-500 space-x-3">
-              <span className="flex items-center">
-                <MapPin className="w-4 h-4 mr-1" />
+
+            <div className="flex items-center space-x-2 text-sm text-gray-500">
+              <div className="flex items-center">
+                <MapPin className="w-3 h-3 mr-1" />
                 {post.location}
-              </span>
-              <span>•</span>
+              </div>
+              •
               <span>{post.farmSize}</span>
-              <span>•</span>
+              •
               <span>{post.time}</span>
             </div>
           </div>
@@ -234,13 +182,12 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
       </div>
 
       <div className="mb-4">
-        <p className="text-gray-800 leading-relaxed text-lg mb-3">
-          {post.content}
-        </p>
+        <p className="text-gray-700 leading-relaxed">{post.content}</p>
+
         {post.price && (
-          <div className="inline-flex items-center bg-green-100 text-green-700 px-3 py-1 rounded-full font-semibold">
-            <DollarSign className="w-4 h-4 mr-1" />
-            {post.price}
+          <div className="mt-3 inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
+            <DollarSign className="w-4 h-4" />
+            <span>{post.price}</span>
           </div>
         )}
       </div>
@@ -248,10 +195,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
       {post.tags && (
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="text-sm bg-gray-100 text-gray-600 px-3 py-1 rounded-full hover:bg-gray-200 cursor-pointer transition-colors"
-            >
+            <span key={idx} className="text-green-600 hover:text-green-700 font-semibold text-sm cursor-pointer hover:underline">
               {tag}
             </span>
           ))}
@@ -259,47 +203,47 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
       )}
 
       {post.images && (
-        <div className="grid grid-cols-2 gap-3 mb-4 rounded-2xl overflow-hidden">
+        <div className="grid grid-cols-2 gap-3 mb-4">
           {post.images.map((img, i) => (
-            <div
-              key={i}
-              className={`h-48 ${img} flex items-center justify-center text-white text-4xl cursor-pointer hover:scale-105 transition-transform`}
-            >
-              🌱
+            <div key={i} className={`${img} rounded-2xl h-48 flex items-center justify-center text-white text-6xl relative overflow-hidden`}>
+              <div className="absolute inset-0 bg-black/10"></div>
+              <span className="relative z-10">🌱</span>
             </div>
           ))}
         </div>
       )}
 
       {post.video && (
-        <div className="bg-gradient-to-br from-blue-500 to-purple-600 h-64 rounded-2xl flex items-center justify-center text-white mb-4 cursor-pointer hover:scale-105 transition-transform">
-          <div className="text-center">
-            <Video className="w-16 h-16 mx-auto mb-2" />
-            <p className="text-lg font-semibold">Watch Full Video</p>
+        <div className="mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl h-64 flex items-center justify-center text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/20"></div>
+          <div className="relative z-10 text-center">
+            <Video className="w-16 h-16 mx-auto mb-3" />
+            <p className="font-bold text-lg">Watch Full Video</p>
           </div>
         </div>
       )}
     </div>
 
-    <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+    <div className="border-t border-gray-100 px-6 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-6">
-          <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-all duration-200 hover:scale-110">
+          <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
             <Heart className="w-5 h-5" />
             <span className="font-semibold">{post.likes}</span>
           </button>
-          <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-all duration-200 hover:scale-110">
+          <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors">
             <MessageSquare className="w-5 h-5" />
             <span className="font-semibold">{post.comments}</span>
           </button>
-          <button className="flex items-center space-x-2 text-gray-600 hover:text-green-500 transition-all duration-200 hover:scale-110">
+          <button className="flex items-center space-x-2 text-gray-600 hover:text-green-500 transition-colors">
             <Share className="w-5 h-5" />
             <span className="font-semibold">{post.shares}</span>
           </button>
         </div>
-        <div className="flex items-center space-x-2 text-sm text-gray-500">
-          <Eye className="w-4 h-4" />
-          <span>{post.likes + post.comments * 3} views</span>
+
+        <div className="text-sm text-gray-500">
+          <Eye className="w-4 h-4 inline mr-1" />
+          {post.likes + post.comments * 3} views
         </div>
       </div>
     </div>
@@ -308,10 +252,10 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
 /* ================= MAIN COMPONENT ================= */
 const FarmChain: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<string>("dashboard");
-  const [notifications, setNotifications] = useState<number>(3);
+  const [activeTab, setActiveTab] = useState("dashboard");
+  const [notifications, setNotifications] = useState(3);
 
-  const [posts] = useState<Post[]>([
+  const posts: Post[] = [
     {
       id: 1,
       farmer: "Sarah Johnson",
@@ -320,8 +264,7 @@ const FarmChain: React.FC = () => {
       time: "2 hours ago",
       verified: true,
       farmSize: "50 acres",
-      content:
-        "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
+      content: "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
       images: [
         "bg-gradient-to-br from-red-500 via-orange-400 to-yellow-500",
         "bg-gradient-to-br from-green-500 to-emerald-600",
@@ -330,11 +273,7 @@ const FarmChain: React.FC = () => {
       comments: 34,
       shares: 18,
       type: "success-story",
-      tags: [
-        "#OrganicFarming",
-        "#CompanionPlanting",
-        "#SustainableAgriculture",
-      ],
+      tags: ["#OrganicFarming", "#CompanionPlanting", "#SustainableAgriculture"],
       category: "small-scale",
     },
     {
@@ -345,8 +284,7 @@ const FarmChain: React.FC = () => {
       time: "4 hours ago",
       verified: true,
       farmSize: "2,500 acres",
-      content:
-        "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
+      content: "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
       video: true,
       likes: 289,
       comments: 67,
@@ -363,8 +301,7 @@ const FarmChain: React.FC = () => {
       time: "8 hours ago",
       verified: false,
       farmSize: "15 acres",
-      content:
-        "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.",
+      content: "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.",
       likes: 67,
       comments: 29,
       shares: 12,
@@ -373,9 +310,9 @@ const FarmChain: React.FC = () => {
       tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"],
       category: "small-scale",
     },
-  ]);
+  ];
 
-  const [messages] = useState<Message[]>([
+  const messages: Message[] = [
     {
       id: 1,
       sender: "Sarah Johnson",
@@ -403,9 +340,9 @@ const FarmChain: React.FC = () => {
       unread: false,
       online: true,
     },
-  ]);
+  ];
 
-    const marketplaceItems = [
+  const marketplaceItems: MarketplaceItem[] = [
     {
       id: 1,
       title: "Premium Organic Wheat",
@@ -482,7 +419,7 @@ const FarmChain: React.FC = () => {
       pressure: "30.15 in",
       uvIndex: 6,
       visibility: "10 miles",
-      icon: <Sun className="w-12 h-12 text-yellow-500" />,
+      icon: <Cloud className="w-12 h-12" />,
     },
     forecast: [
       {
@@ -491,7 +428,7 @@ const FarmChain: React.FC = () => {
         low: "65°",
         condition: "Sunny",
         precipitation: "0%",
-        icon: <Sun className="w-8 h-8 text-yellow-500" />,
+        icon: <Sun className="w-12 h-12 text-yellow-500" />,
       },
       {
         day: "Tomorrow",
@@ -499,7 +436,7 @@ const FarmChain: React.FC = () => {
         low: "60°",
         condition: "Cloudy",
         precipitation: "20%",
-        icon: <Cloud className="w-8 h-8 text-gray-500" />,
+        icon: <Cloud className="w-12 h-12 text-gray-400" />,
       },
       {
         day: "Wednesday",
@@ -507,7 +444,7 @@ const FarmChain: React.FC = () => {
         low: "58°",
         condition: "Rain",
         precipitation: "85%",
-        icon: <Droplets className="w-8 h-8 text-blue-500" />,
+        icon: <Droplets className="w-12 h-12 text-blue-500" />,
       },
     ],
     alerts: [
@@ -529,25 +466,25 @@ const FarmChain: React.FC = () => {
       title: "Soil Moisture",
       value: "72%",
       status: "optimal",
-      icon: <Droplets className="w-5 h-5" />,
+      icon: <Droplets className="w-6 h-6" />,
     },
     {
       title: "Growing Days",
       value: "145",
       status: "good",
-      icon: <Calendar className="w-5 h-5" />,
+      icon: <Calendar className="w-6 h-6" />,
     },
     {
       title: "Market Price",
       value: "+12%",
       status: "up",
-      icon: <TrendingUp className="w-5 h-5" />,
+      icon: <TrendingUp className="w-6 h-6" />,
     },
     {
       title: "Yield Prediction",
       value: "94%",
       status: "excellent",
-      icon: <Zap className="w-5 h-5" />,
+      icon: <Target className="w-6 h-6" />,
     },
   ];
 
@@ -591,53 +528,50 @@ const FarmChain: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* HEADER */}
-      <header className="bg-white/80 backdrop-blur-lg shadow-lg border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-xl">🌾</span>
-              </div>
-              <div>
-                <h1 className="text-3xl font-black bg-gradient-to-r from-green-600 via-emerald-600 to-blue-600 bg-clip-text text-transparent">
-                  Farm Chain
-                </h1>
-                <p className="text-sm text-gray-600 font-medium">
-                  Revolutionizing Agriculture Together
-                </p>
-              </div>
-            </div>
+      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-[1600px] mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-8">
+              <div className="flex items-center space-x-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+                  🌾
+                </div>
 
-            <div className="flex-1 max-w-2xl mx-8">
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <div>
+                  <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                    Farm Chain
+                  </h1>
+                  <p className="text-xs text-gray-500 font-semibold">
+                    Revolutionizing Agriculture Together
+                  </p>
+                </div>
+              </div>
+
+              <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
+                <Search className="w-5 h-5 text-gray-400 mr-3" />
                 <input
                   type="text"
-                  placeholder="Search farmers, crops, equipment, tips, locations..."
-                  className="w-full pl-12 pr-12 py-3 border border-gray-200 rounded-2xl bg-gray-50 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300 text-gray-700"
+                  placeholder="Search farmers, products, insights..."
+                  className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
                 />
-                <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-green-600 transition-colors">
-                  <Filter className="w-5 h-5" />
-                </button>
               </div>
             </div>
 
             <div className="flex items-center space-x-4">
-              <button className="relative p-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all duration-200">
-                <Bell className="w-6 h-6" />
+              <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors">
+                <Bell className="w-6 h-6 text-gray-700" />
                 {notifications > 0 && (
-                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-pulse">
+                  <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {notifications}
                   </span>
                 )}
               </button>
-              <button className="relative p-3 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-xl transition-all duration-200">
-                <MessageCircle className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full"></span>
+              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors">
+                <Settings className="w-6 h-6 text-gray-700" />
               </button>
-              <div className="w-10 h-10 bg-gradient-to-r from-green-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg cursor-pointer hover:scale-110 transition-transform">
+              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform">
                 U
               </div>
             </div>
@@ -646,25 +580,33 @@ const FarmChain: React.FC = () => {
       </header>
 
       {/* BODY */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+      <div className="max-w-[1600px] mx-auto px-6 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl border border-gray-100 p-6 sticky top-28">
-              <nav className="space-y-3 mb-8">
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28">
+              <nav className="space-y-2">
                 <TabButton
                   id="dashboard"
-                  icon={BarChart3}
+                  icon={Home}
                   label="Dashboard"
                   isActive={activeTab === "dashboard"}
                   onClick={setActiveTab}
                 />
                 <TabButton
                   id="feed"
-                  icon={Home}
-                  label="Community Feed"
+                  icon={TrendingUp}
+                  label="Feed"
                   isActive={activeTab === "feed"}
                   onClick={setActiveTab}
+                />
+                <TabButton
+                  id="messages"
+                  icon={MessageCircle}
+                  label="Messages"
+                  isActive={activeTab === "messages"}
+                  onClick={setActiveTab}
+                  badge={2}
                 />
                 <TabButton
                   id="marketplace"
@@ -676,34 +618,26 @@ const FarmChain: React.FC = () => {
                 <TabButton
                   id="weather"
                   icon={Cloud}
-                  label="Weather Hub"
+                  label="Weather"
                   isActive={activeTab === "weather"}
                   onClick={setActiveTab}
                 />
                 <TabButton
-                  id="messages"
-                  icon={MessageCircle}
-                  label="Messages"
-                  isActive={activeTab === "messages"}
-                  onClick={setActiveTab}
-                  badge={5}
-                />
-                <TabButton
                   id="analytics"
-                  icon={TrendingUp}
-                  label="Farm Analytics"
+                  icon={BarChart3}
+                  label="Analytics"
                   isActive={activeTab === "analytics"}
                   onClick={setActiveTab}
                 />
               </nav>
 
-              <div className="space-y-4">
-                <button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3 hover:scale-105">
+              <div className="mt-6 space-y-3">
+                <button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
                   <Plus className="w-5 h-5" />
                   <span>Create Post</span>
                 </button>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-4 rounded-2xl font-bold hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3 hover:scale-105">
-                  <ShoppingCart className="w-5 h-5" />
+                <button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                  <Store className="w-5 h-5" />
                   <span>List Product</span>
                 </button>
               </div>
@@ -711,13 +645,13 @@ const FarmChain: React.FC = () => {
           </div>
 
           {/* Main */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-7">
             {activeTab === "dashboard" && (
               <div className="space-y-8">
-                <div className="bg-gradient-to-br from-green-600 via-emerald-600 to-blue-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+                <div className="bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/10"></div>
                   <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center justify-between">
                       <div>
                         <h2 className="text-3xl font-black mb-2">
                           Welcome back, Farmer! 🌱
@@ -726,7 +660,7 @@ const FarmChain: React.FC = () => {
                           Your farm is thriving. Here's what's happening today.
                         </p>
                       </div>
-                      <div className="text-6xl opacity-20">🚜</div>
+                      <div className="text-7xl opacity-20">🚜</div>
                     </div>
                   </div>
                 </div>
@@ -738,30 +672,10 @@ const FarmChain: React.FC = () => {
                       className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                       <div className="flex items-center justify-between mb-4">
-                        <div
-                          className={`p-3 rounded-xl ${
-                            insight.status === "excellent"
-                              ? "bg-green-100 text-green-600"
-                              : insight.status === "optimal"
-                              ? "bg-blue-100 text-blue-600"
-                              : insight.status === "up"
-                              ? "bg-purple-100 text-purple-600"
-                              : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
+                        <div className="p-3 rounded-xl bg-green-100 text-green-600">
                           {insight.icon}
                         </div>
-                        <span
-                          className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                            insight.status === "excellent"
-                              ? "bg-green-100 text-green-700"
-                              : insight.status === "optimal"
-                              ? "bg-blue-100 text-blue-700"
-                              : insight.status === "up"
-                              ? "bg-purple-100 text-purple-700"
-                              : "bg-gray-100 text-gray-700"
-                          }`}
-                        >
+                        <span className="text-xs font-bold uppercase tracking-wider text-green-600">
                           {insight.status.toUpperCase()}
                         </span>
                       </div>
@@ -777,27 +691,27 @@ const FarmChain: React.FC = () => {
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                    <Zap className="w-7 h-7 mr-3 text-yellow-500" />
+                    <Clock className="w-7 h-7 mr-3 text-green-500" />
                     Recent Activity
                   </h3>
                   <div className="space-y-4">
                     {posts.slice(0, 2).map((post) => (
                       <div
                         key={post.id}
-                        className="flex items-center space-x-4 p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors cursor-pointer"
+                        className="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer"
                       >
                         <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
                           {post.avatar}
                         </div>
                         <div className="flex-1">
-                          <p className="font-semibold text-gray-900">
+                          <h4 className="font-semibold text-gray-900">
                             {post.farmer}
-                          </p>
-                          <p className="text-gray-600 text-sm truncate">
+                          </h4>
+                          <p className="text-sm text-gray-600">
                             {post.content.substring(0, 60)}...
                           </p>
                         </div>
-                        <div className="text-sm text-gray-500">{post.time}</div>
+                        <span className="text-sm text-gray-500">{post.time}</span>
                       </div>
                     ))}
                   </div>
@@ -807,43 +721,43 @@ const FarmChain: React.FC = () => {
 
             {activeTab === "feed" && (
               <div className="space-y-8">
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-                                <div className="flex items-start space-x-4 mb-6">
-                                  <div className="w-14 h-14 bg-gradient-to-r from-green-600 to-blue-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                                    U
-                                  </div>
-                                  <div className="flex-1">
-                                    <textarea
-                                      placeholder="Share your farming insights, ask questions, or showcase your harvest..."
-                                      className="w-full bg-gray-50 rounded-2xl px-6 py-4 focus:bg-white focus:ring-2 focus:ring-green-500 transition-all resize-none text-lg"
-                                      rows={4}
-                                    />
-                                  </div>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                  <div className="flex space-x-4">
-                                    <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors px-4 py-2 rounded-xl hover:bg-green-50">
-                                      <Camera className="w-5 h-5" />
-                                      <span>Photo</span>
-                                    </button>
-                                    <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-xl hover:bg-blue-50">
-                                      <Video className="w-5 h-5" />
-                                      <span>Video</span>
-                                    </button>
-                                    <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-4 py-2 rounded-xl hover:bg-purple-50">
-                                      <MapPin className="w-5 h-5" />
-                                      <span>Location</span>
-                                    </button>
-                                    <button className="flex items-center space-x-2 text-gray-600 hover:text-orange-600 transition-colors px-4 py-2 rounded-xl hover:bg-orange-50">
-                                      <Store className="w-5 h-5" />
-                                      <span>Marketplace</span>
-                                    </button>
-                                  </div>
-                                  <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105">
-                                    Share Post
-                                  </button>
-                                </div>
-                              </div>
+                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
+                      U
+                    </div>
+                    <div className="flex-1">
+                      <textarea
+                        placeholder="What's happening on your farm today?"
+                        className="w-full p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400"
+                        rows={3}
+                      />
+                      <div className="flex justify-between items-center mt-4">
+                        <div className="flex space-x-4">
+                          <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors px-4 py-2 rounded-xl hover:bg-green-50">
+                            <Camera className="w-5 h-5" />
+                            <span>Photo</span>
+                          </button>
+                          <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-xl hover:bg-blue-50">
+                            <Video className="w-5 h-5" />
+                            <span>Video</span>
+                          </button>
+                          <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-4 py-2 rounded-xl hover:bg-purple-50">
+                            <MapPin className="w-5 h-5" />
+                            <span>Location</span>
+                          </button>
+                          <button className="flex items-center space-x-2 text-gray-600 hover:text-orange-600 transition-colors px-4 py-2 rounded-xl hover:bg-orange-50">
+                            <Store className="w-5 h-5" />
+                            <span>Marketplace</span>
+                          </button>
+                        </div>
+                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105">
+                          Share Post
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="space-y-8">
                   {posts.map((post) => (
@@ -883,6 +797,7 @@ const FarmChain: React.FC = () => {
                       </button>
                     </div>
                   </div>
+
                   <div className="divide-y divide-gray-100">
                     {messages.map((message) => (
                       <div
@@ -898,6 +813,7 @@ const FarmChain: React.FC = () => {
                               <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                             )}
                           </div>
+
                           <div className="flex-1">
                             <div className="flex items-center justify-between mb-1">
                               <h4 className="font-semibold text-gray-900">
@@ -917,6 +833,7 @@ const FarmChain: React.FC = () => {
                               {message.lastMessage}
                             </p>
                           </div>
+
                           {message.unread && (
                             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                           )}
@@ -930,7 +847,7 @@ const FarmChain: React.FC = () => {
 
             {activeTab === "marketplace" && (
               <div className="space-y-8">
-                  <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+                <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/10"></div>
                   <div className="relative z-10">
                     <div className="flex items-center justify-between mb-6">
@@ -957,16 +874,15 @@ const FarmChain: React.FC = () => {
                   </div>
                 </div>
 
-
-               <div className="grid lg:grid-cols-2 gap-8">
+                <div className="grid lg:grid-cols-2 gap-8">
                   {marketplaceItems.map((item) => (
                     <div key={item.id} className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105">
                       <div className={`h-48 ${item.image} flex items-center justify-center text-white text-6xl relative`}>
                         <div className="absolute inset-0 bg-black/20"></div>
                         <span className="relative z-10">
-                          {item.category === 'equipment' ? '🚜' : 
-                           item.category === 'grain' ? '🌾' : 
-                           item.category === 'products' ? '🍯' : '🌱'}
+                          {item.category === 'equipment' ? '🚜' :
+                            item.category === 'grain' ? '🌾' :
+                            item.category === 'products' ? '🍯' : '🌱'}
                         </span>
                         {item.certified && (
                           <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
@@ -977,7 +893,7 @@ const FarmChain: React.FC = () => {
                           <CheckCircle className="absolute top-4 left-4 w-8 h-8 text-white bg-blue-500 rounded-full p-1" />
                         )}
                       </div>
-                      
+
                       <div className="p-6">
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
@@ -995,7 +911,7 @@ const FarmChain: React.FC = () => {
                             <span className="text-sm font-semibold text-gray-700">{item.rating}</span>
                           </div>
                         </div>
-                        
+
                         <div className="space-y-3 mb-6">
                           <div className="flex items-center justify-between text-sm">
                             <span className="text-gray-500">Seller:</span>
@@ -1022,7 +938,6 @@ const FarmChain: React.FC = () => {
                           )}
                         </div>
 
-                        {/* Special Features */}
                         <div className="flex flex-wrap gap-2 mb-6">
                           {item.organic && (
                             <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold flex items-center">
@@ -1042,7 +957,7 @@ const FarmChain: React.FC = () => {
                             </span>
                           )}
                         </div>
-                        
+
                         <div className="grid grid-cols-2 gap-3">
                           <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
                             <MessageCircle className="w-4 h-4" />
@@ -1245,9 +1160,9 @@ const FarmChain: React.FC = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-3">
             <div className="space-y-6 sticky top-28">
-              <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl shadow-xl text-white p-6 relative overflow-hidden w-[270px]">
+              <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl shadow-xl text-white p-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative z-10">
                   <h3 className="font-bold text-lg mb-4 flex items-center">
@@ -1279,34 +1194,33 @@ const FarmChain: React.FC = () => {
                 </div>
               </div>
 
-               {/* Trending in Community */}
-                            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 w-[270px]">
-                              <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
-                                <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
-                                Trending Topics
-                              </h3>
-                              <div className="space-y-4">
-                                {[
-                                  { tag: '#OrganicFarming', posts: '2.1k posts', trend: '+12%' },
-                                  { tag: '#ClimateResilience', posts: '891 posts', trend: '+45%' },
-                                  { tag: '#SustainableAgriculture', posts: '1.5k posts', trend: '+8%' },
-                                  { tag: '#PrecisionFarming', posts: '743 posts', trend: '+23%' },
-                                  { tag: '#CropRotation', posts: '564 posts', trend: '+15%' }
-                                ].map((topic, index) => (
-                                  <button key={index} className="w-full text-left p-3 hover:bg-gray-50 rounded-xl transition-colors group">
-                                    <div className="flex items-center justify-between">
-                                      <div>
-                                        <p className="font-semibold text-green-600 group-hover:text-green-700">{topic.tag}</p>
-                                        <p className="text-gray-500 text-xs">{topic.posts}</p>
-                                      </div>
-                                      <span className="text-green-500 text-sm font-bold">{topic.trend}</span>
-                                    </div>
-                                  </button>
-                                ))}
-                              </div>
-                            </div>
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
+                  <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
+                  Trending Topics
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    { tag: '#OrganicFarming', posts: '2.1k posts', trend: '+12%' },
+                    { tag: '#ClimateResilience', posts: '891 posts', trend: '+45%' },
+                    { tag: '#SustainableAgriculture', posts: '1.5k posts', trend: '+8%' },
+                    { tag: '#PrecisionFarming', posts: '743 posts', trend: '+23%' },
+                    { tag: '#CropRotation', posts: '564 posts', trend: '+15%' }
+                  ].map((topic, index) => (
+                    <button key={index} className="w-full text-left p-3 hover:bg-gray-50 rounded-xl transition-colors group">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="font-semibold text-green-600 group-hover:text-green-700">{topic.tag}</p>
+                          <p className="text-gray-500 text-xs">{topic.posts}</p>
+                        </div>
+                        <span className="text-green-500 text-sm font-bold">{topic.trend}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 w-[270px]">
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
                 <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
                   <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
                   Market Prices
@@ -1361,44 +1275,43 @@ const FarmChain: React.FC = () => {
                 </div>
               </div>
 
-                {/* Active Farmers Online */}
-                            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 w-[270px]">
-                              <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
-                                <Users className="w-5 h-5 mr-2 text-blue-500" />
-                                Farmers Online
-                              </h3>
-                              <div className="space-y-4">
-                                {[
-                                  { name: 'Sarah Johnson', farm: 'Organic Valley', status: 'online', avatar: 'SJ' },
-                                  { name: 'Mike Chen', farm: 'Green Acres', status: 'online', avatar: 'MC' },
-                                  { name: 'AgriTech Co.', farm: 'Commercial', status: 'busy', avatar: 'AC' },
-                                  { name: 'Emma Rodriguez', farm: 'Heritage Farm', status: 'online', avatar: 'ER' },
-                                  { name: 'Tech Innovations', farm: 'Smart Farming', status: 'online', avatar: 'TI' }
-                                ].map((farmer, index) => (
-                                  <div key={index} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-xl cursor-pointer transition-colors">
-                                    <div className="relative">
-                                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        {farmer.avatar}
-                                      </div>
-                                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
-                                        farmer.status === 'online' ? 'bg-green-500' :
-                                        farmer.status === 'busy' ? 'bg-yellow-500' : 'bg-gray-400'
-                                      }`}></div>
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="font-semibold text-gray-900 truncate">{farmer.name}</p>
-                                      <p className="text-gray-500 text-xs truncate">{farmer.farm}</p>
-                                    </div>
-                                    <button className="p-2 hover:bg-green-100 rounded-full transition-colors">
-                                      <MessageCircle className="w-4 h-4 text-green-600" />
-                                    </button>
-                                  </div>
-                                ))}
-                              </div>
-                              <button className="w-full mt-4 text-center text-green-600 hover:text-green-700 font-semibold text-sm py-2 hover:bg-green-50 rounded-xl transition-colors">
-                                View All (1,247 online)
-                              </button>
-                            </div>
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+                <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
+                  <Users className="w-5 h-5 mr-2 text-blue-500" />
+                  Farmers Online
+                </h3>
+                <div className="space-y-4">
+                  {[
+                    { name: 'Sarah Johnson', farm: 'Organic Valley', status: 'online', avatar: 'SJ' },
+                    { name: 'Mike Chen', farm: 'Green Acres', status: 'online', avatar: 'MC' },
+                    { name: 'AgriTech Co.', farm: 'Commercial', status: 'busy', avatar: 'AC' },
+                    { name: 'Emma Rodriguez', farm: 'Heritage Farm', status: 'online', avatar: 'ER' },
+                    { name: 'Tech Innovations', farm: 'Smart Farming', status: 'online', avatar: 'TI' }
+                  ].map((farmer, index) => (
+                    <div key={index} className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-xl cursor-pointer transition-colors">
+                      <div className="relative">
+                        <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                          {farmer.avatar}
+                        </div>
+                        <div className={`absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-white ${
+                          farmer.status === 'online' ? 'bg-green-500' :
+                          farmer.status === 'busy' ? 'bg-yellow-500' : 'bg-gray-400'
+                        }`}></div>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-gray-900 truncate">{farmer.name}</p>
+                        <p className="text-gray-500 text-xs truncate">{farmer.farm}</p>
+                      </div>
+                      <button className="p-2 hover:bg-green-100 rounded-full transition-colors">
+                        <MessageCircle className="w-4 h-4 text-green-600" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button className="w-full mt-4 text-center text-green-600 hover:text-green-700 font-semibold text-sm py-2 hover:bg-green-50 rounded-xl transition-colors">
+                  View All (1,247 online)
+                </button>
+              </div>
             </div>
           </div>
         </div>
