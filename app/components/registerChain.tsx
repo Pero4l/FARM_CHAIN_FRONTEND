@@ -186,7 +186,7 @@ const RegisterChain = () => {
                 <div className="space-y-5">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Password *
+                      Password <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="password"
@@ -198,7 +198,7 @@ const RegisterChain = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Confirm Password *
+                      Confirm Password <span className='text-red-500'>*</span>
                     </label>
                     <input
                       type="password"
