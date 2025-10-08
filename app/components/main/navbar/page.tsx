@@ -2,11 +2,12 @@
 import { useState } from 'react';
 import React from 'react'
 import {
-  Bell, Search,User, Settings, LogOut, Award, Bookmark
+  Bell, Search,User, Settings, LogOut, Award, Bookmark, MessageCircle
 } from "lucide-react";
 
 const MainNavPage = () => {
       const [notifications, setNotifications] = useState(3);
+      const [message, setMessge] = useState(5)
   return (
     <div>
           {/* HEADER */}
@@ -39,7 +40,17 @@ const MainNavPage = () => {
                       </div>
                     </div>
         
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center lg:space-x-4">
+
+                        <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
+                        <MessageCircle className="w-6 h-6 text-gray-700" />
+                        {message > 0 && (
+                          <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            {message}
+                          </span>
+                        )}
+                      </button>
+
                       <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
                         <Bell className="w-6 h-6 text-gray-700" />
                         {notifications > 0 && (
@@ -51,9 +62,7 @@ const MainNavPage = () => {
                       <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Bookmarks">
                         <Bookmark className="w-6 h-6 text-gray-700" />
                       </button>
-                      <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Settings">
-                        <Settings className="w-6 h-6 text-gray-700" />
-                      </button>
+                    
                       <div className="relative group">
                         <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform">
                           U
