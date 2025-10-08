@@ -16,7 +16,7 @@ const MainNavPage = () => {
                   <div className="flex items-center justify-between h-20">
                     <div className="flex items-center space-x-8">
                       <div className="flex items-center space-x-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
+                        <div className="hidden w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl md:flex items-center justify-center text-2xl shadow-lg">
                           🌾
                         </div>
         
@@ -24,7 +24,7 @@ const MainNavPage = () => {
                           <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                             Farm Chain
                           </h1>
-                          <p className="text-xs text-gray-500 font-semibold">
+                          <p className="text-xs hidden md:flex text-gray-500 font-semibold">
                             Revolutionizing Agriculture Together
                           </p>
                         </div>
