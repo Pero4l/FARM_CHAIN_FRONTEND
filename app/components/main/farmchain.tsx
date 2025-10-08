@@ -560,7 +560,7 @@ const FarmChain: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors">
+              <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
                 <Bell className="w-6 h-6 text-gray-700" />
                 {notifications > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -568,11 +568,37 @@ const FarmChain: React.FC = () => {
                   </span>
                 )}
               </button>
-              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors">
+              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Bookmarks">
+                <Bookmark className="w-6 h-6 text-gray-700" />
+              </button>
+              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Settings">
                 <Settings className="w-6 h-6 text-gray-700" />
               </button>
-              <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform">
-                U
+              <div className="relative group">
+                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform">
+                  U
+                </div>
+                <div className="absolute right-0 top-12 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <div className="p-3 space-y-1">
+                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <User className="w-4 h-4 text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Profile</span>
+                    </button>
+                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <Award className="w-4 h-4 text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Achievements</span>
+                    </button>
+                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <Settings className="w-4 h-4 text-gray-600" />
+                      <span className="text-sm font-medium text-gray-700">Settings</span>
+                    </button>
+                    <hr className="my-2" />
+                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
+                      <LogOut className="w-4 h-4 text-red-600" />
+                      <span className="text-sm font-medium text-red-600">Logout</span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -653,7 +679,8 @@ const FarmChain: React.FC = () => {
                   <div className="relative z-10">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h2 className="text-3xl font-black mb-2">
+                        <h2 className="text-3xl font-black mb-2 flex items-center">
+                          <Zap className="w-8 h-8 mr-3" />
                           Welcome back, Farmer! 🌱
                         </h2>
                         <p className="text-green-100 text-lg">
@@ -742,20 +769,31 @@ const FarmChain: React.FC = () => {
                             <Video className="w-5 h-5" />
                             <span>Video</span>
                           </button>
+                          <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors px-4 py-2 rounded-xl hover:bg-red-50">
+                            <Mic className="w-5 h-5" />
+                            <span>Audio</span>
+                          </button>
                           <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-4 py-2 rounded-xl hover:bg-purple-50">
                             <MapPin className="w-5 h-5" />
                             <span>Location</span>
                           </button>
-                          <button className="flex items-center space-x-2 text-gray-600 hover:text-orange-600 transition-colors px-4 py-2 rounded-xl hover:bg-orange-50">
-                            <Store className="w-5 h-5" />
-                            <span>Marketplace</span>
-                          </button>
                         </div>
-                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105">
-                          Share Post
+                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2">
+                          <Send className="w-4 h-4" />
+                          <span>Share Post</span>
                         </button>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Community Feed</h3>
+                    <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors px-4 py-2 rounded-xl hover:bg-green-50">
+                      <Filter className="w-5 h-5" />
+                      <span className="font-semibold">Filter</span>
+                    </button>
                   </div>
                 </div>
 
@@ -792,9 +830,15 @@ const FarmChain: React.FC = () => {
                       <h3 className="text-xl font-bold text-gray-900">
                         Conversations
                       </h3>
-                      <button className="bg-green-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-green-700 transition-colors">
-                        New Message
-                      </button>
+                      <div className="flex items-center space-x-2">
+                        <button className="p-2 hover:bg-gray-100 rounded-xl transition-colors" title="Call">
+                          <Phone className="w-5 h-5 text-gray-600" />
+                        </button>
+                        <button className="bg-green-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2">
+                          <Mail className="w-4 h-4" />
+                          <span>New Message</span>
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -1166,7 +1210,7 @@ const FarmChain: React.FC = () => {
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative z-10">
                   <h3 className="font-bold text-lg mb-4 flex items-center">
-                    <Cloud className="w-5 h-5 mr-2" />
+                    <Thermometer className="w-5 h-5 mr-2" />
                     Weather Now
                   </h3>
                   <div className="text-center">
@@ -1182,12 +1226,14 @@ const FarmChain: React.FC = () => {
                         <div className="font-semibold">
                           {weatherData.current.humidity}
                         </div>
+                        <div className="text-xs text-blue-200">Humidity</div>
                       </div>
                       <div>
                         <Wind className="w-4 h-4 mx-auto mb-1" />
                         <div className="font-semibold">
                           {weatherData.current.wind.split(" ")[0]}
                         </div>
+                        <div className="text-xs text-blue-200">Wind</div>
                       </div>
                     </div>
                   </div>
@@ -1300,9 +1346,12 @@ const FarmChain: React.FC = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-gray-900 truncate">{farmer.name}</p>
-                        <p className="text-gray-500 text-xs truncate">{farmer.farm}</p>
+                        <p className="text-gray-500 text-xs truncate flex items-center">
+                          <Globe className="w-3 h-3 mr-1" />
+                          {farmer.farm}
+                        </p>
                       </div>
-                      <button className="p-2 hover:bg-green-100 rounded-full transition-colors">
+                      <button className="p-2 hover:bg-green-100 rounded-full transition-colors" title="Send Message">
                         <MessageCircle className="w-4 h-4 text-green-600" />
                       </button>
                     </div>

@@ -3,16 +3,19 @@ import FeaturePage from "./components/features/features";
 import PricingPage from "./components/pricing/pricing";
 import TestimonialPage from "./components/testimonial/testimonial";
 import CtaPage from "./components/cta-section/cta";
+import MainNavPage from "./components/main/navbar/page";
 export default function Home() {
   return (
     <div className="">
-      <HeroPage/>
-      <FeaturePage/>
+      {/* <HeroPage/>
+      <FeaturePage/> */}
       {/* <PricingPage/> */}
       
-      <TestimonialPage/>
-      <CtaPage/>
+      {/* <TestimonialPage/>
+      <CtaPage/> */}
       
+
+      <MainNavPage/>
     </div>
   );
 }
