@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import {
   Home, Users, MessageCircle, Store, Cloud, Bell, Search, Plus, 
@@ -529,84 +530,10 @@ const FarmChain: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-      {/* HEADER */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50 shadow-sm">
-        <div className="max-w-[1600px] mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
-            <div className="flex items-center space-x-8">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl flex items-center justify-center text-2xl shadow-lg">
-                  🌾
-                </div>
-
-                <div>
-                  <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                    Farm Chain
-                  </h1>
-                  <p className="text-xs text-gray-500 font-semibold">
-                    Revolutionizing Agriculture Together
-                  </p>
-                </div>
-              </div>
-
-              <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
-                <Search className="w-5 h-5 text-gray-400 mr-3" />
-                <input
-                  type="text"
-                  placeholder="Search farmers, products, insights..."
-                  className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
-                />
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <button className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
-                <Bell className="w-6 h-6 text-gray-700" />
-                {notifications > 0 && (
-                  <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {notifications}
-                  </span>
-                )}
-              </button>
-              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Bookmarks">
-                <Bookmark className="w-6 h-6 text-gray-700" />
-              </button>
-              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Settings">
-                <Settings className="w-6 h-6 text-gray-700" />
-              </button>
-              <div className="relative group">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform">
-                  U
-                </div>
-                <div className="absolute right-0 top-12 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
-                  <div className="p-3 space-y-1">
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                      <User className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-700">Profile</span>
-                    </button>
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                      <Award className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-700">Achievements</span>
-                    </button>
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                      <Settings className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm font-medium text-gray-700">Settings</span>
-                    </button>
-                    <hr className="my-2" />
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
-                      <LogOut className="w-4 h-4 text-red-600" />
-                      <span className="text-sm font-medium text-red-600">Logout</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      
 
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-2">
@@ -747,62 +674,65 @@ const FarmChain: React.FC = () => {
             )}
 
             {activeTab === "feed" && (
-              <div className="space-y-8">
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold">
-                      U
-                    </div>
-                    <div className="flex-1">
-                      <textarea
-                        placeholder="What's happening on your farm today?"
-                        className="w-full p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400"
-                        rows={3}
-                      />
-                      <div className="flex justify-between items-center mt-4">
-                        <div className="flex space-x-4">
-                          <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors px-4 py-2 rounded-xl hover:bg-green-50">
-                            <Camera className="w-5 h-5" />
-                            <span>Photo</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-4 py-2 rounded-xl hover:bg-blue-50">
-                            <Video className="w-5 h-5" />
-                            <span>Video</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-gray-600 hover:text-red-600 transition-colors px-4 py-2 rounded-xl hover:bg-red-50">
-                            <Mic className="w-5 h-5" />
-                            <span>Audio</span>
-                          </button>
-                          <button className="flex items-center space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-4 py-2 rounded-xl hover:bg-purple-50">
-                            <MapPin className="w-5 h-5" />
-                            <span>Location</span>
-                          </button>
-                        </div>
-                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2">
-                          <Send className="w-4 h-4" />
-                          <span>Share Post</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+             <div className="space-y-8 px-4 sm:px-6 md:px-0">
+  {/* Post input card */}
+  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6">
+    <div className="flex items-start space-x-4">
+      <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+        U
+      </div>
+      <div className="flex-1">
+        <textarea
+          placeholder="What's happening on your farm today?"
+          className="w-full p-3 sm:p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 text-sm sm:text-base"
+          rows={3}
+        />
+        <div className="flex flex-wrap justify-between items-center mt-4 gap-2 sm:gap-4">
+          <div className="flex flex-wrap space-x-2 sm:space-x-4">
+            <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
+              <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Photo</span>
+            </button>
+            <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap">
+              <Video className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Video</span>
+            </button>
+            <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap">
+              <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Audio</span>
+            </button>
+            <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap">
+              <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span>Location</span>
+            </button>
+          </div>
 
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-gray-900">Community Feed</h3>
-                    <button className="flex items-center space-x-2 text-gray-600 hover:text-green-600 transition-colors px-4 py-2 rounded-xl hover:bg-green-50">
-                      <Filter className="w-5 h-5" />
-                      <span className="font-semibold">Filter</span>
-                    </button>
-                  </div>
-                </div>
+          <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2 text-sm sm:text-base whitespace-nowrap">
+            <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+            <span>Share Post</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                <div className="space-y-8">
-                  {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                  ))}
-                </div>
-              </div>
+  {/* Community Feed header */}
+  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center">
+    <h3 className="text-lg sm:text-xl font-bold text-gray-900">Community Feed</h3>
+    <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
+      <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
+      <span className="font-semibold">Filter</span>
+    </button>
+  </div>
+
+  {/* Posts list */}
+  <div className="space-y-8">
+    {posts.map((post) => (
+      <PostCard key={post.id} post={post} />
+    ))}
+  </div>
+</div>
+
             )}
 
             {activeTab === "messages" && (
