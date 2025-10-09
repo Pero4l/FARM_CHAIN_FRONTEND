@@ -2,13 +2,14 @@
 import { useState, useRef, useEffect } from 'react';
 import React from 'react'
 import {
-  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle
+  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X
 } from "lucide-react";
 
 const MainNavPage = () => {
   const [notifications, setNotifications] = useState(3);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
  const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -40,7 +41,9 @@ const MainNavPage = () => {
                   🌾
                 </div>
 
-                <div>
+                <div className='flex items-center gap-2'>
+                  <p onClick={() => setIsMenuOpen(!isMenuOpen)} className='md:hidden text-3xl'>{!isMenuOpen ? <Menu/> : <X/>}</p>
+                  
                   <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     Farm Chain
                   </h1>
