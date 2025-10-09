@@ -1,5 +1,3 @@
-'use client'
-import { useState } from "react";
 import HeroPage from "./components/home/hero-page";
 import FeaturePage from "./components/features/features";
 import PricingPage from "./components/pricing/pricing";
@@ -20,16 +18,17 @@ export default function Home() {
   return (
 
     <div className="">
-      {/* <HeroPage/>
-      <FeaturePage/> */}
+      <HeroPage/>
+      <FeaturePage/>
+
       {/* <PricingPage/> */}
       
-      {/* <TestimonialPage/>
-      <CtaPage/> */}
+      <TestimonialPage/>
+      <CtaPage/>
       
 
-      <MainNavPage />
-      <FarmChain />
+      {/* <MainNavPage />
+      <FarmChain /> */}
     </div>
   );
 }
