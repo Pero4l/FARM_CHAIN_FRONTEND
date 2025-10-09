@@ -9,6 +9,11 @@ import {
   CheckCircle, AlertCircle, Clock, Eye, PieChart
 } from "lucide-react";
 
+
+type ButtonProps = {
+  onClose?: () => void;
+};
+
 /* ================= TYPES ================= */
 type Post = {
   id: number;
@@ -255,6 +260,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 const FarmChain: React.FC = () => {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [notifications, setNotifications] = useState(3);
+  const [mainMenu, setMainMenu] = useState(false)
 
   const posts: Post[] = [
     {
@@ -533,11 +539,11 @@ const FarmChain: React.FC = () => {
       
 
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28">
+            <div className={!mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden"}>
               <nav className="space-y-2">
                 <TabButton
                   id="dashboard"

@@ -1,3 +1,5 @@
+'use client'
+import { useState } from "react";
 import HeroPage from "./components/home/hero-page";
 import FeaturePage from "./components/features/features";
 import PricingPage from "./components/pricing/pricing";
@@ -6,7 +8,9 @@ import CtaPage from "./components/cta-section/cta";
 import MainNavPage from "./components/main/navbar/page";
 import FarmChain from "./components/main/farmchain";
 export default function Home() {
+  
   return (
+
     <div className="">
       {/* <HeroPage/>
       <FeaturePage/> */}
