@@ -544,10 +544,14 @@ const FarmChain: React.FC = () => {
       
 
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-14">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <p onClick={()=> setMainMenu(!mainMenu)}>{!mainMenu ? <Menu/>: <X/>}</p>
-          {/* Sidebar */}
+
+          <div>
+            <p className="lg:hidden" onClick={()=> setMainMenu(!mainMenu)}>{!mainMenu ? <Menu/>: <X/>}</p>
+            <input type="text" />
+          </div>
+            {/* Sidebar */}
           <div className="lg:col-span-2">
             <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden"}>
               <nav className="space-y-2">
