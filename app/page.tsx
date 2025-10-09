@@ -15,7 +15,7 @@ import FarmChain from "./components/main/farmchain";
 
 export default function Home() {
 
-const [mainMenu, setMainMenu] = useState(false)
+
 
   return (
 
@@ -28,8 +28,8 @@ const [mainMenu, setMainMenu] = useState(false)
       <CtaPage/> */}
       
 
-      <MainNavPage setMainMenu={setMainMenu} />
-      <FarmChain mainMenu={mainMenu} />
+      <MainNavPage />
+      <FarmChain />
     </div>
   );
 }
