@@ -7,8 +7,16 @@ import TestimonialPage from "./components/testimonial/testimonial";
 import CtaPage from "./components/cta-section/cta";
 import MainNavPage from "./components/main/navbar/page";
 import FarmChain from "./components/main/farmchain";
+
+
+// interface MainNavPageProps {
+//   setMenu: React.Dispatch<React.SetStateAction<boolean>>;
+// }
+
 export default function Home() {
-  
+
+//  const [menu, setMenu] = useState<boolean>(false);
+
   return (
 
     <div className="">
@@ -20,7 +28,7 @@ export default function Home() {
       <CtaPage/> */}
       
 
-      <MainNavPage/>
+      <MainNavPage />
       <FarmChain/>
     </div>
   );

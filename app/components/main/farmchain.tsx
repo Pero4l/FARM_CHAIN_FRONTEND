@@ -6,7 +6,7 @@ import {
   Droplets, Wind, Sun, Filter, Star,
   Calendar, DollarSign, Truck, Leaf, BarChart3, Camera,
   Video, Mic, Send, Phone, Mail, Globe, Zap, Target, ShoppingCart,
-  CheckCircle, AlertCircle, Clock, Eye, PieChart
+  CheckCircle, AlertCircle, Clock, Eye, PieChart, Menu, X
 } from "lucide-react";
 
 
@@ -255,6 +255,9 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
     </div>
   </div>
 );
+
+
+
 
 /* ================= MAIN COMPONENT ================= */
 const FarmChain: React.FC = () => {
@@ -541,9 +544,10 @@ const FarmChain: React.FC = () => {
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <p onClick={()=> setMainMenu(!mainMenu)}>{!mainMenu ? 'oooo': 'ppppp'}</p>
           {/* Sidebar */}
           <div className="lg:col-span-2">
-            <div className={!mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden"}>
+            <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden"}>
               <nav className="space-y-2">
                 <TabButton
                   id="dashboard"
