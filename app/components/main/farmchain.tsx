@@ -1,12 +1,12 @@
 'use client'
 import React, { useState } from "react";
 import {
-  Home, Users, MessageCircle, Store, Cloud, Bell, Search, Plus, 
+  Home, Users, MessageCircle, Store, Cloud, Plus, 
   Heart, MessageSquare, Share, TrendingUp, MapPin, Thermometer,
-  Droplets, Wind, Sun, User, Settings, LogOut, Filter, Star,
-  Calendar, DollarSign, Truck, Leaf, Award, BarChart3, Camera,
+  Droplets, Wind, Sun, Filter, Star,
+  Calendar, DollarSign, Truck, Leaf, BarChart3, Camera,
   Video, Mic, Send, Phone, Mail, Globe, Zap, Target, ShoppingCart,
-  CheckCircle, AlertCircle, Clock, Eye, Bookmark, PieChart
+  CheckCircle, AlertCircle, Clock, Eye, PieChart
 } from "lucide-react";
 
 /* ================= TYPES ================= */

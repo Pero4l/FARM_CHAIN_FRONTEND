@@ -38,15 +38,13 @@ const CtaPage = () => {
             
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
 
-              <Link href='/auth/register'>
-                <button className="group bg-white text-green-600 px-10 py-5 rounded-2xl font-bold text-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 flex items-center space-x-3">
+              <Link href='/auth/register' className="group bg-white text-green-600 px-10 py-5 rounded-2xl font-bold text-xl hover:shadow-2xl transition-all duration-300 hover:scale-110 flex items-center space-x-3">
                 <span>Start Your Journey</span>
-                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-              </button>            
+                <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />            
               </Link>
 
               <button className="group border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-bold text-xl hover:bg-white/10 transition-all duration-300 hover:scale-110 flex items-center space-x-3">
-                <Play className="w-6 h-6 group-hover:scale-125 transition-transform" />
+                <Play className="w-12 h-6 group-hover:scale-125 transition-transform" />
                 <span>Schedule Demo</span>
               </button>
             </div>
