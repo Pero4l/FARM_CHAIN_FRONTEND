@@ -9,9 +9,11 @@ import {
   CheckCircle, AlertCircle, Clock, Eye, PieChart, Menu, X
 } from "lucide-react";
 
+import Hamburger from "../atoms/hamburger";
+
 
 type ButtonProps = {
-  onClose?: () => void;
+  onClick?: () => void;
 };
 
 /* ================= TYPES ================= */
@@ -544,7 +546,7 @@ const FarmChain: React.FC = () => {
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <p onClick={()=> setMainMenu(!mainMenu)}>{!mainMenu ? 'oooo': 'ppppp'}</p>
+          <p onClick={()=> setMainMenu(!mainMenu)}>{!mainMenu ? <Menu/>: <X/>}</p>
           {/* Sidebar */}
           <div className="lg:col-span-2">
             <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden"}>
