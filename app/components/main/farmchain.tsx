@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from "react";
+import Hamburger from "../atoms/hamburger";
 import {
   Home, Users, MessageCircle, Store, Cloud, Plus, 
   Heart, MessageSquare, Share, TrendingUp, MapPin, Thermometer,
@@ -595,7 +596,8 @@ const FarmChain: React.FC = () => {
       
 
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16"> 
+        <div onClick={()=> setMainMenu(!mainMenu)}><Hamburger/></div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Sidebar */}
