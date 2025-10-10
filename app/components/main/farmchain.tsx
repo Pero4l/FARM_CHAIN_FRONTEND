@@ -597,14 +597,16 @@ const FarmChain: React.FC = () => {
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20"> 
 
-        <div className='md:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
+        <div className="flex gap-3">
+          <div className='md:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
           {mainMenu ? <X/> : <Menu/>}
-
-          {/* <div>
-            <input type="text" />
-          </div> */}
-
           </div>
+
+           <div>
+            <input className="w-62 h-7 bg-green-300" type="text" />
+          </div>
+        </div>
+
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
