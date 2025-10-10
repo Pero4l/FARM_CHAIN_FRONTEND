@@ -1,7 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
 import React from 'react'
-import Hamburger from '../../atoms/hamburger';
 import {
   Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X
 } from "lucide-react";
