@@ -617,7 +617,7 @@ const FarmChain: React.FC = () => {
           
           {/* Sidebar */}
           <div className="lg:col-span-2">
-            <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden lg:block sticky top-28"}>
+            <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28 mt-3": "hidden lg:block sticky top-28"}>
               <nav className="space-y-2">
                 <TabButton
                   id="dashboard"
