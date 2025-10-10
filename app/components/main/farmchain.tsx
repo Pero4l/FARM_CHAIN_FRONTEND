@@ -6,7 +6,7 @@ import {
   Droplets, Wind, Sun, Filter, Star,
   Calendar, DollarSign, Truck, Leaf, BarChart3, Camera,
   Video, Mic, Send, Phone, Mail, Globe, Zap, Target, ShoppingCart,
-  CheckCircle, AlertCircle, Clock, Eye, PieChart, Menu, X
+  CheckCircle, AlertCircle, Clock, Eye, PieChart, Menu, X,Search
 } from "lucide-react";
 
 
@@ -597,14 +597,19 @@ const FarmChain: React.FC = () => {
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20"> 
 
-        <div className="flex gap-3">
+        <div className="flex gap-3 items-center">
           <div className='md:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
           {mainMenu ? <X/> : <Menu/>}
           </div>
 
-           <div>
-            <input className="w-62 h-7 bg-green-300" type="text" />
-          </div>
+              <div className="lg:hidden flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
+                <Search className="w-5 h-5 text-gray-400 mr-3" />
+                <input
+                  type="text"
+                  placeholder="Search farmers, products, insights..."
+                  className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
+                />
+              </div>
         </div>
 
 
