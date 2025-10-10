@@ -598,14 +598,14 @@ const FarmChain: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16"> 
 
         <div className='md:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
-          {!mainMenu ? <X/> : <Menu/>}
+          {mainMenu ? <X/> : <Menu/>}
           </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           
           {/* Sidebar */}
           <div className="lg:col-span-2">
-            <div className={!mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden lg:block"}>
+            <div className={mainMenu? " bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-28": "hidden lg:block"}>
               <nav className="space-y-2">
                 <TabButton
                   id="dashboard"
