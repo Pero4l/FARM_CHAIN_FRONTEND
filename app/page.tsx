@@ -3,14 +3,6 @@ import FeaturePage from "./components/features/features";
 import PricingPage from "./components/pricing/pricing";
 import TestimonialPage from "./components/testimonial/testimonial";
 import CtaPage from "./components/cta-section/cta";
-import MainNavPage from "./components/main/navbar/page";
-import FarmChain from "./components/main/farmchain";
-
-
-// interface MainNavPageProps {
-//   setMenu: React.Dispatch<React.SetStateAction<boolean>>;
-// }
-
 export default function Home() {
 
 
@@ -26,9 +18,6 @@ export default function Home() {
       <TestimonialPage/>
       <CtaPage/>
       
-
-      {/* <MainNavPage />
-      <FarmChain /> */}
     </div>
   );
 }
