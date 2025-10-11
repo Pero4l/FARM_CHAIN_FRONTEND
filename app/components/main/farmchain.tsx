@@ -606,7 +606,7 @@ const FarmChain: React.FC = () => {
           {mainMenu ? <X/> : <Menu/>}
           </div>
 
-              <div className="lg:hidden flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-96">
+              <div className="lg:hidden flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-full">
                 <Search className="w-5 h-5 text-gray-500 mr-3" />
                 <input
                   type="text"
