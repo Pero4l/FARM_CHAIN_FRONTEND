@@ -818,8 +818,9 @@ const FarmChain: React.FC = () => {
     ))}
   </div>
 </div>
+      )}
 
-            )}
+      {/* Message tab */}
 
             {activeTab === "messages" && (
               <div className="space-y-8">
