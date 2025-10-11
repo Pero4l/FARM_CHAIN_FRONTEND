@@ -590,6 +590,10 @@ const FarmChain: React.FC = () => {
     ],
   };
 
+   React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       
@@ -598,7 +602,7 @@ const FarmChain: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20"> 
 
         <div className="flex gap-3 items-center">
-          <div className='md:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
+          <div className='lg:hidden text-3xl' onClick={()=> setMainMenu(!mainMenu)}>
           {mainMenu ? <X/> : <Menu/>}
           </div>
 
