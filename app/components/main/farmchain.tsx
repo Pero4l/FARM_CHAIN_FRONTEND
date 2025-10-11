@@ -147,9 +147,12 @@ const TabButton: React.FC<{
   </button>
 );
 
+
+// Post tab
+
 const PostCard: React.FC<{ post: Post }> = ({ post }) => (
   <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300">
-    <div className="p-6">
+    <div className="p-3">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-start space-x-4">
           <div className="relative">
@@ -230,7 +233,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
       )}
     </div>
 
-    <div className="border-t border-gray-100 px-6 py-4">
+    <div className="border-t border-gray-100 px-3 py-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-6">
           <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
@@ -683,7 +686,7 @@ const FarmChain: React.FC = () => {
 
 
 
-          {/* Main */}
+          {/* Dashboard */}
           <div className="lg:col-span-7">
             {activeTab === "dashboard" && (
               <div className="space-y-8">
