@@ -173,15 +173,15 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
               </span>
             </div>
 
-            <div className="flex items-center space-x-2 text-sm text-gray-500">
+            <div className="flex items-center space-x-5 text-sm text-gray-500">
               <div className="flex items-center">
-                <MapPin className="w-3 h-3 mr-1" />
+                <MapPin className="w-4 h-4 mr-1 " />
                 {post.location}
               </div>
+            
+              {/* <span>{post.farmSize}</span> */}
               •
-              <span>{post.farmSize}</span>
-              •
-              <span>{post.time}</span>
+              <span> {post.time}</span>
             </div>
           </div>
         </div>
