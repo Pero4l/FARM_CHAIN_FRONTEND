@@ -760,7 +760,7 @@ const FarmChain: React.FC = () => {
             )}
 
             {activeTab === "feed" && (
-             <div className="space-y-8 px-4 sm:px-6 md:px-0">
+             <div className="space-y-8 sm:px-6 md:px-0">
   {/* Post input card */}
   <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6">
     <div className="flex items-start space-x-4">
@@ -793,7 +793,7 @@ const FarmChain: React.FC = () => {
             </button>
           </div>
 
-          <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2 text-sm sm:text-base whitespace-nowrap">
+          <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-12 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2 text-sm sm:text-base whitespace-nowrap">
             <Send className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Share Post</span>
           </button>
