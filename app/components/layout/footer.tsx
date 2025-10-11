@@ -66,6 +66,7 @@ const Footer = () => {
                   <div>
                     <h4 className="font-bold text-lg mb-4">Company</h4>
                     <div className="space-y-3">
+                      <a href="https://hackmd.io/@Pero4l/HJZD_iMall" target="blank" className="block text-gray-400 hover:text-green-400 transition-colors">Documentation</a>
                       <a href="#" className="block text-gray-400 hover:text-green-400 transition-colors">About Us</a>
                       <a href="#" className="block text-gray-400 hover:text-green-400 transition-colors">Careers</a>
                       <a href="#" className="block text-gray-400 hover:text-green-400 transition-colors">Press</a>
