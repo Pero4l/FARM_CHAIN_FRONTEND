@@ -11,7 +11,7 @@ export default function Home() {
       <PricingPage/>
       <TestimonialPage/>
       <CtaPage/>
-      
+       
     </div>
   );
 }
