@@ -1139,6 +1139,11 @@ const FarmChain: React.FC = () => {
               </div>
             )}
 
+
+
+
+            {/* Analytics tab */}
+
             {activeTab === "analytics" && (
               <div className="space-y-8">
                 <div className="bg-gradient-to-br from-purple-600 via-pink-600 to-red-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
