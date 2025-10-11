@@ -906,8 +906,13 @@ const FarmChain: React.FC = () => {
               </div>
             )}
 
+
+            {/* Marketplace tab */}
+
             {activeTab === "marketplace" && (
               <div className="space-y-8">
+
+                {/* market header */}
                 <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/10"></div>
                   <div className="relative z-10">
@@ -935,6 +940,7 @@ const FarmChain: React.FC = () => {
                   </div>
                 </div>
 
+                {/* Market content */}
                 <div className="grid lg:grid-cols-2 gap-8">
                   {marketplaceItems.map((item) => (
                     <div key={item.id} className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105">
@@ -1035,6 +1041,9 @@ const FarmChain: React.FC = () => {
                 </div>
               </div>
             )}
+
+
+            {/* Weather tab */}
 
             {activeTab === "weather" && (
               <div className="space-y-8">
