@@ -650,7 +650,7 @@ const FarmChain: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20">
 
         {/* menu */}
-        <div className="flex gap-3 items-center">
+        <div className="flex gap-3 items-center fixed z-10">
 
           <div
             className="lg:hidden text-3xl"
