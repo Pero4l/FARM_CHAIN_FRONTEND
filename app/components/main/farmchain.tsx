@@ -647,10 +647,10 @@ const FarmChain: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
 
         {/* menu */}
-        <div className="flex gap-3 items-center fixed z-10">
+        <div className="flex gap-3 items-center fixed z-10 ">
 
           <div
             className="lg:hidden text-3xl"
@@ -664,12 +664,12 @@ const FarmChain: React.FC = () => {
             <input
               type="text"
               placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full"
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-9">
           {/* Sidebar */}
           <div className="lg:col-span-2">
             <div
