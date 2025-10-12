@@ -664,7 +664,7 @@ const FarmChain: React.FC = () => {
             <input
               type="text"
               placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full"
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[240px]"
             />
           </div>
         </div>
