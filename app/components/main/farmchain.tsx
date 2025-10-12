@@ -650,7 +650,7 @@ const FarmChain: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
 
         {/* menu */}
-        <div className="flex gap-3 items-center fixed z-10 ">
+        <div className="flex gap-3 items-center fixed z-10  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
 
           <div
             className="lg:hidden text-3xl"
@@ -669,7 +669,7 @@ const FarmChain: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-9">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9 mt-12">
           {/* Sidebar */}
           <div className="lg:col-span-2">
             <div
