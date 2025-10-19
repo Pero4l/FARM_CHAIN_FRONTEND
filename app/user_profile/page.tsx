@@ -3,8 +3,8 @@ import { FaPlus } from "react-icons/fa";
 
 function Profile() {
   return (
-    <div className="flex justify-center mt-22 mb-2 md:mb-16">
-      <div className="bg-white shadow-2xl rounded-4xl p-1 py-4 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg: ">
+    <div className="flex justify-center mt-22 mb-2 md:mb-3 px-1">
+      <div className="bg-white shadow-2xl rounded-2xl p- py-4 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
         <div>
           <div className="relative">
             <Image
@@ -14,8 +14,8 @@ function Profile() {
               height={100}
               className=" rounded-4xl mx-auto  w-[97%] h-[90%] md:h-[230px] object-cover "
             />
-            <div className="absolute top-3 right-4">
-              <button className=" bg-white  flex gap-2 items-center py-1.5 px-4 rounded-full">
+            <div className="absolute top-3 right-4 lg:right-7">
+              <button className=" bg-green-100  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-500">
                 <p className="text-sm">follow</p>
                 <FaPlus size={10} />
               </button>
