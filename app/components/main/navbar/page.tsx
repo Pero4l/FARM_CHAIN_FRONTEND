@@ -5,7 +5,10 @@ import {
   Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X
 } from "lucide-react";
 
+import { useActiveTab } from "@/app/context/ActiveTabContext";
+
 const MainNavPage = () => {
+  const { setActiveTab } = useActiveTab();
   const [notifications, setNotifications] = useState(3);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
@@ -41,19 +44,106 @@ const MainNavPage = () => {
                   🌾
                 </div>
 
-                <div className=''>
-                  
-                  
-                  
+                <div className="flex items-center gap-1 md:hidden relative">
+                  {/* checkbox + peer trick so we don't need extra hooks for mobile menu */}
+                  <input id="mobile-menu-toggle" type="checkbox" className="sr-only peer" />
+
+                  <label
+                  htmlFor="mobile-menu-toggle"
+                  className="flex items-center gap-2 cursor-pointer select-none"
+                  >
+                  <span className="w-5 h-5 text-gray-700">
+                    <Menu className="w-5 h-5 peer-checked:hidden" />
+                    <X className="w-5 h-5 hidden peer-checked:inline" />
+                  </span>
+
                   <div>
-                      <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                    <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     Farm Chain
-                  </h1>
-                  <p className="text-xs hidden md:flex text-gray-500 font-semibold">
-                    Revolutionizing Agriculture Together
-                  </p>
+                    </h1>
+                    {/* <p className="text-xs text-gray-500 font-semibold">Revolutionizing Agriculture Together</p> */}
+                  </div>
+                  </label>
+
+                  {/* mobile dropdown (shows when checkbox is checked) */}
+                  <div className="hidden peer-checked:flex flex-col absolute left-0 top-full mt-2 w-44 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 z-40">
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("dashboard")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <Menu className="w-4 h-4" />
+                    </span>
+                    Dashboard
+                    </label>
+
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("feed")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <Search className="w-4 h-4" />
+                    </span>
+                    Feed
+                    </label>
+
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("marketplace")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <Bookmark className="w-4 h-4" />
+                    </span>
+                    Marketplace
+                    </label>
+
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("messages")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <MessageCircle className="w-4 h-4" />
+                    </span>
+                    Messages
+                    </label>
+
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("weather")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <Bell className="w-4 h-4" />
+                    </span>
+                    Weather
+                    </label>
+
+                    <label
+                    htmlFor="mobile-menu-toggle"
+                    onClick={() => setActiveTab("analytics")}
+                    className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                    >
+                    <span className="w-4 h-4 text-gray-600 mr-2">
+                      <Award className="w-4 h-4" />
+                    </span>
+                    Analytics
+                    </label>
                   </div>
                 </div>
+              </div>
+
+
+               {/* quick menu links (clicking these opens tab in FarmChain) */}
+              <div className="hidden md:flex items-center space-x-2">
+                <button onClick={() => setActiveTab("dashboard")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Dashboard</button>
+                <button onClick={() => setActiveTab("feed")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Feed</button>
+                <button onClick={() => setActiveTab("marketplace")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Marketplace</button>
+                <button onClick={() => setActiveTab("messages")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Messages</button>
+                <button onClick={() => setActiveTab("weather")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Weather</button>
               </div>
 
               <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">

@@ -43,6 +43,8 @@ import {
   Search,
 } from "lucide-react";
 
+import { useActiveTab } from "@/app/context/ActiveTabContext";
+
 type ButtonProps = {
   onClose?: () => void;
 };
@@ -296,7 +298,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
 /* ================= MAIN COMPONENT ================= */
 const FarmChain: React.FC = () => {
-  const [activeTab, setActiveTab] = useState("dashboard");
+  const { activeTab, setActiveTab } = useActiveTab();
   const [notifications, setNotifications] = useState(3);
   const [mainMenu, setMainMenu] = useState(false);
 
@@ -653,7 +655,7 @@ const FarmChain: React.FC = () => {
         <div className="flex gap-3 items-center fixed z-40  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
 
           <div
-            className="lg:hidden text-3xl"
+            className="hidden text-3xl"
             onClick={() => setMainMenu(!mainMenu)}
           >
             {mainMenu ? <X /> : <Menu />}
@@ -664,7 +666,7 @@ const FarmChain: React.FC = () => {
             <input
               type="text"
               placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[240px] md:w-[610px]"
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[256px] md:w-[610px]"
             />
           </div>
         </div>
