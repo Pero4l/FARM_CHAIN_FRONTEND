@@ -3,8 +3,8 @@ import { FaPlus } from "react-icons/fa";
 
 function Profile() {
   return (
-    <div className="m-10 flex justify-center">
-      <div className="bg-white shadow-2xl rounded-4xl p-1 w-full sm:max-w-[20rem] md:h-[26rem] ">
+    <div className="flex justify-center mt-22 mb-2">
+      <div className="bg-white shadow-2xl rounded-4xl p-1 py- w-full sm:max-w-[20rem] md:h-[26rem] ">
         <div>
           <div className="relative">
             <Image
@@ -17,7 +17,7 @@ function Profile() {
             <div className="absolute top-3 right-3">
               <button className=" bg-white  flex gap-2 items-center py-1.5 px-4 rounded-full">
                 <p className="text-sm">follow</p>
-                <FaPlus size={15} />
+                <FaPlus size={10} />
               </button>
             </div>
             <div className=" absolute bottom-0  translate-y-1/2 translate-x-7 w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center">
@@ -30,10 +30,10 @@ function Profile() {
           </div>
           <div className=" mx-6 mt-12">
             <div className="">
-             <p className="font-black text-2xl mb-2"> dev peter </p>
+             <p className="font-black text-2xl mb-2"> Dev peter </p>
              <p className="text-gray-400 text-sm mb-5">product Designer who focuses on simplicity and usability</p>
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center mb-5">
             <div >
               <p className="font-black">72.89K</p>
               <p className="text-gray-400">Likes</p>
