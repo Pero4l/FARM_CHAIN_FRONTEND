@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from 'react';
 import React from 'react'
 import {
-  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X
+  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X,Home,TrendingUp,Store,Cloud,BarChart3
 } from "lucide-react";
 
 import { useActiveTab } from "@/app/context/ActiveTabContext";
@@ -73,7 +73,7 @@ const MainNavPage = () => {
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
-                      <Menu className="w-4 h-4" />
+                      <Home className="w-4 h-4" />
                     </span>
                     Dashboard
                     </label>
@@ -84,7 +84,7 @@ const MainNavPage = () => {
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
-                      <Search className="w-4 h-4" />
+                      <TrendingUp className="w-4 h-4" />
                     </span>
                     Feed
                     </label>
@@ -95,7 +95,7 @@ const MainNavPage = () => {
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
-                      <Bookmark className="w-4 h-4" />
+                      <Store className="w-4 h-4" />
                     </span>
                     Marketplace
                     </label>
@@ -117,7 +117,7 @@ const MainNavPage = () => {
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
-                      <Bell className="w-4 h-4" />
+                      <Cloud className="w-4 h-4" />
                     </span>
                     Weather
                     </label>
@@ -128,7 +128,7 @@ const MainNavPage = () => {
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
-                      <Award className="w-4 h-4" />
+                      <BarChart3 className="w-4 h-4" />
                     </span>
                     Analytics
                     </label>
