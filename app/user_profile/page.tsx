@@ -20,11 +20,11 @@ function Profile() {
                 <FaPlus size={10} />
               </button>
             </div>
-            <div className=" absolute bottom-0  translate-y-1/2 translate-x-7 w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center">
+            <div className=" absolute bottom-0  translate-y-1/2 translate-x-7 w-40 h-40 rounded-full bg-white shadow-md flex items-center justify-center">
               <img
                 src="https://i.pravatar.cc/300"
                 alt="User Avatar"
-                className="w-16 h-16 rounded-full object-cover"
+                className="w-38 rounded-full object-cover"
               />
             </div>
           </div>
