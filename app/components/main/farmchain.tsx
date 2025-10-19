@@ -650,7 +650,7 @@ const FarmChain: React.FC = () => {
       <div className="max-w-[1600px] mx-auto px-6 py-8 mt-16">
 
         {/* menu */}
-        <div className="flex gap-3 items-center fixed z-50  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
+        <div className="flex gap-3 items-center fixed z-40  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
 
           <div
             className="lg:hidden text-3xl"
@@ -664,7 +664,7 @@ const FarmChain: React.FC = () => {
             <input
               type="text"
               placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[240px]"
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[240px] md:w-[610px]"
             />
           </div>
         </div>

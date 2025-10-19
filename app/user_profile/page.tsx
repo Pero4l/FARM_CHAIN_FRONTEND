@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FaPlus } from "react-icons/fa"; 
+import { SlSettings } from "react-icons/sl";
 
 function Profile() {
   return (
@@ -30,8 +31,12 @@ function Profile() {
           </div>
           <div className=" mx-6 mt-12">
             <div className="">
-             <p className="font-black text-2xl mb-2"> Dev peter </p>
-             <p className="text-gray-400 text-sm mb-5">product Designer who focuses on simplicity and usability</p>
+            <div className="flex items-center justify-between">
+               <p className="font-black text-3xl mb-2"> Dev peter </p>
+
+               <p className="text-3xl"><SlSettings/></p>
+            </div>
+             <p className="text-gray-400 text-sm mb-5 mt-2">product Designer who focuses on simplicity and usability</p>
           </div>
           <div className="flex justify-between items-center mb-8 md:mb-">
             <div >
