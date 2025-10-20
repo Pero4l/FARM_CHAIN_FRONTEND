@@ -45,7 +45,7 @@ const MainNavPage = () => {
                   🌾
                 </div>
 
-                <div className="flex items-center gap-1 md:hidden relative">
+                <div className="flex items-center gap-1 relative">
                   {/* checkbox + peer trick so we don't need extra hooks for mobile menu */}
                   <input id="mobile-menu-toggle" type="checkbox" className="sr-only peer" />
 
@@ -135,16 +135,7 @@ const MainNavPage = () => {
                   </div>
                 </div>
               </div>
-
-
-               {/* quick menu links (clicking these opens tab in FarmChain) */}
-              {/* <div className="hidden space-x-2">
-                <button onClick={() => setActiveTab("dashboard")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Dashboard</button>
-                <button onClick={() => setActiveTab("feed")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Feed</button>
-                <button onClick={() => setActiveTab("marketplace")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Marketplace</button>
-                <button onClick={() => setActiveTab("messages")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Messages</button>
-                <button onClick={() => setActiveTab("weather")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Weather</button>
-              </div> */}
+              
 
 
 
@@ -224,7 +215,7 @@ const MainNavPage = () => {
           {/* Hamburger and search */}
 
            <label  htmlFor="mobile-menu-toggle"
-                  className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2">
+                  className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden">
              <span  onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
                     {isMenuOpen ? <X/> : <Menu/>}
                   </span>
@@ -234,7 +225,7 @@ const MainNavPage = () => {
             <input
               type="text"
               placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[256px] md:w-[610px]"
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400  md:w-[610px]"
             />
           </div>
            </label>
