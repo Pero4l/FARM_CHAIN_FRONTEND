@@ -649,27 +649,8 @@ const FarmChain: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20">
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-10">
 
-        {/* menu */}
-        {/* <div className="flex gap-3 items-center fixed z-40  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
-
-          <div
-            className="lg:hidden text-3xl"
-            onClick={() => setMainMenu(!mainMenu)}
-          >
-            {mainMenu ? <X /> : <Menu />}
-          </div>
-
-          <div className="lg:hidden flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-full">
-            <Search className="w-5 h-5 text-gray-500 mr-3" />
-            <input
-              type="text"
-              placeholder="Search farmers, products, insights..."
-              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[256px] md:w-[610px]"
-            />
-          </div>
-        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9">
           {/* Sidebar */}

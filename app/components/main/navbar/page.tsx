@@ -217,7 +217,7 @@ const MainNavPage = () => {
 
           {/* Hamburger and search */}
 
-          <div className='flex'>
+          <div className='flex gap-2'>
             <label
             htmlFor="mobile-menu-toggle"
             className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden"
@@ -237,7 +237,7 @@ const MainNavPage = () => {
           </label>
 
           {/* place the user avatar outside the mobile label so clicking it doesn't toggle the mobile menu */}
-          <div className="relative md:hidden" ref={menuRef}>
+          <div className="relative md:hidden bottom-2" ref={menuRef}>
             <div
               onClick={() => setUserOption(prev => !prev)}
               className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
@@ -246,7 +246,7 @@ const MainNavPage = () => {
             </div>
 
             {userOption && (
-              <div className="absolute right-0 top-12 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
+              <div className="absolute right-0 top-14 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
                 <div className="p-3 space-y-1">
                   <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                     <User className="w-4 h-4 text-gray-600" />
