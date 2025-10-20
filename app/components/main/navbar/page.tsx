@@ -53,9 +53,9 @@ const MainNavPage = () => {
                   htmlFor="mobile-menu-toggle"
                   className="flex items-center gap-2 cursor-pointer select-none"
                   >
-                  <span onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
+                  {/* <span onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
                     {isMenuOpen ? <X/> : <Menu/>}
-                  </span>
+                  </span> */}
 
                   <div>
                     <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -216,9 +216,18 @@ const MainNavPage = () => {
               </div>
               {/* END USER MENU */}
             </div>
-            
+ 
           </div>
+
+          {/* Hamburger and search */}
+
+           <label  htmlFor="mobile-menu-toggle"
+                  className="flex items-center gap-2 cursor-pointer select-none">
+             <span  onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
+                    {isMenuOpen ? <X/> : <Menu/>}
+                  </span>
              <div className="lg:hidden flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-full">
+              
             <Search className="w-5 h-5 text-gray-500 mr-3" />
             <input
               type="text"
@@ -226,6 +235,7 @@ const MainNavPage = () => {
               className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[256px] md:w-[610px]"
             />
           </div>
+           </label>
         </div>
       </header>
     </>
@@ -233,3 +243,4 @@ const MainNavPage = () => {
 }
 
 export default MainNavPage;
+
