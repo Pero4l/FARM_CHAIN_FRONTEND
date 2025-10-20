@@ -649,8 +649,8 @@ const FarmChain: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-10">
-
+      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20 lg:mt-10">
+        
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9">
           {/* Sidebar */}
@@ -750,7 +750,7 @@ const FarmChain: React.FC = () => {
                       className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
                       <div className="flex items-center justify-between mb-4">
-                        <div className="p-3 rounded-xl bg-green-100 text-green-600">
+                        <div className="p-1 lg:p-3 rounded-xl bg-green-100 text-green-600">
                           {insight.icon}
                         </div>
                         <span className="text-xs font-bold uppercase tracking-wider text-green-600">
@@ -767,7 +767,7 @@ const FarmChain: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <Clock className="w-7 h-7 mr-3 text-green-500" />
                     Recent Activity
