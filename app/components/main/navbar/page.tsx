@@ -138,13 +138,13 @@ const MainNavPage = () => {
 
 
                {/* quick menu links (clicking these opens tab in FarmChain) */}
-              <div className="hidden space-x-2">
+              {/* <div className="hidden space-x-2">
                 <button onClick={() => setActiveTab("dashboard")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Dashboard</button>
                 <button onClick={() => setActiveTab("feed")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Feed</button>
                 <button onClick={() => setActiveTab("marketplace")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Marketplace</button>
                 <button onClick={() => setActiveTab("messages")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Messages</button>
                 <button onClick={() => setActiveTab("weather")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Weather</button>
-              </div>
+              </div> */}
 
               <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
                 <Search className="w-5 h-5 text-gray-400 mr-3" />
