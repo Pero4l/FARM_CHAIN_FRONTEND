@@ -655,7 +655,7 @@ const FarmChain: React.FC = () => {
         <div className="flex gap-3 items-center fixed z-40  bg-white shadow-2xl rounded-md p-1 py-2 lg:hidden">
 
           <div
-            className="hidden text-3xl"
+            className="lg:hidden text-3xl"
             onClick={() => setMainMenu(!mainMenu)}
           >
             {mainMenu ? <X /> : <Menu />}

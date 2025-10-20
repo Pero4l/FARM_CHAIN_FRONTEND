@@ -12,6 +12,7 @@ const MainNavPage = () => {
   const [notifications, setNotifications] = useState(3);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
  
 
  const menuRef = useRef<HTMLDivElement | null>(null);
@@ -52,9 +53,8 @@ const MainNavPage = () => {
                   htmlFor="mobile-menu-toggle"
                   className="flex items-center gap-2 cursor-pointer select-none"
                   >
-                  <span className="w-5 h-5 text-gray-700">
-                    <Menu className="w-5 h-5 peer-checked:hidden" />
-                    <X className="w-5 h-5 hidden peer-checked:inline" />
+                  <span onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
+                    {isMenuOpen ? <X/> : <Menu/>}
                   </span>
 
                   <div>
@@ -138,7 +138,7 @@ const MainNavPage = () => {
 
 
                {/* quick menu links (clicking these opens tab in FarmChain) */}
-              <div className="hidden md:flex items-center space-x-2">
+              <div className="hidden space-x-2">
                 <button onClick={() => setActiveTab("dashboard")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Dashboard</button>
                 <button onClick={() => setActiveTab("feed")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Feed</button>
                 <button onClick={() => setActiveTab("marketplace")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Marketplace</button>
