@@ -646,6 +646,8 @@ const FarmChain: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [activeTab]);
 
+  
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
