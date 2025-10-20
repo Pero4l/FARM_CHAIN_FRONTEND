@@ -66,7 +66,7 @@ const MainNavPage = () => {
                   </label>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
-                  <div className="hidden peer-checked:flex flex-col absolute left-0 top-full mt-17 w-44 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 z-40">
+                  <div className="hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40">
                     <label
                     htmlFor="mobile-menu-toggle"
                     onClick={() => setActiveTab("dashboard")}
