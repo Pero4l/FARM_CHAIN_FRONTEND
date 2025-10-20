@@ -799,6 +799,8 @@ const FarmChain: React.FC = () => {
               </div>
             )}
 
+            {/* Feed */}
+
             {activeTab === "feed" && (
               <div className="space-y-8 sm:px-6 md:px-0">
                 {/* Post input card */}

@@ -53,9 +53,6 @@ const MainNavPage = () => {
                   htmlFor="mobile-menu-toggle"
                   className="flex items-center gap-2 cursor-pointer select-none"
                   >
-                  {/* <span onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
-                    {isMenuOpen ? <X/> : <Menu/>}
-                  </span> */}
 
                   <div>
                     <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
@@ -66,10 +63,10 @@ const MainNavPage = () => {
                   </label>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
-                  <div className="hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40">
+                    <div className="hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40">
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("dashboard")}
+                    onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -80,7 +77,7 @@ const MainNavPage = () => {
 
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("feed")}
+                    onClick={() => { setActiveTab("feed"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -91,7 +88,7 @@ const MainNavPage = () => {
 
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("marketplace")}
+                    onClick={() => { setActiveTab("marketplace"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -102,7 +99,7 @@ const MainNavPage = () => {
 
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("messages")}
+                    onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -113,7 +110,7 @@ const MainNavPage = () => {
 
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("weather")}
+                    onClick={() => { setActiveTab("weather"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -124,7 +121,7 @@ const MainNavPage = () => {
 
                     <label
                     htmlFor="mobile-menu-toggle"
-                    onClick={() => setActiveTab("analytics")}
+                    onClick={() => { setActiveTab("analytics"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                     <span className="w-4 h-4 text-gray-600 mr-2">
@@ -132,7 +129,7 @@ const MainNavPage = () => {
                     </span>
                     Analytics
                     </label>
-                  </div>
+                    </div>
                 </div>
               </div>
               
@@ -215,7 +212,7 @@ const MainNavPage = () => {
  
           </div>
 
-          {/* Hamburger and search */}
+          {/* Hamburger, user profile and search */}
 
           <div className='flex gap-2'>
             <label
