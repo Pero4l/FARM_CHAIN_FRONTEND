@@ -175,9 +175,11 @@ const MainNavPage = () => {
                 )}
               </button>
 
-              <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Bookmarks">
+              {/* <button className="p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Bookmarks">
                 <Bookmark className="w-6 h-6 text-gray-700" />
-              </button>
+              </button> */}
+
+              
 
               {/* USER MENU */}
               <div className="relative" ref={menuRef}>
@@ -214,6 +216,15 @@ const MainNavPage = () => {
               </div>
               {/* END USER MENU */}
             </div>
+            
+          </div>
+             <div className="lg:hidden flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-full">
+            <Search className="w-5 h-5 text-gray-500 mr-3" />
+            <input
+              type="text"
+              placeholder="Search farmers, products, insights..."
+              className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-[256px] md:w-[610px]"
+            />
           </div>
         </div>
       </header>
