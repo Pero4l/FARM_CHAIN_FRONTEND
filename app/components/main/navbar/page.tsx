@@ -66,7 +66,7 @@ const MainNavPage = () => {
                   </label>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
-                  <div className="hidden peer-checked:flex flex-col absolute left-0 top-full mt-2 w-44 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 z-40">
+                  <div className="hidden peer-checked:flex flex-col absolute left-0 top-full mt-17 w-44 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 z-40">
                     <label
                     htmlFor="mobile-menu-toggle"
                     onClick={() => setActiveTab("dashboard")}
@@ -146,6 +146,8 @@ const MainNavPage = () => {
                 <button onClick={() => setActiveTab("weather")} className="px-3 py-1 rounded-md text-sm hover:bg-gray-100">Weather</button>
               </div> */}
 
+
+
               <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
                 <Search className="w-5 h-5 text-gray-400 mr-3" />
                 <input
@@ -222,7 +224,7 @@ const MainNavPage = () => {
           {/* Hamburger and search */}
 
            <label  htmlFor="mobile-menu-toggle"
-                  className="flex items-center gap-2 cursor-pointer select-none">
+                  className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2">
              <span  onClick={()=> setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
                     {isMenuOpen ? <X/> : <Menu/>}
                   </span>
