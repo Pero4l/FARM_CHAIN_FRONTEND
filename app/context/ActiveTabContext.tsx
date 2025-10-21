@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 type ActiveTabContextType = {
   activeTab: string;
@@ -14,31 +14,7 @@ const ActiveTabContext = createContext<ActiveTabContextType | undefined>(
 export const ActiveTabProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  // Read from localStorage synchronously on first client render to avoid flashing back to default
-  const [activeTab, setActiveTabState] = useState<string>(() => {
-    try {
-      return typeof window !== "undefined"
-        ? localStorage.getItem("activeTab") ?? "dashboard"
-        : "dashboard";
-    } catch {
-      return "dashboard";
-    }
-  });
-
-  const setActiveTab = (tab: string) => {
-    setActiveTabState(tab);
-    try {
-      localStorage.setItem("activeTab", tab);
-    } catch {}
-  };
-
-  // optional: always scroll to top when tab changes
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [activeTab]);
-
+  const [activeTab, setActiveTab] = useState<string>("dashboard");
   return (
     <ActiveTabContext.Provider value={{ activeTab, setActiveTab }}>
       {children}
