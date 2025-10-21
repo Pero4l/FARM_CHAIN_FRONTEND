@@ -146,6 +146,8 @@ const MainNavPage = () => {
               </div>
             </div>
 
+            {/* nav button */}
+
             <div className="flex items-center lg:space-x-4">
 
                     <button className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
@@ -186,7 +188,9 @@ const MainNavPage = () => {
                 {userOption && (
                   <div className="absolute right-0 top-12 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
                     <div className="p-3 space-y-1">
-                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <button
+                        onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
+                        className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <User className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Profile</span>
                       </button>
@@ -245,7 +249,10 @@ const MainNavPage = () => {
             {userOption && (
               <div className="absolute right-0 top-14 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
                 <div className="p-3 space-y-1">
-                  <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                  <button
+                    onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
+                    className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left"
+                  >
                     <User className="w-4 h-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">Profile</span>
                   </button>
