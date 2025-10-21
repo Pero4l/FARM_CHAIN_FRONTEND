@@ -188,25 +188,29 @@ const MainNavPage = () => {
                 {userOption && (
                   <div className="absolute right-0 top-12 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
                     <div className="p-3 space-y-1">
+
                       <button
-                        onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
                         className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <User className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Profile</span>
                       </button>
+
                       <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <Award className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Achievements</span>
                       </button>
+
                       <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <Settings className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Settings</span>
                       </button>
+
                       <hr className="my-2" />
                       <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
                         <LogOut className="w-4 h-4 text-red-600" />
                         <span className="text-sm font-medium text-red-600">Logout</span>
                       </button>
+                      
                     </div>
                   </div>
                 )}
