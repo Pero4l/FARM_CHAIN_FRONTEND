@@ -1,5 +1,6 @@
 'use client'
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import {
   Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X,Home,TrendingUp,Store,Cloud,BarChart3,PlusCircle
@@ -8,6 +9,7 @@ import {
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 
 const MainNavPage = () => {
+  const router = useRouter();
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
   const [notifications, setNotifications] = useState(3);
@@ -191,7 +193,7 @@ const MainNavPage = () => {
                     <div className="p-3 space-y-1">
 
                       <button
-                        onClick={() => { setActiveTab("profile"); setUserOption(false); }}
+                        onClick={() => { setActiveTab("profile"); setUserOption(false); router.push('/profile'); }}
                         className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <User className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Profile</span>
