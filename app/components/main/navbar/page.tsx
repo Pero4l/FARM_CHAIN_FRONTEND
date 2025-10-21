@@ -228,7 +228,7 @@ const MainNavPage = () => {
               <input
                 type="text"
                 placeholder="Search farmers, products, insights..."
-                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 md:w-[610px]"
+                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[610px]"
               />
             </div>
           </label>
