@@ -223,12 +223,12 @@ const MainNavPage = () => {
               {isMenuOpen ? <X /> : <Menu />}
             </span>
 
-            <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-4 py-2.5 w-full">
-              <Search className="w-5 h-5 text-gray-500 mr-3" />
+            <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-6 py-2.5 w-full">
+              <Search className="w-5 h-5 text-gray-500 mr-3 relative right-2" />
               <input
                 type="text"
                 placeholder="Search farmers, products, insights..."
-                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[610px]"
+                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[670px]"
               />
             </div>
           </label>
