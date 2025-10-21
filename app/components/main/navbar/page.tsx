@@ -2,13 +2,14 @@
 import { useState, useRef, useEffect } from 'react';
 import React from 'react'
 import {
-  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X,Home,TrendingUp,Store,Cloud,BarChart3,CirclePlus
+  Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X,Home,TrendingUp,Store,Cloud,BarChart3,PlusCircle
 } from "lucide-react";
 
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 
 const MainNavPage = () => {
-  const { setActiveTab } = useActiveTab();
+  const activeTabContext = useActiveTab();
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
   const [notifications, setNotifications] = useState(3);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
@@ -150,8 +151,8 @@ const MainNavPage = () => {
 
             <div className="flex items-center lg:space-x-4">
 
-                    <button className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
-                <CirclePlus className="w-6 h-6 text-gray-700" />
+              <button className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
+                <PlusCircle className="w-6 h-6 text-gray-700" />
               </button>
 
 
@@ -182,7 +183,7 @@ const MainNavPage = () => {
                   onClick={() => setUserOption(prev => !prev)}
                   className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
                 >
-                  U
+                  UP
                 </div>
 
                 {userOption && (
@@ -190,6 +191,7 @@ const MainNavPage = () => {
                     <div className="p-3 space-y-1">
 
                       <button
+                        onClick={() => { setActiveTab("profile"); setUserOption(false); }}
                         className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <User className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Profile</span>
@@ -210,7 +212,7 @@ const MainNavPage = () => {
                         <LogOut className="w-4 h-4 text-red-600" />
                         <span className="text-sm font-medium text-red-600">Logout</span>
                       </button>
-                      
+
                     </div>
                   </div>
                 )}
@@ -232,11 +234,11 @@ const MainNavPage = () => {
             </span>
 
             <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-6 py-2.5 w-full">
-              <Search className="w-5 h-5 text-gray-500 mr-3 relative right-2" />
+              <Search className="w-5 h-5 text-gray-500 mr-3" />
               <input
                 type="text"
                 placeholder="Search farmers, products, insights..."
-                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[670px]"
+                className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[630px]"
               />
             </div>
           </label>

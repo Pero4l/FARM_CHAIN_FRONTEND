@@ -5,7 +5,7 @@ import { SlSettings } from "react-icons/sl";
 function Profile() {
   return (
     <div className="flex justify-center mt-22 mb-2 md:mb-3 px-1">
-      <div className="bg-white shadow-2xl rounded-2xl p- py-4 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
+      <div className="bg-white shadow-2xl rounded-2xl w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
         <div>
           <div className="relative">
             <Image

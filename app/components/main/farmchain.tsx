@@ -201,7 +201,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
           </div>
 
           <div className="flex-1">
-            <div className="flex items-center space-x-2 mb-1">
+            <div className="flex items-center space-x-7 mb-1">
               <h3 className="font-bold text-lg text-gray-900">{post.farmer}</h3>
               <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
                 {post.category === "commercial"
@@ -653,7 +653,7 @@ const FarmChain: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
-      <div className="max-w-[1600px] mx-auto px-6 py-8 mt-20 lg:mt-10">
+      <div className="max-w-[1600px] mx-auto px-2 py-8 mt-20 lg:mt-10">
         
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9">
@@ -800,8 +800,8 @@ const FarmChain: React.FC = () => {
             )}
 
             {activeTab === "profile" && (
-              <div className="flex justify-center lg:mt-22 mb-2 md:mb-3 px-1">
-                    <div className="bg-white shadow-2xl rounded-2xl p- py-4 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
+              <div className="flex justify-center lg:mt-2 mb-2 md:mb-3 px-">
+                    <div className="bg-white shadow-2xl rounded-2xl p- py-3 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
                       <div>
                         <div className="relative">
                           <Image
