@@ -1205,6 +1205,8 @@ const FarmChain: React.FC = () => {
                   </div>
                 </div>
 
+                {/* search bar */}
+
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
                   <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <Calendar className="w-7 h-7 mr-3 text-green-500" />
