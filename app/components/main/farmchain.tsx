@@ -1208,7 +1208,7 @@ const FarmChain: React.FC = () => {
                 {/* search bar */}
 
                 <div>
-                  <input className="bg-green-200 rounded-md p-2" type="text" />
+                  <input className="bg-green-200 rounded-md p-2 outline-none " placeholder="search a location" type="text" />
                 </div>
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
