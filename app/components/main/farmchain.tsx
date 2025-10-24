@@ -1211,7 +1211,7 @@ const FarmChain: React.FC = () => {
                     type="text"
                     aria-label="Search location"
                     placeholder="Search a location"
-                    className="w-full bg-gray-200 rounded-2xl py-3 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                    className="w-full bg-gray-200 rounded-2xl py-4 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
                   />
                   <button
                     type="button"
