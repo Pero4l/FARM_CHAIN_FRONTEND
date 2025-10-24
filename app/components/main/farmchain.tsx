@@ -1208,7 +1208,7 @@ const FarmChain: React.FC = () => {
                 {/* search bar */}
 
                 <div>
-                  <input type="text" />
+                  <input className="" type="text" />
                 </div>
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
