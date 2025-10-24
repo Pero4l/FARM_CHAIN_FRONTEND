@@ -38,8 +38,6 @@ import {
   Clock,
   Eye,
   PieChart,
-  Menu,
-  X,
   Search,
 } from "lucide-react";
 import Image from "next/image";
@@ -1210,6 +1208,7 @@ const FarmChain: React.FC = () => {
                 <div className="">
                   <input className="bg-gray-200 rounded-md p-4 px-10 w-full outline-none" placeholder="Search a location" type="text" />
                   <MapPin className="relative left-2 bottom-10 text-gray-500"/>
+                  <Search className="relative left-[300px] bottom-10 text-gray-500"/>
                 </div>
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
