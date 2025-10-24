@@ -1205,10 +1205,22 @@ const FarmChain: React.FC = () => {
 
                 {/* search bar */}
 
-                <div className="">
-                  <input className="bg-gray-200 rounded-2xl p-4 px-10 w-full outline-none" placeholder="Search a location" type="text" />
-                  <MapPin className="relative left-2 bottom-10 text-gray-500"/>
-                  <Search className="relative left-[310px] lg:left-[860px] bottom-16 text-gray-500"/>
+                <div className="relative">
+                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+                  <input
+                    type="text"
+                    aria-label="Search location"
+                    placeholder="Search a location"
+                    className="w-full bg-gray-200 rounded-2xl py-3 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 text-white rounded-xl px-3 py-2 sm:px-4 sm:py-2 flex items-center gap-2"
+                    aria-label="Search"
+                  >
+                    <Search className="w-4 h-4" />
+                    <span className="hidden sm:inline text-sm font-semibold">Search</span>
+                  </button>
                 </div>
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
