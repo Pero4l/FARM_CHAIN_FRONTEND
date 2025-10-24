@@ -1206,9 +1206,9 @@ const FarmChain: React.FC = () => {
                 {/* search bar */}
 
                 <div className="">
-                  <input className="bg-gray-200 rounded-md p-4 px-10 w-full outline-none" placeholder="Search a location" type="text" />
+                  <input className="bg-gray-200 rounded-2xl p-4 px-10 w-full outline-none" placeholder="Search a location" type="text" />
                   <MapPin className="relative left-2 bottom-10 text-gray-500"/>
-                  <Search className="relative left-[310px] bottom-16 text-gray-500"/>
+                  <Search className="relative left-[310px] lg:left-[860px] bottom-16 text-gray-500"/>
                 </div>
 
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
