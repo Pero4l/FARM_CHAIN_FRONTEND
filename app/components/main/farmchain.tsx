@@ -45,6 +45,7 @@ import { FaPlus } from "react-icons/fa";
 import { SlSettings } from "react-icons/sl";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 import WeatherPage from "../tabs/weather/page";
+import Dashboard from "../tabs/dashboard/page";
 
 // type ButtonProps = {
 //   onClose?: () => void;
@@ -723,79 +724,7 @@ const FarmChain: React.FC = () => {
           {/* Dashboard */}
           <div className="lg:col-span-7">
             {activeTab === "dashboard" && (
-              <div className="space-y-8">
-                <div className="bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h2 className="text-3xl font-black mb-2 flex items-center">
-                          <Zap className="w-8 h-8 mr-3" />
-                          Welcome back, Farmer! 🌱
-                        </h2>
-                        <p className="text-green-100 text-lg">
-                          Your farm is thriving. Here's what's happening today.
-                        </p>
-                      </div>
-                      <div className="text-7xl opacity-20">🚜</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                  {farmingInsights.map((insight, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="p-1 lg:p-3 rounded-xl bg-green-100 text-green-600">
-                          {insight.icon}
-                        </div>
-                        <span className="text-xs font-bold uppercase tracking-wider text-green-600">
-                          {insight.status.toUpperCase()}
-                        </span>
-                      </div>
-                      <h3 className="text-gray-600 text-sm font-medium mb-2">
-                        {insight.title}
-                      </h3>
-                      <p className="text-2xl font-black text-gray-900">
-                        {insight.value}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-5">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                    <Clock className="w-7 h-7 mr-3 text-green-500" />
-                    Recent Activity
-                  </h3>
-                  <div className="space-y-4">
-                    {posts.slice(0, 3).map((post) => (
-                      <div
-                        key={post.id}
-                        className="flex items-center space-x-4 py-4 hover:bg-gray-50 rounded-2xl transition-colors cursor-pointer"
-                      >
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                          {post.avatar}
-                        </div>
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-gray-900">
-                            {post.farmer}
-                          </h4>
-                          <p className="text-sm text-gray-600">
-                            {post.content.substring(0, 60)}...
-                          </p>
-                        </div>
-                        <span className="text-sm text-gray-500">
-                          {post.time}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <Dashboard/>
             )}
 
             {activeTab === "profile" && (
