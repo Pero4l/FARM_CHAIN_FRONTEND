@@ -40,8 +40,9 @@ import {
   PieChart,
   Search,
 } from "lucide-react";
-import Image from "next/image";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
+
+// TABS
 import WeatherPage from "../tabs/weather/page";
 import Dashboard from "../tabs/dashboard/page";
 import Profile from "../tabs/profile/page"
