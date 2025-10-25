@@ -1182,6 +1182,7 @@ const FarmChain: React.FC = () => {
               <WeatherPage/>
             )}
 
+
             {/* Analytics tab */}
 
             {activeTab === "analytics" && (
