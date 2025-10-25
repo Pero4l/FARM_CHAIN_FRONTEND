@@ -134,12 +134,6 @@ type WeatherData = {
   alerts: { type: string; message: string; severity: string }[];
 };
 
-type Insight = {
-  title: string;
-  value: string;
-  status: string;
-  icon: React.ReactNode;
-};
 
 type AnalyticsData = {
   farmPerformance: {
@@ -576,33 +570,6 @@ const FarmChain: React.FC = () => {
       },
     ],
   };
-
-  const farmingInsights: Insight[] = [
-    {
-      title: "Soil Moisture",
-      value: "72%",
-      status: "optimal",
-      icon: <Droplets className="w-6 h-6" />,
-    },
-    {
-      title: "Growing Days",
-      value: "145",
-      status: "good",
-      icon: <Calendar className="w-6 h-6" />,
-    },
-    {
-      title: "Market Price",
-      value: "+12%",
-      status: "up",
-      icon: <TrendingUp className="w-6 h-6" />,
-    },
-    {
-      title: "Yield Prediction",
-      value: "94%",
-      status: "excellent",
-      icon: <Target className="w-6 h-6" />,
-    },
-  ];
 
   const analyticsData: AnalyticsData = {
     farmPerformance: [
