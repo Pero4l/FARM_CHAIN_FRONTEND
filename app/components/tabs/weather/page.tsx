@@ -311,7 +311,7 @@ const getWeatherIcon = (condition: string): React.ReactElement => {
 
 const WeatherPage: React.FC = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [city, setCity] = useState<string>("London");
+  const [city, setCity] = useState<string>("Nigeria");
   const [searchInput, setSearchInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
