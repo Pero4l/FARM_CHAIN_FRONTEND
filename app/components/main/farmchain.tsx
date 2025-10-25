@@ -44,6 +44,7 @@ import Image from "next/image";
 import { FaPlus } from "react-icons/fa"; 
 import { SlSettings } from "react-icons/sl";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
+import WeatherPage from "../tabs/weather/page";
 
 type ButtonProps = {
   onClose?: () => void;
