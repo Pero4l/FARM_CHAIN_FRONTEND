@@ -46,9 +46,9 @@ import { SlSettings } from "react-icons/sl";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 import WeatherPage from "../tabs/weather/page";
 
-type ButtonProps = {
-  onClose?: () => void;
-};
+// type ButtonProps = {
+//   onClose?: () => void;
+// };
 
 /* ================= TYPES ================= */
 type Post = {
@@ -1179,117 +1179,7 @@ const FarmChain: React.FC = () => {
             {/* Weather tab */}
 
             {activeTab === "weather" && (
-              <div className="space-y-8">
-                <div className="bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-500 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/10"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h2 className="text-3xl font-black mb-2">
-                          Weather Hub
-                        </h2>
-                        <p className="text-blue-100 text-lg">
-                          Advanced weather insights for smart farming
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-5xl font-black mb-2">
-                          {weatherData.current.temp}
-                        </div>
-                        <p className="text-blue-200">
-                          {weatherData.current.condition}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* search bar */}
-
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
-                  <input
-                    type="text"
-                    aria-label="Search location"
-                    placeholder="Search a location"
-                    className="w-full bg-gray-200 rounded-2xl py-4 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
-                  />
-                  <button
-                    type="button"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-green-600 hover:bg-green-700 text-white rounded-xl px-3 py-2 sm:px-4 sm:py-2 flex items-center gap-2"
-                    aria-label="Search"
-                  >
-                    <Search className="w-4 h-4" />
-                    <span className="hidden sm:inline text-sm font-semibold">Search</span>
-                  </button>
-                </div>
-
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                    <Calendar className="w-7 h-7 mr-3 text-green-500" />
-                    3-Day Forecast
-                  </h3>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    {weatherData.forecast.map((day, i) => (
-                      <div
-                        key={i}
-                        className="text-center p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:scale-105"
-                      >
-                        <div className="font-bold text-lg text-gray-900 mb-3">
-                          {day.day}
-                        </div>
-                        <div className="flex justify-center mb-4">
-                          {day.icon}
-                        </div>
-                        <div className="text-sm text-gray-600 mb-2">
-                          {day.condition}
-                        </div>
-                        <div className="font-bold text-lg text-gray-900 mb-2">
-                          <span className="text-xl">{day.high}</span> /{" "}
-                          <span className="text-gray-600">{day.low}</span>
-                        </div>
-                        <div className="text-xs text-blue-600 font-semibold">
-                          {day.precipitation} rain
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {weatherData.alerts.length > 0 && (
-                  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-                      <AlertCircle className="w-7 h-7 mr-3 text-orange-500" />
-                      Weather Alerts
-                    </h3>
-                    <div className="space-y-4">
-                      {weatherData.alerts.map((alert, i) => (
-                        <div
-                          key={i}
-                          className={`p-4 rounded-2xl border-l-4 ${
-                            alert.severity === "moderate"
-                              ? "bg-orange-50 border-orange-500"
-                              : "bg-blue-50 border-blue-500"
-                          }`}
-                        >
-                          <div className="flex items-center space-x-3">
-                            <AlertCircle
-                              className={`w-5 h-5 ${
-                                alert.severity === "moderate"
-                                  ? "text-orange-500"
-                                  : "text-blue-500"
-                              }`}
-                            />
-                            <p className="font-semibold text-gray-900">
-                              {alert.message}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
+              <WeatherPage/>
             )}
 
             {/* Analytics tab */}
