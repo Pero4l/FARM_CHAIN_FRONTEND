@@ -41,8 +41,6 @@ import {
   Search,
 } from "lucide-react";
 import Image from "next/image";
-import { FaPlus } from "react-icons/fa"; 
-import { SlSettings } from "react-icons/sl";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 import WeatherPage from "../tabs/weather/page";
 import Dashboard from "../tabs/dashboard/page";
@@ -727,6 +725,8 @@ const FarmChain: React.FC = () => {
             <Dashboard/>
             )}
 
+
+            {/* profile */}
             {activeTab === "profile" && (
               <div className="flex justify-center lg:mt-2 mb-2 md:mb-3 px-">
                     <div className="bg-white shadow-2xl rounded-2xl p- py-3 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px] ">
