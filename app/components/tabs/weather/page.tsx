@@ -264,7 +264,7 @@ import {
   CloudSnow,
 } from "lucide-react";
 
-const OPENWEATHER_API_KEY: string = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || "";
+const OPENWEATHER_API_KEY: string = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || "bbc866c78ccd689ab15a1de21e627ba0";
 
 interface ForecastDay {
   day: string;
