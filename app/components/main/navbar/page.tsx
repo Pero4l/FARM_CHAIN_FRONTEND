@@ -48,20 +48,17 @@ const MainNavPage = () => {
 
                 <div className="flex items-center gap-1 relative">
                   {/* checkbox + peer trick so we don't need extra hooks for mobile menu */}
-                  <input id="mobile-menu-toggle" type="checkbox" className="sr-only peer" />
+                  <input id="mobile-menu-toggle" type="checkbox" className="sr-only peer md:hidden" />
 
-                  <label
-                  htmlFor="mobile-menu-toggle"
-                  className="flex items-center gap-2 cursor-pointer select-none"
-                  >
-
+                  {/* Logo is no longer wrapped by the label so clicks on it won't toggle the mobile menu */}
+                  <div className="flex items-center gap-2">
                   <div>
                     <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                     Farm Chain
                     </h1>
                     <p className="hidden lg:flex text-xs text-gray-500 font-semibold">Revolutionizing Agriculture Together</p>
                   </div>
-                  </label>
+                  </div>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
                     <div className="hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40">
@@ -224,7 +221,7 @@ const MainNavPage = () => {
 
           {/* Hamburger, user profile and search */}
 
-          <div className='flex gap-2'>
+          <div className='lg:hidden flex gap-2'>
             <label
             htmlFor="mobile-menu-toggle"
             className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden"
