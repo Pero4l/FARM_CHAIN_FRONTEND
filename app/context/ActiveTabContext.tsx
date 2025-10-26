@@ -19,7 +19,7 @@ export const ActiveTabProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   // DO NOT read localStorage during render — use a stable default so server & client markup match
   const [activeTab, setActiveTabState] = useState<string>(() => {
-    return "dashboard";
+    return "";
   });
 
   // read persisted value after mount (client-only) to avoid hydration mismatch
