@@ -667,7 +667,6 @@ const FarmChain: React.FC = () => {
             )}
 
             {/* Feed */}
-
             {activeTab === "feed" && (
               <div className="space-y-8 sm:px-6 md:px-0">
                 {/* Post input card */}
@@ -1005,6 +1004,7 @@ const FarmChain: React.FC = () => {
           {/* Right Sidebar */}
           <div className="lg:col-span-3">
             <div className="space-y-6 sticky top-28">
+              {/* weather */}
               <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl shadow-xl text-white p-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative z-10">
@@ -1038,6 +1038,8 @@ const FarmChain: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+              {/* trending now */}
 
               <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
                 <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
@@ -1087,6 +1089,8 @@ const FarmChain: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {/* market price */}
 
               <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
                 <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
@@ -1142,6 +1146,8 @@ const FarmChain: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {/* online users */}
 
               <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
                 <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
