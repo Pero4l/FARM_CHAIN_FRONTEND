@@ -125,13 +125,13 @@ const WeatherSide = () => {
                 <div className="absolute inset-0 bg-black/10"></div>
                 <div className="relative z-10">
 
-                 <div>
+                 <div className='flex items-center justify-between'>
                    <h3 className="font-bold text-lg mb-4 flex items-center">
                     <Thermometer className="w-5 h-5 mr-2" />
                     Weather Now
                   </h3>
 
-                  <h1>Location: <span>Abuja</span></h1>
+                  <h1 className='text-sm'>Location: <span>Abuja</span></h1>
                  </div>
 
                   <div className="text-center">
