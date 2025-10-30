@@ -9,7 +9,103 @@ import {
   CheckCircle,
 } from "lucide-react";
 
+type MarketplaceItem = {
+  id: number;
+  title: string;
+  quantity?: string;
+  price: string;
+  pricePerUnit?: string;
+  seller: string;
+  location: string;
+  rating: number;
+  image: string;
+  certified?: string;
+  harvestDate?: string;
+  category: string;
+  condition?: string;
+  shipping?: string;
+  specifications?: string;
+  availability?: string;
+  verified?: boolean;
+  insurance?: string;
+  varieties?: string;
+  readyDate?: string;
+  organic?: boolean;
+  guarantee?: string;
+  flowerSource?: string;
+  tested?: string;
+  wholesale?: boolean;
+};
+
 const MarketPage = () => {
+
+     const marketplaceItems: MarketplaceItem[] = [
+    {
+      id: 1,
+      title: "Premium Organic Wheat",
+      quantity: "5,000 lbs",
+      price: "$2,450",
+      pricePerUnit: "$0.49/lb",
+      seller: "Sunset Organic Farm",
+      location: "Nebraska, USA",
+      rating: 4.9,
+      image: "bg-gradient-to-br from-yellow-400 via-orange-400 to-red-400",
+      certified: "USDA Organic",
+      harvestDate: "This week",
+      category: "grain",
+      condition: "Fresh",
+      shipping: "Available",
+    },
+    {
+      id: 2,
+      title: "John Deere 5075E Tractor",
+      condition: "Excellent (2019)",
+      price: "$850/week",
+      pricePerUnit: "$120/day",
+      seller: "Equipment Solutions Co-op",
+      location: "Iowa, USA",
+      rating: 4.8,
+      image: "bg-gradient-to-br from-green-600 via-green-500 to-emerald-600",
+      specifications: "75 HP, 4WD, 450 hours",
+      availability: "Next week",
+      category: "equipment",
+      verified: true,
+      insurance: "Included",
+    },
+    {
+      id: 3,
+      title: "Heirloom Tomato Seedlings",
+      quantity: "500 plants",
+      price: "$375",
+      pricePerUnit: "$0.75 each",
+      seller: "Heritage Seeds Farm",
+      location: "California, USA",
+      rating: 5.0,
+      image: "bg-gradient-to-br from-red-500 via-pink-400 to-orange-500",
+      varieties: "Cherokee Purple, Brandywine",
+      readyDate: "April 15th",
+      category: "seeds",
+      organic: true,
+      guarantee: "90% germination",
+    },
+    {
+      id: 4,
+      title: "Raw Honey Bulk Sale",
+      quantity: "200 jars (12 oz each)",
+      price: "$1,800",
+      pricePerUnit: "$9/jar",
+      seller: "Golden Bee Apiary",
+      location: "Montana, USA",
+      rating: 4.9,
+      image: "bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500",
+      flowerSource: "Wildflower & Clover",
+      harvestDate: "Last month",
+      category: "products",
+      tested: "Lab certified pure",
+      wholesale: true,
+    },
+  ];
+
   return (
     <div>
          <div className="space-y-8">
