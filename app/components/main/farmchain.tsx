@@ -105,31 +105,6 @@ type MarketplaceItem = {
   wholesale?: boolean;
 };
 
-type WeatherDay = {
-  day: string;
-  high: string;
-  low: string;
-  condition: string;
-  precipitation: string;
-  icon: React.ReactNode;
-};
-
-type WeatherData = {
-  location: string;
-  current: {
-    temp: string;
-    condition: string;
-    humidity: string;
-    wind: string;
-    pressure: string;
-    uvIndex: number;
-    visibility: string;
-    icon: React.ReactNode;
-  };
-  forecast: WeatherDay[];
-  alerts: { type: string; message: string; severity: string }[];
-};
-
 
 type AnalyticsData = {
   farmPerformance: {
@@ -1009,7 +984,7 @@ const FarmChain: React.FC = () => {
             <div className="space-y-6 sticky top-28">
               {/* weather */}
               <WeatherSide/>
-              
+
 
               {/* trending now */}
               <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
