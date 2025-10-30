@@ -264,7 +264,8 @@ import {
   CloudSnow,
 } from "lucide-react";
 
-const OPENWEATHER_API_KEY: string = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || "bbc866c78ccd689ab15a1de21e627ba0";
+const OPENWEATHER_API_KEY: string =
+  process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || "bbc866c78ccd689ab15a1de21e627ba0";
 
 interface ForecastDay {
   day: string;
@@ -316,21 +317,28 @@ const WeatherPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchWeather = async (location: string) => {
+  // ✅ Fetch weather using lat/lon
+  const fetchWeather = async (lat: number, lon: number, fallbackCity?: string) => {
     try {
       setLoading(true);
       setError(null);
 
-      if (!OPENWEATHER_API_KEY) throw new Error("Missing API Key (check .env.local)");
+      if (!OPENWEATHER_API_KEY)
+        throw new Error("Missing API Key (check .env.local)");
 
+      // Current weather
       const currentRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&appid=${OPENWEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
       );
-      if (!currentRes.ok) throw new Error("City not found.");
+      if (!currentRes.ok)
+        throw new Error("Unable to fetch weather for this location.");
       const currentData = await currentRes.json();
 
+      const cityName = fallbackCity || currentData.name || "Your Location";
+
+      // Forecast
       const forecastRes = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${encodeURIComponent(location)}&appid=${OPENWEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
       );
       const forecastData = await forecastRes.json();
 
@@ -340,26 +348,40 @@ const WeatherPage: React.FC = () => {
         .map((day: any) => {
           const date = new Date(day.dt * 1000);
           return {
-            day: date.toLocaleDateString('en-US', { weekday: 'short' }),
-            high: Math.round(day.main.temp_max) + '°',
-            low: Math.round(day.main.temp_min) + '°',
-            condition: day.weather?.[0]?.description ?? 'Unknown',
-            icon: getWeatherIcon(day.weather?.[0]?.description ?? ''),
+            day: date.toLocaleDateString("en-US", { weekday: "short" }),
+            high: Math.round(day.main.temp_max) + "°",
+            low: Math.round(day.main.temp_min) + "°",
+            condition: day.weather?.[0]?.description ?? "Unknown",
+            icon: getWeatherIcon(day.weather?.[0]?.description ?? ""),
             precipitation: `${Math.round(day.pop * 100)}%`,
           };
         });
 
-      const current: CurrentWeather = {
-        temp: Math.round(currentData.main.temp) + '°C',
-        condition: currentData.weather?.[0]?.description ?? 'Unknown',
-        city: currentData.name,
-        icon: getWeatherIcon(currentData.weather?.[0]?.description ?? ''),
-      };
+      // ✅ Real alerts from One Call 3.0
+      const oneCallRes = await fetch(
+        `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`
+      );
+      const oneCallData = await oneCallRes.json();
 
-      // 🌩️ Example alerts (you can later replace with a real weather alerts API)
-      const alerts: Alert[] = currentData.weather[0].main.includes('Rain')
-        ? [{ message: "Expect rain — adjust irrigation plans.", severity: 'moderate' }]
-        : [{ message: "Clear weather — optimal for planting.", severity: 'mild' }];
+      let alerts: Alert[] = [];
+
+      if (oneCallData.alerts && oneCallData.alerts.length > 0) {
+        alerts = oneCallData.alerts.map((alert: any) => ({
+          message: `${alert.event}: ${alert.description}`,
+          severity: alert.tags?.includes("Extreme") ? "moderate" : "mild",
+        }));
+      } else {
+        alerts = [
+          { message: "No active weather alerts at this time.", severity: "mild" },
+        ];
+      }
+
+      const current: CurrentWeather = {
+        temp: Math.round(currentData.main.temp) + "°C",
+        condition: currentData.weather?.[0]?.description ?? "Unknown",
+        city: cityName,
+        icon: getWeatherIcon(currentData.weather?.[0]?.description ?? ""),
+      };
 
       setWeatherData({ current, forecast: dailyForecast, alerts });
     } catch (err: any) {
@@ -371,13 +393,61 @@ const WeatherPage: React.FC = () => {
     }
   };
 
+  // 📍 Detect user location
   useEffect(() => {
-    fetchWeather(city);
-  }, [city]);
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          const { latitude, longitude } = pos.coords;
 
-  const handleSearchClick = () => {
+          try {
+            // Get readable city name for display (not for API)
+            const reverseGeo = await fetch(
+              `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${OPENWEATHER_API_KEY}`
+            );
+            const geoData = await reverseGeo.json();
+            const detectedCity = geoData?.[0]?.name || "Your Location";
+            await fetchWeather(latitude, longitude, detectedCity);
+          } catch (err) {
+            console.error("Reverse geocoding failed:", err);
+            await fetchWeather(latitude, longitude, "Your Location");
+          }
+        },
+        async (err) => {
+          console.warn("Geolocation denied:", err.message);
+          // fallback: Abuja
+          const fallbackLat = 9.0579;
+          const fallbackLon = 7.4951;
+          await fetchWeather(fallbackLat, fallbackLon, "Abuja");
+        }
+      );
+    } else {
+      console.warn("Geolocation not supported.");
+      const fallbackLat = 9.0579;
+      const fallbackLon = 7.4951;
+      fetchWeather(fallbackLat, fallbackLon, "Abuja");
+    }
+  }, []);
+
+  // Manual search (still supported)
+  const handleSearchClick = async () => {
     if (searchInput.trim()) {
-      setCity(searchInput.trim());
+      try {
+        const geo = await fetch(
+          `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+            searchInput
+          )}&limit=1&appid=${OPENWEATHER_API_KEY}`
+        );
+        const geoData = await geo.json();
+        if (geoData.length > 0) {
+          const { lat, lon, name } = geoData[0];
+          await fetchWeather(lat, lon, name);
+        } else {
+          setError("City not found.");
+        }
+      } catch {
+        setError("City not found.");
+      }
       setSearchInput("");
     }
   };
@@ -407,7 +477,7 @@ const WeatherPage: React.FC = () => {
   if (!weatherData) {
     return (
       <div className="text-center p-12 text-lg text-gray-500">
-        Search for a city to see the weather.
+        Weather unavailable.
       </div>
     );
   }
@@ -490,39 +560,71 @@ const WeatherPage: React.FC = () => {
       </div>
 
       {/* ⚠️ Alerts */}
-      {weatherData.alerts.length > 0 && (
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
-            <AlertCircle className="w-7 h-7 mr-3 text-orange-500" />
-            Weather Alerts
-          </h3>
-          <div className="space-y-4">
-            {weatherData.alerts.map((alert, i) => (
-              <div
-                key={i}
-                className={`p-4 rounded-2xl border-l-4 ${
+      {/* ⚠️ Smarter Farming Weather Alerts */}
+{weatherData.alerts.length > 0 && (
+  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+    <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+      <AlertCircle className="w-7 h-7 mr-3 text-orange-500" />
+      Weather & Farming Advisory
+    </h3>
+
+    <div className="space-y-4">
+      {weatherData.alerts.map((alert, i) => {
+        // 🌦 Generate additional advice for farmers
+        const condition = weatherData.current.condition.toLowerCase();
+        let farmingAdvice = "";
+
+        if (condition.includes("rain") || alert.message.toLowerCase().includes("rain")) {
+          farmingAdvice =
+            "🌧️ Rain expected — delay planting or fertilizer use to prevent wash-off.";
+        } else if (condition.includes("storm") || alert.message.toLowerCase().includes("storm")) {
+          farmingAdvice =
+            "⛈️ Storm warning — protect seedlings and secure greenhouse covers.";
+        } else if (condition.includes("clear") || condition.includes("sun")) {
+          farmingAdvice =
+            "☀️ Clear and sunny — great time for planting or field inspection.";
+        } else if (condition.includes("cloud")) {
+          farmingAdvice =
+            "☁️ Cloudy conditions — moderate sunlight, suitable for transplanting.";
+        } else if (condition.includes("wind")) {
+          farmingAdvice =
+            "💨 Strong winds possible — avoid pesticide spraying today.";
+        } else {
+          farmingAdvice =
+            "🌤️ Weather is stable — proceed with routine farming tasks.";
+        }
+
+        return (
+          <div
+            key={i}
+            className={`p-4 rounded-2xl border-l-4 ${
+              alert.severity === "moderate"
+                ? "bg-orange-50 border-orange-500"
+                : "bg-blue-50 border-blue-500"
+            }`}
+          >
+            <div className="flex items-start space-x-3">
+              <AlertCircle
+                className={`w-5 h-5 mt-1 ${
                   alert.severity === "moderate"
-                    ? "bg-orange-50 border-orange-500"
-                    : "bg-blue-50 border-blue-500"
+                    ? "text-orange-500"
+                    : "text-blue-500"
                 }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <AlertCircle
-                    className={`w-5 h-5 ${
-                      alert.severity === "moderate"
-                        ? "text-orange-500"
-                        : "text-blue-500"
-                    }`}
-                  />
-                  <p className="font-semibold text-gray-900">
-                    {alert.message}
-                  </p>
-                </div>
+              />
+              <div>
+                <p className="font-semibold text-gray-900 mb-1">
+                  {alert.message}
+                </p>
+                <p className="text-sm text-gray-700">{farmingAdvice}</p>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })}
+    </div>
+  </div>
+)}
+
     </div>
   );
 };

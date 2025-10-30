@@ -127,7 +127,7 @@ const WeatherSide = () => {
               <Thermometer className="w-5 h-5 mr-2" />
               Weather Now
             </h3>
-            <h1 className="text-sm">
+            <h1 className="text-sm font-semibold">
               Location: <span>{weatherData.location}</span>
             </h1>
           </div>
