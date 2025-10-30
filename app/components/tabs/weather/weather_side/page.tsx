@@ -118,16 +118,16 @@ const WeatherSide = () => {
   const { tempC, tempF, condition, humidity, wind, icon } = weatherData.current;
 
   return (
-    <div className="pt-32">
+    <div className="">
       <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl shadow-xl text-white p-6 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
-          <div className="flex items-center justify-between">
+          <div className="flex justify-between">
             <h3 className="font-bold text-lg mb-4 flex items-center">
               <Thermometer className="w-5 h-5 mr-2" />
               Weather Now
             </h3>
-            <h1 className="text-sm font-semibold">
+            <h1 className="text-sm relative top-1">
               Location: <span>{weatherData.location}</span>
             </h1>
           </div>
