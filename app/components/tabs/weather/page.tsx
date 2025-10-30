@@ -233,7 +233,7 @@ const WeatherPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* 🌤 Header */}
-      <div className="bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-500 rounded-3xl shadow-2xl text-white p-5 md:py-8 lg:py-10 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-500 rounded-3xl shadow-2xl text-white p-6 py-10 md:py-8 md:px-8 lg:px-8 lg:py-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex items-center justify-between">
