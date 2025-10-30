@@ -460,57 +460,6 @@ const FarmChain: React.FC = () => {
     },
   ];
 
-  const weatherData: WeatherData = {
-    location: "Your Location",
-    current: {
-      temp: "74°F",
-      condition: "Partly Cloudy",
-      humidity: "68%",
-      wind: "12 mph NE",
-      pressure: "30.15 in",
-      uvIndex: 6,
-      visibility: "10 miles",
-      icon: <Cloud className="w-12 h-12" />,
-    },
-    forecast: [
-      {
-        day: "Today",
-        high: "78°",
-        low: "65°",
-        condition: "Sunny",
-        precipitation: "0%",
-        icon: <Sun className="w-12 h-12 text-yellow-500" />,
-      },
-      {
-        day: "Tomorrow",
-        high: "72°",
-        low: "60°",
-        condition: "Cloudy",
-        precipitation: "20%",
-        icon: <Cloud className="w-12 h-12 text-gray-400" />,
-      },
-      {
-        day: "Wednesday",
-        high: "69°",
-        low: "58°",
-        condition: "Rain",
-        precipitation: "85%",
-        icon: <Droplets className="w-12 h-12 text-blue-500" />,
-      },
-    ],
-    alerts: [
-      {
-        type: "warning",
-        message: "Frost warning for Thursday night",
-        severity: "moderate",
-      },
-      {
-        type: "info",
-        message: "Perfect planting conditions this weekend",
-        severity: "low",
-      },
-    ],
-  };
 
   const analyticsData: AnalyticsData = {
     farmPerformance: [
