@@ -1,4 +1,8 @@
 import React from 'react'
+import {
+  BarChart3,
+  PieChart,
+} from "lucide-react";
 
 const analyticsPage = () => {
   return (
