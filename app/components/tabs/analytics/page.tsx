@@ -148,7 +148,7 @@ const analyticsPage = () => {
                     ))}
                   </div>
                 </div>
-              </div>
+        </div>
     </div>
   )
 }
