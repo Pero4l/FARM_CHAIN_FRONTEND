@@ -4,7 +4,63 @@ import {
   PieChart,
 } from "lucide-react";
 
+
+type AnalyticsData = {
+  farmPerformance: {
+    metric: string;
+    value: string;
+    change: string;
+    trend: "up" | "down";
+  }[];
+  cropData: {
+    crop: string;
+    planted: string;
+    expected: string;
+    revenue: string;
+  }[];
+};
+
 const analyticsPage = () => {
+
+      const analyticsData: AnalyticsData = {
+    farmPerformance: [
+      {
+        metric: "Total Revenue",
+        value: "$145,200",
+        change: "+15.3%",
+        trend: "up",
+      },
+      { metric: "Crop Yield", value: "89%", change: "+8.2%", trend: "up" },
+      { metric: "Cost Efficiency", value: "92%", change: "+5.7%", trend: "up" },
+      {
+        metric: "Sustainability Score",
+        value: "87%",
+        change: "+12.1%",
+        trend: "up",
+      },
+    ],
+    cropData: [
+      {
+        crop: "Corn",
+        planted: "125 acres",
+        expected: "8,750 bushels",
+        revenue: "$52,500",
+      },
+      {
+        crop: "Soybeans",
+        planted: "85 acres",
+        expected: "4,250 bushels",
+        revenue: "$42,500",
+      },
+      {
+        crop: "Wheat",
+        planted: "65 acres",
+        expected: "3,900 bushels",
+        revenue: "$31,200",
+      },
+    ],
+  };
+
   return (
     <div>
          <div className="space-y-8">
