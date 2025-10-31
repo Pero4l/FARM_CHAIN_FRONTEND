@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image';
 import {
   Heart,
   MessageSquare,
@@ -75,7 +76,8 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
       <div className="mb-4">
         <p className="text-gray-700 leading-relaxed">{post.content}</p>
-
+        
+        {/* PRICE */}
         {post.price && (
           <div className="mt-3 inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
             <DollarSign className="w-4 h-4" />
@@ -83,7 +85,9 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
           </div>
         )}
       </div>
+       
 
+      {/* TAGS */}
       {post.tags && (
         <div className="flex flex-wrap gap-2 mb-4">
           {post.tags.map((tag, idx) => (
@@ -97,20 +101,25 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
         </div>
       )}
 
-      {post.images && (
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          {post.images.map((img, i) => (
-            <div
-              key={i}
-              className={`${img} rounded-2xl h-48 flex items-center justify-center text-white text-6xl relative overflow-hidden`}
-            >
-              <div className="absolute inset-0 bg-black/10"></div>
-              <span className="relative z-10">🌱</span>
-            </div>
-          ))}
-        </div>
-      )}
 
+
+       {/* IMAGE */}
+     {post.images && post.images.length > 0 && (
+  <div className="grid lg:grid-cols-2 gap-3 mb-4">
+    {post.images.map((img: string, i: number) => (
+      <div
+        key={i}
+        className="rounded-2xl w-full relative overflow-hidden"
+      >
+        <img src={img} alt="..." className="object-cover w-full h-full" />
+        <div className="absolute inset-0 bg-black/10"></div>
+      </div>
+    ))}
+  </div>
+)}
+
+
+       {/* VIDEO */}
       {post.video && (
         <div className="mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl h-64 flex items-center justify-center text-white relative overflow-hidden">
           <div className="absolute inset-0 bg-black/20"></div>
@@ -120,6 +129,9 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
           </div>
         </div>
       )}
+
+
+
     </div>
 
     <div className="border-t border-gray-100 px-3 py-4">
@@ -162,8 +174,8 @@ const feedPage = () => {
       content:
         "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
       images: [
-        "bg-gradient-to-br from-red-500 via-orange-400 to-yellow-500",
-        "bg-gradient-to-br from-green-500 to-emerald-600",
+        "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s",
       ],
       likes: 142,
       comments: 34,
@@ -223,8 +235,8 @@ const feedPage = () => {
       content:
         "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
       images: [
-        "bg-gradient-to-br from-red-500 via-orange-400 to-yellow-500",
-        "bg-gradient-to-br from-green-500 to-emerald-600",
+        "https://barbadostoday.bb/wp-content/uploads/2021/02/farmer-pic-1024x640.jpg",
+        "https://african.land/oc-content/plugins/blog/img/blog/698.jpg",
       ],
       likes: 142,
       comments: 34,
