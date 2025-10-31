@@ -49,7 +49,7 @@ import Profile from "../tabs/profile/page"
 import Message from "../tabs/message/page"
 import MarketPage from "../tabs/market_place/page";
 import AnalyticsPage from "../tabs/analytics/page"
-import FeedPage from "../tabs/feed/page";
+import Feed from "../tabs/feed/page";
 
 // SIDE BAR
 import WeatherSide from "../tabs/weather/weather_side/page"
@@ -84,12 +84,12 @@ const TabButton: React.FC<{
 );
 
 
-
 /* ================= MAIN COMPONENT ================= */
 const FarmChain: React.FC = () => {
   const { activeTab, setActiveTab } = useActiveTab();
   const [notifications, setNotifications] = useState(3);
   const [mainMenu, setMainMenu] = useState(false);
+
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -186,7 +186,7 @@ const FarmChain: React.FC = () => {
 
             {/* Feed */}
             {activeTab === "feed" && (
-            <FeedPage/>
+             <Feed/>
             )}
 
             {/* Message tab */}
