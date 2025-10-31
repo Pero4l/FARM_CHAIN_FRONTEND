@@ -49,6 +49,7 @@ import Profile from "../tabs/profile/page"
 import Message from "../tabs/message/page"
 import MarketPage from "../tabs/market_place/page";
 import AnalyticsPage from "../tabs/analytics/page"
+import FeedPage from "../tabs/feed/page";
 
 // SIDE BAR
 import WeatherSide from "../tabs/weather/weather_side/page"
@@ -446,66 +447,7 @@ const FarmChain: React.FC = () => {
 
             {/* Feed */}
             {activeTab === "feed" && (
-              <div className="space-y-8 sm:px-6 md:px-0">
-                {/* Post input card */}
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                      U
-                    </div>
-                    <div className="flex-1">
-                      <textarea
-                        placeholder="What's happening on your farm today?"
-                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 text-sm sm:text-base"
-                        rows={3}
-                      />
-                      <div className="flex flex-wrap justify-between items-center mt-4 gap-2 sm:gap-4">
-                        <div className="flex flex-wrap space-x-2 sm:space-x-4">
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
-                            <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <span>Photo</span>
-                          </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap">
-                            <Video className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <span>Video</span>
-                          </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap">
-                            <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <span>Audio</span>
-                          </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap">
-                            <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
-                            <span>Location</span>
-                          </button>
-                        </div>
-
-                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-12 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center space-x-2 text-sm sm:text-base whitespace-nowrap">
-                          <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-                          <span>Share Post</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Community Feed header */}
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center">
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">
-                    Community Feed
-                  </h3>
-                  <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
-                    <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
-                    <span className="font-semibold">Filter</span>
-                  </button>
-                </div>
-
-                {/* Posts list */}
-                <div className="space-y-8">
-                  {posts.map((post) => (
-                    <PostCard key={post.id} post={post} />
-                  ))}
-                </div>
-              </div>
+            <FeedPage/>
             )}
 
             {/* Message tab */}
