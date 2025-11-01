@@ -307,6 +307,7 @@ const feedPage = () => {
       category: "small-scale",
     },
   ];
+  
 
   return (
     <div>
