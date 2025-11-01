@@ -279,8 +279,8 @@ const feedPage = () => {
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
       video: [
-        "/video1.mp4", 
-        "/video1.mp4"],
+        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", 
+        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4"],
       likes: 289,
       comments: 67,
       shares: 45,
