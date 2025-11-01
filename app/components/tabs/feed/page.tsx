@@ -124,7 +124,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
   <div className=" rounded-2xl   grid md:grid-cols-2 gap-3 text-white relative overflow-hidden">
     <div className="absolute inset-0 "></div>
     {post.video.map((vid: string, i: number) => (
-  <div key={i} className="relative w-full h-[400px] rounded-2xl overflow-hidden">
+  <div key={i} className="relative w-full rounded-2xl overflow-hidden">
     <video
       autoPlay
       controls
@@ -215,8 +215,8 @@ const feedPage = () => {
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
       video: [
-        "/video1.mp4", 
-        "/video1.mp4"
+        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", 
+        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4"
       ],
       likes: 1200,
       comments: 67,
