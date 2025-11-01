@@ -1,5 +1,5 @@
 import React from 'react'
-import Image from 'next/image';
+// import Image from 'next/image';
 import {
   Heart,
   MessageSquare,
@@ -105,7 +105,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
        {/* IMAGE */}
      {post.images && post.images.length > 0 && (
-  <div className="grid lg:grid-cols-2 gap-3 mb-4">
+  <div className="grid md:grid-cols-2 gap-3 mb-4">
     {post.images.map((img: string, i: number) => (
       <div
         key={i}
@@ -120,15 +120,38 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
 
        {/* VIDEO */}
-      {post.video && (
-        <div className="mb-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl h-64 flex items-center justify-center text-white relative overflow-hidden">
+      {/* {post.video && (
+        <div className="mb-4  rounded-2xl h-64 flex items-center justify-center text-white relative overflow-hidden">
+            
           <div className="absolute inset-0 bg-black/20"></div>
+          <video autoPlay src="/public/video2.mov"></video>
           <div className="relative z-10 text-center">
             <Video className="w-16 h-16 mx-auto mb-3" />
             <p className="font-bold text-lg">Watch Full Video</p>
           </div>
         </div>
-      )}
+      )} */}
+
+
+        {post.video && (
+  <div className="mb-4 rounded-2xl h-[400px] flex items-center justify-center text-white relative overflow-hidden">
+    <div className="absolute inset-0 bg-black/20"></div>
+
+    <video
+      autoPlay
+      controls
+      muted
+      playsInline
+      src="/video2.mp4"
+      className="absolute inset-0 w-full h-full object-cover"
+    ></video>
+
+    {/* <div className="relative z-10 text-center">
+      <Video className="w-16 h-16 mx-auto mb-3" />
+      <p className="font-bold text-lg">Watch Full Video</p>
+    </div> */}
+  </div>
+)}
 
 
 
