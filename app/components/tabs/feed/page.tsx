@@ -25,7 +25,7 @@ type Post = {
   farmSize: string;
   content: string;
   images?: string[];
-  video?: boolean;
+  video?: string[];
   likes: number;
   comments: number;
   shares: number;
@@ -120,31 +120,24 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
 
        {/* VIDEO */}
-      {/* {post.video && (
-        <div className="mb-4  rounded-2xl h-64 flex items-center justify-center text-white relative overflow-hidden">
-            
-          <div className="absolute inset-0 bg-black/20"></div>
-          <video autoPlay src="/public/video2.mov"></video>
-          <div className="relative z-10 text-center">
-            <Video className="w-16 h-16 mx-auto mb-3" />
-            <p className="font-bold text-lg">Watch Full Video</p>
-          </div>
-        </div>
-      )} */}
-
-
         {post.video && (
-  <div className="mb-4 rounded-2xl h-[400px] flex items-center justify-center text-white relative overflow-hidden">
-    <div className="absolute inset-0 bg-black/20"></div>
-
+  <div className=" rounded-2xl   grid md:grid-cols-2 gap-3 text-white relative overflow-hidden">
+    <div className="absolute inset-0 "></div>
+    {post.video.map((vid: string, i: number) => (
+  <div key={i} className="relative w-full h-[400px] rounded-2xl overflow-hidden">
     <video
       autoPlay
       controls
       muted
       playsInline
-      src="/video2.mp4"
-      className="absolute inset-0 w-full h-full object-cover"
-    ></video>
+      src={vid}
+      className="h-[500px] object-cover"
+    />
+  </div>
+))}
+
+
+    
 
     {/* <div className="relative z-10 text-center">
       <Video className="w-16 h-16 mx-auto mb-3" />
@@ -221,7 +214,7 @@ const feedPage = () => {
       farmSize: "2,500 acres",
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: true,
+      video: ["/video2.mp4", "/video1.mp4"],
       likes: 1200,
       comments: 67,
       shares: 45,
@@ -282,7 +275,7 @@ const feedPage = () => {
       farmSize: "2,500 acres",
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: true,
+      video: ["/video1.mp4", "/video1.mp4"],
       likes: 289,
       comments: 67,
       shares: 45,
