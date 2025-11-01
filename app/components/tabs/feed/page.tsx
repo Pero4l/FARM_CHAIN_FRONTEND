@@ -214,7 +214,10 @@ const feedPage = () => {
       farmSize: "2,500 acres",
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: ["/video2.mp4", "/video1.mp4"],
+      video: [
+        "/video1.mp4", 
+        "/video1.mp4"
+      ],
       likes: 1200,
       comments: 67,
       shares: 45,
@@ -275,7 +278,9 @@ const feedPage = () => {
       farmSize: "2,500 acres",
       content:
         "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: ["/video1.mp4", "/video1.mp4"],
+      video: [
+        "/video1.mp4", 
+        "/video1.mp4"],
       likes: 289,
       comments: 67,
       shares: 45,
