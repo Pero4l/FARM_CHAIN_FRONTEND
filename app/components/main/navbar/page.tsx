@@ -38,7 +38,7 @@ const MainNavPage = () => {
     <>
       {/* HEADER */}
       <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm">
-        <div className="max-w-[1600px] mx-auto lg:px-6 px-3">
+        <div className="max-w-[1600px] mx-auto px-3">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">

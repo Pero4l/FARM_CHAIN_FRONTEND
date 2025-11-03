@@ -105,7 +105,7 @@ const FarmChain: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9">
           {/* Sidebar */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 relative">
             <div
               className='hidden lg:block bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-2'
             >
