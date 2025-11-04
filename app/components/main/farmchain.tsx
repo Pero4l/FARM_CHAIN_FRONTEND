@@ -211,7 +211,7 @@ const FarmChain: React.FC = () => {
             )}
 
              {activeTab === "notification" && (
-              <AnalyticsPage/>
+              <Notification/>
             )}
           </div>
 
