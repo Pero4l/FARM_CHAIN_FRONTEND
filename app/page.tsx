@@ -26,8 +26,6 @@ export default function Home() {
       {/* <TestimonialPage/>
       <CtaPage/> */}
       
-
-      <MainNavPage />
       <FarmChain />
     </div>
   );

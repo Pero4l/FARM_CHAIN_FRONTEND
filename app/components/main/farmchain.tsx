@@ -42,6 +42,9 @@ import {
 } from "lucide-react";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 
+// NAVBAR
+import MainNavPage from "./navbar/page";
+
 // TABS
 import WeatherPage from "../tabs/weather/page";
 import Dashboard from "../tabs/dashboard/page";
@@ -97,8 +100,10 @@ const FarmChain: React.FC = () => {
   }, [activeTab]);
 
   
-
   return (
+    <>
+    {/* MAIN NAV */}
+    <MainNavPage/>
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-2 py-8 mt-20 lg:mt-10">
@@ -419,6 +424,7 @@ const FarmChain: React.FC = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
