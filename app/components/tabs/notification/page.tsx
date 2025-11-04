@@ -162,7 +162,7 @@ const NotificationCenter = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
       <div className="max-w-3x mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-gradient-to-br from-green-600 via-gray-700 to-green-300 rounded-3xl shadow-2xl text-white lg:p-10 p-4 py-8 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-green-600 via-gray-700 to-green-300 rounded-3xl shadow-2xl text-white lg:p-10 p-4 py-10 relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
