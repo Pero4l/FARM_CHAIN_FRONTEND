@@ -10,7 +10,7 @@ import { useActiveTab } from "@/app/context/ActiveTabContext";
 const MainNavPage = () => {
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
-  const [notifications, setNotifications] = useState(3);
+  const [notifications, setNotifications] = useState(2);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false)

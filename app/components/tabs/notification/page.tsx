@@ -159,16 +159,16 @@ const NotificationCenter = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
       <div className="max-w-3xl mx-auto space-y-8">
         {/* Header */}
-        <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+        <div className="bg-gradient-to-br from-green-600 via-gray-700 to-green-300 rounded-3xl shadow-2xl text-white lg:p-10 p-4 py-8 relative overflow-hidden">
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="absolute -right-10 -top-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
           <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
           
           <div className="relative z-10">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between ">
               <div>
                 <div className="flex items-center space-x-3 mb-2">
                   <Bell className="w-8 h-8" />
@@ -179,7 +179,7 @@ const NotificationCenter = () => {
                 </p>
               </div>
               <div className="text-center">
-                <div className="w-20 h-20 bg-white/20 backdrop-blur-lg rounded-2xl flex items-center justify-center mb-2">
+                <div className="lg:w-20 lg:h-20 p-3 px-5 bg-white/20 backdrop-blur-lg rounded-2xl flex items-center justify-center mb-2">
                   <span className="text-4xl font-black">{unreadCount}</span>
                 </div>
                 <p className="text-sm text-purple-100">Unread</p>
@@ -213,7 +213,7 @@ const NotificationCenter = () => {
                 <div
                   key={notification.id}
                   className={`p-6 hover:bg-gradient-to-r hover:from-gray-50 hover:to-transparent cursor-pointer transition-all group ${
-                    notification.unread ? "bg-blue-50/30" : ""
+                    notification.unread ? "bg-blue-100/40" : ""
                   }`}
                   onClick={() => markAsRead(notification.id)}
                 >
