@@ -50,6 +50,7 @@ import Message from "../tabs/message/page"
 import MarketPage from "../tabs/market_place/page";
 import AnalyticsPage from "../tabs/analytics/page"
 import Feed from "../tabs/feed/page";
+import Notification from "../tabs/notification/page";
 
 // SIDE BAR
 import WeatherSide from "../tabs/weather/weather_side/page"
@@ -206,6 +207,10 @@ const FarmChain: React.FC = () => {
 
             {/* Analytics tab */}
             {activeTab === "analytics" && (
+              <AnalyticsPage/>
+            )}
+
+             {activeTab === "notification" && (
               <AnalyticsPage/>
             )}
           </div>
