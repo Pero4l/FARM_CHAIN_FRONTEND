@@ -344,10 +344,10 @@ const feedPage = () => {
                           </button>
                         </div>
 
-                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white w-full md:px-66 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2 text-sm sm:text-base whitespace-nowrap">
-  <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-  <span>Share Post</span>
-</button>
+                        <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white w-full md:px-66 sm:px-8 py-2.5 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-95 flex items-center justify-center space-x-2 text-sm sm:text-base whitespace-nowrap">
+                        <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+                        <span>Share Post</span>
+                      </button>
 
                       </div>
                     </div>
