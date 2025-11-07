@@ -193,6 +193,10 @@ const feedPage = () => {
         "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg",
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s",
       ],
+         video: [
+        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", 
+        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4"
+      ],
       likes: 142,
       comments: 34,
       shares: 18,
