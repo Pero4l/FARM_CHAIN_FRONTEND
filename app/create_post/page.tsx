@@ -58,36 +58,39 @@ const CreatePost: React.FC = () => {
     e.preventDefault();
 
     const formData = new FormData();
+    images.forEach((file) => formData.append("images", file));
+    videos.forEach((file) => formData.append("video", file));
+    
     formData.append("farmSize", farmSize);
     formData.append("content", content);
     formData.append("tags", tags);
     formData.append("category", category);
 
-    images.forEach((file) => formData.append("images", file));
-    videos.forEach((file) => formData.append("video", file));
 
-    try {
-      const res = await fetch("/api/posts/create", {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      });
+    // try {
+    //   const res = await fetch("/api/posts/create", {
+    //     method: "POST",
+    //     body: formData,
+    //     credentials: "include",
+    //   });
 
-      const data = await res.json();
-      if (data.success) {
-        alert("✅ Post created successfully!");
-        setContent("");
-        setImages([]);
-        setVideos([]);
-        setImagePreviews([]);
-        setVideoPreviews([]);
-      } else {
-        alert("❌ " + data.message);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong.");
-    }
+    //   const data = await res.json();
+    //   if (data.success) {
+    //     alert("✅ Post created successfully!");
+    //     setContent("");
+    //     setImages([]);
+    //     setVideos([]);
+    //     setImagePreviews([]);
+    //     setVideoPreviews([]);
+    //   } else {
+    //     alert("❌ " + data.message);
+    //   }
+    // } catch (error) {
+    //   console.error("Error:", error);
+    //   alert("Something went wrong.");
+    // }
+
+    
   };
 
   return (
