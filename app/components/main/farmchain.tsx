@@ -59,8 +59,9 @@ import Notification from "../tabs/notification/page";
 import WeatherSide from "../tabs/weather/weather_side/page"
 
 
-
 /* ================ SMALL COMPONENTS ================ */
+import CreatePost from "../create_post/page";
+
 const TabButton: React.FC<{
   id: string;
   icon: React.ComponentType<{ className?: string }>;
