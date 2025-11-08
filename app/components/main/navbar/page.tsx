@@ -148,7 +148,7 @@ const MainNavPage = () => {
 
             <div className="flex items-center lg:space-x-4">
 
-              <button className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
+              <button onClick={() => { setActiveTab("create_post") }} className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
                 <PlusCircle className="w-6 h-6 text-gray-700" />
               </button>
 
