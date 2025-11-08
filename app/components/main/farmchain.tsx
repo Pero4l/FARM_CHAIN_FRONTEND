@@ -70,7 +70,7 @@ const TabButton: React.FC<{
   onClick: (id: string) => void;
   badge?: number;
 }> = ({ id, icon: Icon, label, isActive, onClick, badge }) => (
-  
+
   <button
     onClick={() => onClick(id)}
     className={`relative flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 w-full ${
@@ -225,6 +225,10 @@ const FarmChain: React.FC = () => {
           {/* TABS END */}
 
 
+            {/* Create post */}
+             {activeTab === "create_post" && (
+              <CreatePost/>
+            )}
 
 
           {/* Right Sidebar */}
