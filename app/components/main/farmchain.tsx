@@ -63,6 +63,7 @@ import WeatherSide from "../tabs/weather/weather_side/page"
 import CreatePost from "../create_post/page";
 import SettingsPage from "../settings/page";
 
+
 const TabButton: React.FC<{
   id: string;
   icon: React.ComponentType<{ className?: string }>;

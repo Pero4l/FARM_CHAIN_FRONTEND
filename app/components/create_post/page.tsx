@@ -94,7 +94,7 @@ const CreatePost: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl md:max-w-full pt-2">
+    <div className="max-w-2xl md:max-w-full ">
       {/* Header */}
       <div className="bg-gradient-to-br from-green-700  to-emerald-500 rounded-3xl shadow-xl text-white p-8 py-10 mb-5 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>

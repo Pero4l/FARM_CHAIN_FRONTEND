@@ -133,7 +133,7 @@ const MainNavPage = () => {
               
 
 
-
+              {/* search bar */}
               <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
                 <Search className="w-5 h-5 text-gray-400 mr-3" />
                 <input
@@ -145,9 +145,10 @@ const MainNavPage = () => {
             </div>
 
             {/* nav button */}
-
             <div className="flex items-center lg:space-x-4">
 
+
+              {/* Create post */}
               <button onClick={() => { setActiveTab("create_post") }} className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
                 <PlusCircle className="w-6 h-6 text-gray-700" />
               </button>
@@ -200,7 +201,7 @@ const MainNavPage = () => {
                         <span className="text-sm font-medium text-gray-700">Achievements</span>
                       </button>
 
-                      <button onClick={() => { setActiveTab("settings") }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <Settings className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Settings</span>
                       </button>
@@ -259,15 +260,18 @@ const MainNavPage = () => {
                     <User className="w-4 h-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">Profile</span>
                   </button>
+
                   <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                     <Award className="w-4 h-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">Achievements</span>
                   </button>
-                  <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+
+                  <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                     <Settings className="w-4 h-4 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">Settings</span>
                   </button>
                   <hr className="my-2" />
+
                   <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
                     <LogOut className="w-4 h-4 text-red-600" />
                     <span className="text-sm font-medium text-red-600">Logout</span>

@@ -167,7 +167,7 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 pb-8">
-      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-4 sm:py-6 lg:py-10">
+      <div className="max-w-7xl ">
         {/* Success Toast */}
         {showSuccess && (
           <div className="fixed top-4 right-4 z-50 animate-[slideIn_0.3s_ease-out]">
@@ -215,13 +215,17 @@ export default function SettingsPage() {
                     <X className="w-3 h-3 sm:w-4 sm:h-4" />
                   </button>
                 )}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 rounded-xl sm:rounded-2xl transition-opacity flex items-center justify-center">
+
+                {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 rounded-xl sm:rounded-2xl transition-opacity flex items-center justify-center">
                   <Camera className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-                </div>
+                </div> */}
+
+                
+
               </div>
               <label className="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm font-bold bg-white/20 backdrop-blur-md px-3 py-2 sm:px-5 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition cursor-pointer shadow-lg">
                 <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span className="hidden xs:inline">Change</span>
+                <span className=" xs:inline">Change</span>
                 <input type="file" accept="image/*" hidden onChange={handleImageUpload} />
               </label>
             </div>
@@ -587,6 +591,6 @@ export default function SettingsPage() {
         </div>
       )}
     </div>
-    
+
   );
 }
