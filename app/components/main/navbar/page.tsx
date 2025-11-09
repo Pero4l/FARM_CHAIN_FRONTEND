@@ -221,7 +221,7 @@ const MainNavPage = () => {
  
           </div>
 
-          {/* Hamburger, user profile and search */}
+          {/* Hamburger, user profile and search for mobile*/}
           <div className='lg:hidden flex gap-2'>
             <label
             htmlFor="mobile-menu-toggle"
