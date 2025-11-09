@@ -61,6 +61,7 @@ import WeatherSide from "../tabs/weather/weather_side/page"
 
 /* ================ SMALL COMPONENTS ================ */
 import CreatePost from "../create_post/page";
+import SettingsPage from "../settings/page";
 
 const TabButton: React.FC<{
   id: string;
@@ -227,6 +228,13 @@ const FarmChain: React.FC = () => {
              {activeTab === "create_post" && (
               <CreatePost/>
             )}
+
+            {/* Settings */}
+             {activeTab === "create_post" && (
+              <SettingsPage/>
+            )}
+
+            
 
 
           </div>
