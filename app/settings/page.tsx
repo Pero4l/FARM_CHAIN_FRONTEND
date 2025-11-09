@@ -1,10 +1,12 @@
+'use client';
+
 import { User, Lock, Bell, Palette, Save, LogOut } from "lucide-react";
 
 export default function SettingsPage() {
-  const handleSubmit = () => {
-    // e.preventDefault();
-    alert("Settings saved successfully!");
-  };
+  // const handleSubmit = () => {
+  //   // e.preventDefault();
+  //   alert("Settings saved successfully!");
+  // };
 
   return (
     <div className="max-w-3xl mx-auto pt-4 md:pt-10 px-4">
@@ -24,7 +26,7 @@ export default function SettingsPage() {
 
       {/* Settings Form */}
       <form
-        onSubmit={handleSubmit}
+        
         className="bg-white rounded-3xl shadow-lg border border-gray-100 p-6 space-y-8"
       >
         {/* Profile Section */}
