@@ -200,7 +200,7 @@ const MainNavPage = () => {
                         <span className="text-sm font-medium text-gray-700">Achievements</span>
                       </button>
 
-                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                      <button onClick={() => { setActiveTab("settings") }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
                         <Settings className="w-4 h-4 text-gray-600" />
                         <span className="text-sm font-medium text-gray-700">Settings</span>
                       </button>
@@ -221,7 +221,6 @@ const MainNavPage = () => {
           </div>
 
           {/* Hamburger, user profile and search */}
-
           <div className='lg:hidden flex gap-2'>
             <label
             htmlFor="mobile-menu-toggle"

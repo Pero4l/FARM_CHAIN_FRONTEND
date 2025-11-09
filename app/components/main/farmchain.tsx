@@ -230,7 +230,7 @@ const FarmChain: React.FC = () => {
             )}
 
             {/* Settings */}
-             {activeTab === "create_post" && (
+             {activeTab === "settings" && (
               <SettingsPage/>
             )}
 
