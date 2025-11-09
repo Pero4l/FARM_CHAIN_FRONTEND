@@ -165,7 +165,7 @@ const FarmChain: React.FC = () => {
 
               {/*  CREATE POST BUTTON ON LG */}
               <div className="mt-6 space-y-3">
-                <button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
+                <button onClick={() => { setActiveTab("create_post") }} className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-xl font-bold hover:shadow-lg transition-all duration-300 hover:scale-105 flex items-center justify-center space-x-2">
                   <Plus className="w-5 h-5" />
                   <span>Create Post</span>
                 </button>
@@ -227,6 +227,8 @@ const FarmChain: React.FC = () => {
              {activeTab === "create_post" && (
               <CreatePost/>
             )}
+
+
           </div>
 
           {/* TABS END */}
