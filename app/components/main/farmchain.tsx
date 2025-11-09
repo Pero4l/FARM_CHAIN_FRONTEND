@@ -220,15 +220,19 @@ const FarmChain: React.FC = () => {
              {activeTab === "notification" && (
               <Notification/>
             )}
-          </div>
 
-          {/* TABS END */}
 
 
             {/* Create post */}
              {activeTab === "create_post" && (
               <CreatePost/>
             )}
+          </div>
+
+          {/* TABS END */}
+
+
+            
 
 
           {/* Right Sidebar */}

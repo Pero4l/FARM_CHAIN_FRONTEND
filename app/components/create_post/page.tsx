@@ -94,16 +94,16 @@ const CreatePost: React.FC = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-10 mt-20">
+    <div className="max-w-2xl md:max-w-full pt-2">
       {/* Header */}
-      <div className="bg-gradient-to-br from-green-600 via-lime-600 to-emerald-500 rounded-3xl shadow-xl text-white p-8 mb-8 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-green-700  to-emerald-500 rounded-3xl shadow-xl text-white p-8 py-10 mb-5 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <h2 className="text-3xl font-black mb-2 flex items-center space-x-2">
             <Leaf className="w-7 h-7" />
             <span>Create New Post</span>
           </h2>
-          <p className="text-green-100 text-lg">
+          <p className="text-green-100 text-lg pt-2">
             Share your latest farming update 🌾
           </p>
         </div>
@@ -253,14 +253,15 @@ const CreatePost: React.FC = () => {
         </div>
 
         {/* Submit */}
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-green-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2"
+        <div className="">
+         <button
+            className="bg-green-600 text-white px-6 py-3 w-full rounded-xl font-semibold hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
           >
             <Send className="w-5 h-5" />
             <span>Post Update</span>
           </button>
+
+
         </div>
       </form>
     </div>
