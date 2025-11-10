@@ -355,19 +355,21 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             </div>
 
             {/* Security Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow">
+            <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow`}>
               <div className="flex items-center space-x-2 sm:space-x-3 mb-5 sm:mb-6">
                 <div className="bg-amber-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
                   <Lock className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600" />
                 </div>
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-black text-gray-800">Security</h2>
-                  <p className="text-gray-500 text-xs sm:text-sm">Protect your account</p>
+                  <h2 className={`text-xl sm:text-2xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Security</h2>
+                  <p className={`"${theme === 'dark' ? 'text-white' : 'text-gray-500'} text-xs sm:text-sm"`}>Protect your account</p>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
-                <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-100 hover:shadow-md transition-shadow">
+
+                {/* password */}
+                <div className={` ${theme === 'dark' ? 'bg-white' : 'bg-gradient-to-r from-amber-50 to-orange-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-100 hover:shadow-md transition-shadow`}>
                   <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between space-y-3 xs:space-y-0">
                     <div className="flex items-center space-x-3 sm:space-x-4">
                       <div className="bg-amber-100 p-2 sm:p-3 rounded-lg sm:rounded-xl">
@@ -387,7 +389,8 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 hover:shadow-md transition-shadow">
+                {/* two-factor auth */}
+                <div className={` ${theme === 'dark' ? 'bg-white' : 'bg-gradient-to-r from-blue-50 to-indigo-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 hover:shadow-md transition-shadow`}>
                   <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between space-y-3 xs:space-y-0">
                     <div className="flex items-center space-x-3 sm:space-x-4">
                       <div className="bg-blue-100 p-2 sm:p-3 rounded-lg sm:rounded-xl">
