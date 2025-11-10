@@ -63,7 +63,7 @@ const MainNavPage = () => {
                   </div>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
-                    <div className="hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 bg-white rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40">
+                    <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 ${theme === 'dark' ? 'bg-white text-black' : 'bg-white'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40`}>
                     <label
                     htmlFor="mobile-menu-toggle"
                     onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}
@@ -159,7 +159,7 @@ const MainNavPage = () => {
               <button onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Messages">
                 <MessageCircle className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
                 {message > 0 && (
-                  <span className="absolute top-1 right-1 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {message}
                   </span>
                 )}
