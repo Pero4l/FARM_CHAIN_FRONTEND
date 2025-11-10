@@ -185,7 +185,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
         )}
 
         {/* Header */}
-        <div className="bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600 rounded-2xl sm:rounded-3xl shadow-2xl text-white p-5 sm:p-8 lg:p-12 mb-6 sm:mb-8 relative overflow-hidden">
+        <div className={`bg-gradient-to-br ${theme === 'dark' ? 'bg-black text-white' : ' from-green-600 via-emerald-600 to-teal-600'} rounded-2xl sm:rounded-3xl shadow-2xl text-white p-5 sm:p-8 lg:p-12 mb-6 sm:mb-8 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
           
           <div className="relative z-10 flex flex-col space-y-5 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
@@ -250,7 +250,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                     <User className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
                   </div>
                   <div>
-                    <h2 className="text-xl sm:text-2xl font-black text-gray-800">Profile</h2>
+                    <h2 className={`text-xl sm:text-2xl font-black ${theme === 'dark' ? 'bg-black text-white' : 'text-gray-800'}`}>Profile</h2>
                     <p className="text-gray-500 text-xs sm:text-sm">Personal details</p>
                   </div>
                 </div>
@@ -261,25 +261,25 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                   <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                     <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
                       <div className="flex items-center space-x-2 mb-2">
-                        <User className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Full Name</span>
+                        <User className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
+                        <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Full Name</span>
                       </div>
                       <p className="font-bold text-gray-800 text-base sm:text-lg">{profile.name}</p>
                     </div>
                     <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
                       <div className="flex items-center space-x-2 mb-2">
-                        <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Email</span>
+                        <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
+                        <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Email</span>
                       </div>
                       <p className="font-bold text-gray-800 text-sm sm:text-lg break-all">{profile.email}</p>
                     </div>
                   </div>
                   <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
                     <div className="flex items-center space-x-2 mb-2">
-                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                      <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Location</span>
+                      <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
+                      <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Location</span>
                     </div>
-                    <p className="font-bold text-gray-800 text-base sm:text-lg">{profile.location}</p>
+                    <p className={`font-bold text-gray-800  text-base sm:text-lg`}>{profile.location}</p>
                   </div>
                   <button
                     onClick={handleStartEdit}
@@ -292,7 +292,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                 <div className="space-y-4 sm:space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-700 mb-2">
+                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
                         <User className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>Full Name</span>
                       </label>
@@ -306,7 +306,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                       />
                     </div>
                     <div>
-                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-700 mb-2">
+                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
                         <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>Email</span>
                       </label>
@@ -321,7 +321,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                     </div>
                   </div>
                   <div>
-                    <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-700 mb-2">
+                    <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
                       <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span>Location</span>
                     </label>
@@ -452,7 +452,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             </div>
 
             {/* Appearance Card */}
-            {/* <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
+            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
               <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                 <div className="bg-purple-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
                   <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
@@ -491,7 +491,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                   );
                 })}
               </div>
-            </div> */}
+            </div>
 
             {/* Logout Card */}
             <div className="bg-red-500 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 hover:shadow-2xl transition-shadow">
