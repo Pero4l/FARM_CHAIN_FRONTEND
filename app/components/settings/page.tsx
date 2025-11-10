@@ -251,7 +251,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                   </div>
                   <div>
                     <h2 className={`text-xl sm:text-2xl font-black ${theme === 'dark' ? 'bg-black text-white' : 'text-gray-800'}`}>Profile</h2>
-                    <p className="text-gray-500 text-xs sm:text-sm">Personal details</p>
+                    <p className={`${theme === 'dark' ? 'text-white' : 'text-gray-500'} text-xs sm:text-sm`}>Personal details</p>
                   </div>
                 </div>
               </div>
@@ -264,14 +264,14 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                         <User className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
                         <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Full Name</span>
                       </div>
-                      <p className="font-bold text-gray-800 text-base sm:text-lg">{profile.name}</p>
+                      <p className={`font-bold ${theme === 'dark' ? 'text-black' : 'text-gray-800'} text-base sm:text-lg`}>{profile.name}</p>
                     </div>
                     <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
                       <div className="flex items-center space-x-2 mb-2">
                         <Mail className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
                         <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Email</span>
                       </div>
-                      <p className="font-bold text-gray-800 text-sm sm:text-lg break-all">{profile.email}</p>
+                      <p className={`font-bold ${theme === 'dark' ? 'text-black' : 'text-gray-800'} text-sm sm:text-lg break-all`}>{profile.email}</p>
                     </div>
                   </div>
                   <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100">
@@ -279,7 +279,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                       <MapPin className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800" />
                       <span className="text-xs font-semibold text-gray-800 uppercase tracking-wide">Location</span>
                     </div>
-                    <p className={`font-bold text-gray-800  text-base sm:text-lg`}>{profile.location}</p>
+                    <p className={`font-bold ${theme === 'dark' ? 'text-black' : 'text-gray-800'} text-sm sm:text-lg`}>{profile.location}</p>
                   </div>
                   <button
                     onClick={handleStartEdit}
@@ -292,7 +292,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                 <div className="space-y-4 sm:space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                     <div>
-                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
+                      <label className={`flex items-center space-x-2 text-xs sm:text-sm font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'} mb-2`}>
                         <User className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>Full Name</span>
                       </label>
@@ -306,7 +306,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                       />
                     </div>
                     <div>
-                      <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
+                      <label className={`flex items-center space-x-2 text-xs sm:text-sm font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'} mb-2`}>
                         <Mail className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>Email</span>
                       </label>
@@ -321,7 +321,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                     </div>
                   </div>
                   <div>
-                    <label className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-gray-800 mb-2">
+                    <label className={`flex items-center space-x-2 text-xs sm:text-sm font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'} mb-2`}>
                       <MapPin className="w-3 h-3 sm:w-4 sm:h-4" />
                       <span>Location</span>
                     </label>
