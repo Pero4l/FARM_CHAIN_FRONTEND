@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react';
 import {
   User,
@@ -45,7 +44,6 @@ interface PasswordState {
   showConfirm: boolean;
 }
 
-
 type ThemeOption = 'system' | 'light' | 'dark';
 
 export default function SettingsPage() {
@@ -59,6 +57,7 @@ export default function SettingsPage() {
   const [tempProfile, setTempProfile] = useState<Profile>(profile);
   const [image, setImage] = useState('https://randomuser.me/api/portraits/men/32.jpg');
   const [preview, setPreview] = useState<string | null>(null);
+  
   const [notifications, setNotifications] = useState<Notifications>({
     email: true,
     push: false,
@@ -170,7 +169,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 pb-8">
+    <div className={`min-h-screen ${theme === 'dark' ? ' bg-gray-800' : ' bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50'} pb-8`}>
       <div className="max-w-7xl ">
         {/* Success Toast */}
         {showSuccess && (
