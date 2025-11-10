@@ -410,17 +410,18 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             </div>
           </div>
 
+
           {/* Right Column - Preferences */}
           <div className="space-y-4 sm:space-y-6">
             {/* Notifications Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
+            <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow`}>
               <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                 <div className="bg-blue-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
                   <Bell className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-lg sm:text-xl font-black text-gray-800">Notifications</h2>
-                  <p className="text-gray-500 text-xs">Manage alerts</p>
+                  <h2 className={`text-lg sm:text-xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Notifications</h2>
+                  <p className={`text-lg sm:text-xl font-black ${theme === 'dark' ? 'text-white text-xs' : 'text-gray-500 text-xs'}`}>Manage alerts</p>
                 </div>
               </div>
               <ul className="space-y-3 sm:space-y-4">
@@ -455,14 +456,14 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             </div>
 
             {/* Appearance Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
+            <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow`}>
               <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                 <div className="bg-purple-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
                   <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
                 </div>
                 <div>
-                  <h2 className="text-lg sm:text-xl font-black text-gray-800">Appearance</h2>
-                  <p className="text-gray-500 text-xs">Customize theme</p>
+                  <h2 className={`text-lg sm:text-xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Appearance</h2>
+                  <p className={`${theme === 'dark' ? 'text-white text-xs' : 'text-gray-500 text-xs'}`}>Customize theme</p>
                 </div>
               </div>
               <div className="space-y-2 sm:space-y-3">
@@ -497,10 +498,10 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             </div>
 
             {/* Logout Card */}
-            <div className="bg-red-500 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 hover:shadow-2xl transition-shadow">
+            <div className="bg-red-500 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-3 sm:p-3 lg:p-2 hover:shadow-2xl transition-shadow">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-2 sm:space-x-3 text-white hover:text-red-600 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-xl"
+                className="w-full flex items-center justify-center space-x-2 sm:space-x-3 text-white hover:text-gray-800 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-xl"
               >
                 <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Log Out</span>
