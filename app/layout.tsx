@@ -4,6 +4,7 @@ import "./globals.css"
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/navbar";
 import { ActiveTabProvider } from "./context/ActiveTabContext";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,15 +27,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en"
+    suppressHydrationWarning
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <ActiveTabProvider>
              <Navbar/>
         {children}
         <Footer/>
         </ActiveTabProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

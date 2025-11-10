@@ -22,6 +22,7 @@ import {
   MapPin,
   CheckCircle2,
 } from 'lucide-react';
+import { useTheme } from 'next-themes'
 
 interface Profile {
   name: string;
@@ -44,9 +45,11 @@ interface PasswordState {
   showConfirm: boolean;
 }
 
+
 type ThemeOption = 'system' | 'light' | 'dark';
 
 export default function SettingsPage() {
+
   const [profile, setProfile] = useState<Profile>({
     name: 'John Greenfield',
     email: 'john.greenfield@example.com',
@@ -61,7 +64,7 @@ export default function SettingsPage() {
     push: false,
     monthly: true,
   });
-  const [theme, setTheme] = useState<ThemeOption>('system');
+  const { theme, setTheme } = useTheme();
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [password, setPassword] = useState<PasswordState>({
@@ -137,10 +140,11 @@ export default function SettingsPage() {
     showSuccessMessage();
   };
 
-  const handleThemeChange = (newTheme: ThemeOption) => {
-    setTheme(newTheme);
-    showSuccessMessage();
-  };
+const handleThemeChange = (newTheme: ThemeOption) => {
+  setTheme(newTheme); // next-themes will persist & update automatically
+  showSuccessMessage();
+};
+
 
   const showSuccessMessage = () => {
     setShowSuccess(true);
@@ -233,11 +237,13 @@ export default function SettingsPage() {
         </div>
 
         {/* Main Content */}
+        
         <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Left Column - Profile & Security */}
+
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Profile Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow">
+            <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow`}>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5 sm:mb-6 space-y-3 sm:space-y-0">
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <div className="bg-green-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
@@ -446,7 +452,7 @@ export default function SettingsPage() {
             </div>
 
             {/* Appearance Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
+            {/* <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 lg:p-8 hover:shadow-2xl transition-shadow">
               <div className="flex items-center space-x-2 sm:space-x-3 mb-4 sm:mb-6">
                 <div className="bg-purple-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
                   <Palette className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
@@ -485,13 +491,13 @@ export default function SettingsPage() {
                   );
                 })}
               </div>
-            </div>
+            </div> */}
 
             {/* Logout Card */}
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 hover:shadow-2xl transition-shadow">
+            <div className="bg-red-500 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 hover:shadow-2xl transition-shadow">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-2 sm:space-x-3 text-gray-600 hover:text-red-600 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-base"
+                className="w-full flex items-center justify-center space-x-2 sm:space-x-3 text-white hover:text-red-600 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-xl"
               >
                 <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Log Out</span>
