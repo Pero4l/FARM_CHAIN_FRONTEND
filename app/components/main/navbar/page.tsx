@@ -63,13 +63,13 @@ const MainNavPage = () => {
                   </div>
 
                   {/* mobile dropdown (shows when checkbox is checked) */}
-                    <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 ${theme === 'dark' ? 'bg-white text-black' : 'bg-white'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40`}>
+                    <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40`}>
                     <label
                     htmlFor="mobile-menu-toggle"
                     onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <Home className="w-4 h-4" />
                     </span>
                     Dashboard
@@ -80,7 +80,7 @@ const MainNavPage = () => {
                     onClick={() => { setActiveTab("feed"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <TrendingUp className="w-4 h-4" />
                     </span>
                     Feed
@@ -91,7 +91,7 @@ const MainNavPage = () => {
                     onClick={() => { setActiveTab("marketplace"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <Store className="w-4 h-4" />
                     </span>
                     Marketplace
@@ -102,7 +102,7 @@ const MainNavPage = () => {
                     onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <MessageCircle className="w-4 h-4" />
                     </span>
                     Messages
@@ -113,7 +113,7 @@ const MainNavPage = () => {
                     onClick={() => { setActiveTab("weather"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <Cloud className="w-4 h-4" />
                     </span>
                     Weather
@@ -124,7 +124,7 @@ const MainNavPage = () => {
                     onClick={() => { setActiveTab("analytics"); setIsMenuOpen(false); }}
                     className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
-                    <span className="w-4 h-4 text-gray-600 mr-2">
+                    <span className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                       <BarChart3 className="w-4 h-4" />
                     </span>
                     Analytics
