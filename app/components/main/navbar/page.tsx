@@ -4,6 +4,7 @@ import React from 'react'
 import {
   Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X,Home,TrendingUp,Store,Cloud,BarChart3,PlusCircle
 } from "lucide-react";
+import { useTheme } from 'next-themes'
 
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 
@@ -14,6 +15,7 @@ const MainNavPage = () => {
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { theme } = useTheme();
  
 
  const menuRef = useRef<HTMLDivElement | null>(null);
@@ -37,7 +39,7 @@ const MainNavPage = () => {
   return (
     <>
       {/* HEADER */}
-      <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm">
+      <header className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white/80'} backdrop-blur-md border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm`}>
         <div className="max-w-[1600px] mx-auto px-3">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-8">
@@ -155,9 +157,9 @@ const MainNavPage = () => {
 
               {/* Messages */}
               <button onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Messages">
-                <MessageCircle className="w-6 h-6 text-gray-700" />
+                <MessageCircle className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
                 {message > 0 && (
-                  <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute top-1 right-1 bg-red-500 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {message}
                   </span>
                 )}
