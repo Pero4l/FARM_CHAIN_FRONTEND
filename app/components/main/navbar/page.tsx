@@ -152,7 +152,7 @@ const MainNavPage = () => {
 
               {/* Create post */}
               <button onClick={() => { setActiveTab("create_post") }} className="lg:hidden p-3 hover:bg-gray-100 rounded-xl transition-colors" title="plus">
-                <PlusCircle className="w-6 h-6 text-gray-700" />
+                <PlusCircle className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
               </button>
 
               {/* Messages */}
@@ -167,7 +167,7 @@ const MainNavPage = () => {
 
                 {/* Notification */}
               <button onClick={() => { setActiveTab("notification"); setIsMenuOpen(false); }} className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
-                <Bell className="w-6 h-6 text-gray-700" />
+                <Bell className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
                 {notifications > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {notifications}
@@ -229,7 +229,7 @@ const MainNavPage = () => {
             htmlFor="mobile-menu-toggle"
             className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden"
           >
-            <span onClick={() => setIsMenuOpen(!isMenuOpen)} className="w-6 text-gray-700">
+            <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
               {isMenuOpen ? <X /> : <Menu />}
             </span>
 
