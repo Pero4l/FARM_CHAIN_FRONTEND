@@ -178,7 +178,7 @@ const MainNavPage = () => {
               
               
 
-              {/* USER MENU */}
+              {/* USER MENU LG*/}
               <div className="relative hidden md:flex" ref={menuRef}>
                 <div
                   onClick={() => setUserOption(prev => !prev)}
@@ -188,28 +188,28 @@ const MainNavPage = () => {
                 </div>
 
                 {userOption && (
-                  <div className="absolute right-0 top-12 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
+                  <div className={`absolute right-0 top-14 w-52 rounded-2xl shadow-xl border border-gray-100 z-50 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
                     <div className="p-3 space-y-1">
 
                       <button
                         onClick={() => { setActiveTab("profile"); setUserOption(false) }}
-                        className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                        <User className="w-4 h-4 text-gray-600" />
-                        <span className="text-sm font-medium text-gray-700">Profile</span>
+                        className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                        <User className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                        <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Profile</span>
                       </button>
 
-                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                        <Award className="w-4 h-4 text-gray-600" />
-                        <span className="text-sm font-medium text-gray-700">Achievements</span>
+                      <button className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                        <Award className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                        <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Achievements</span>
                       </button>
 
-                      <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                        <Settings className="w-4 h-4 text-gray-600" />
-                        <span className="text-sm font-medium text-gray-700">Settings</span>
+                      <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                        <Settings className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                        <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Settings</span>
                       </button>
 
                       <hr className="my-2" />
-                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
+                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-100 rounded-xl transition-colors text-left">
                         <LogOut className="w-4 h-4 text-red-600" />
                         <span className="text-sm font-medium text-red-600">Logout</span>
                       </button>
@@ -234,7 +234,7 @@ const MainNavPage = () => {
             </span>
 
             <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-6 py-2.5 w-full">
-              <Search className="w-5 h-5 text-gray-500 mr-3" />
+              <Search className="w-5 h-5 text-gray-5000 mr-3" />
               <input
                 type="text"
                 placeholder="Search farmers, products, insights..."
@@ -247,30 +247,30 @@ const MainNavPage = () => {
           <div className="relative md:hidden bottom-2" ref={menuRef}>
             <div
               onClick={() => setUserOption(prev => !prev)}
-              className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
+              className="w-10 h-10 bg-gradient-to-r from-purple-5000 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
             >
               U
             </div>
 
             {userOption && (
-              <div className="absolute right-0 top-14 w-52 bg-white rounded-2xl shadow-xl border border-gray-100 z-50">
+              <div className={`absolute right-0 top-14 w-52 rounded-2xl shadow-xl border border-gray-100 z-50 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
                 <div className="p-3 space-y-1">
                   <button
                     onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
                     className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left"
                   >
-                    <User className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">Profile</span>
+                    <User className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Profile</span>
                   </button>
 
                   <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                    <Award className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">Achievements</span>
+                    <Award className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Achievements</span>
                   </button>
 
                   <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                    <Settings className="w-4 h-4 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">Settings</span>
+                    <Settings className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={ `${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Settings</span>
                   </button>
                   <hr className="my-2" />
 

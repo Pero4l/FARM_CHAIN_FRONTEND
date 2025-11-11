@@ -18,7 +18,7 @@ const profile = () => {
                 className=" rounded-4xl mx-auto  w-[97%] h-[90%] md:h-[230px] object-cover "
               />
               <div className="absolute top-3 right-4 lg:right-7">
-                <button className=" bg-green-100  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-500">
+                <button className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">
                   <p className="text-sm">follow</p>
                   <FaPlus size={10} />
                 </button>
