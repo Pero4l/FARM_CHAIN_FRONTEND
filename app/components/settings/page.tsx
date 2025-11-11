@@ -282,7 +282,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                   </div>
                   <button
                     onClick={handleStartEdit}
-                    className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl sm:rounded-2xl hover:from-green-700 hover:to-emerald-700 font-bold transition-all shadow-lg hover:shadow-xl text-sm sm:text-base"
+                    className="w-full sm:w-full px-6 sm:px-8 py-3 sm:py-3.5 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl sm:rounded-2xl hover:from-green-700 hover:to-emerald-700 font-bold transition-all shadow-lg hover:shadow-xl text-sm sm:text-base"
                   >
                     Edit Profile
                   </button>
@@ -500,7 +500,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
             <div className="bg-red-500 rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-3 sm:p-3 lg:p-2 hover:shadow-2xl transition-shadow">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center space-x-2 sm:space-x-3 text-white hover:text-gray-800 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-xl"
+                className="w-full flex items-center justify-center space-x-2 sm:space-x-3  text-white hover:text-gray-800 font-bold transition-colors py-2 sm:py-3 text-sm sm:text-xl"
               >
                 <LogOut className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span>Log Out</span>

@@ -112,7 +112,7 @@ const FarmChain: React.FC = () => {
     <>
     {/* MAIN NAV */}
     <MainNavPage/>
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-black' : 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50'}`}>
+    <div suppressHydrationWarning className={`min-h-screen ${theme === 'dark' ? 'bg-black' : 'bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50'}`}>
       {/* BODY */}
       <div className="max-w-[1600px] mx-auto px-2 py-8 mt-20 lg:mt-10">
         
