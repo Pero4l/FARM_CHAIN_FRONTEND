@@ -370,8 +370,8 @@ const FarmChain: React.FC = () => {
               </div>
 
               {/* online users */}
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
+              <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-6`}>
+                <h3 className={`font-bold text-lg  mb-6 flex items-center  ${theme === 'dark' ? 'bg-black text-white' : 'text-gray-900'}`}>
                   <Users className="w-5 h-5 mr-2 text-blue-500" />
                   Farmers Online
                 </h3>
@@ -410,7 +410,7 @@ const FarmChain: React.FC = () => {
                   ].map((farmer, index) => (
                     <div
                       key={index}
-                      className="flex items-center space-x-3 p-2 hover:bg-gray-50 rounded-xl cursor-pointer transition-colors"
+                      className="flex items-center space-x-3 p-2 hover:bg-white/15 rounded-xl cursor-pointer transition-colors"
                     >
                       <div className="relative">
                         <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
@@ -427,16 +427,16 @@ const FarmChain: React.FC = () => {
                         ></div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-semibold text-gray-900 truncate">
+                        <p className={`font-semibold ${theme === 'dark' ? '' : 'text-gray-900'} truncate`}>
                           {farmer.name}
                         </p>
-                        <p className="text-gray-500 text-xs truncate flex items-center">
+                        <p className="text-gray-400 text-xs truncate flex items-center">
                           <Globe className="w-3 h-3 mr-1" />
                           {farmer.farm}
                         </p>
                       </div>
                       <button
-                        className="p-2 hover:bg-green-100 rounded-full transition-colors"
+                        className={`p-2  ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-green-100'} rounded-full transition-colors`}
                         title="Send Message"
                       >
                         <MessageCircle className="w-4 h-4 text-green-600" />
@@ -444,7 +444,7 @@ const FarmChain: React.FC = () => {
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-4 text-center text-green-600 hover:text-green-700 font-semibold text-sm py-2 hover:bg-green-50 rounded-xl transition-colors">
+                <button className={`w-full mt-4 text-center text-green-600  ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-green-700'} font-semibold text-sm py-2 hover:bg-green-50 rounded-xl transition-colors`}>
                   View All (1,247 online)
                 </button>
               </div>
