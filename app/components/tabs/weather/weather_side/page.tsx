@@ -6,6 +6,7 @@ import {
   Thermometer,
   Wind,
 } from "lucide-react";
+import { useTheme } from 'next-themes'
 
 type WeatherData = {
   location: string;
@@ -23,6 +24,8 @@ const WeatherSide = () => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+   const { theme, setTheme } = useTheme();
+  
 
   const apiKey = "bbc866c78ccd689ab15a1de21e627ba0"; 
 
@@ -119,7 +122,7 @@ const WeatherSide = () => {
 
   return (
     <div className="">
-      <div className="bg-gradient-to-br from-blue-500 to-cyan-500 rounded-3xl shadow-xl text-white p-6 relative overflow-hidden">
+      <div className={`${theme === 'dark' ? 'border-1 bg-gradient-to-br from-white/15 to-' : 'bg-gradient-to-br from-blue-500 to-cyan-500'} rounded-3xl shadow-xl text-white p-6 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex justify-between">

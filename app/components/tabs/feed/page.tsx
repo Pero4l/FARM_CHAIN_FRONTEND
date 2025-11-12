@@ -316,6 +316,25 @@ const feedPage = () => {
   return (
     <div>
         <div className="space-y-8 sm:px-6 md:px-0">
+
+                              <div className="bg-gradient-to-br from-green-600 via- to-green-900 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+                {/* subtle overlay */}
+                <div className="absolute inset-0 bg-black/10"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h2 className="text-3xl font-black mb-2">Post Feed 📰</h2>
+                      <p className="text-pink-100 text-lg">
+                        Discover the latest updates and stories from the community
+                      </p>
+                    </div>
+                    <div className="text-6xl opacity-20">🐄</div>
+                  </div>
+                </div>
+              </div>
+
+
                 {/* Post input card */}
                 <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6">
                   <div className="flex items-start space-x-4">

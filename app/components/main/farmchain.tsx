@@ -124,7 +124,7 @@ const FarmChain: React.FC = () => {
         
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:mt-9">
-          {/* Sidebar */}
+          {/*left Sidebar */}
           <div className="lg:col-span-2 relative">
             <div
               className={`hidden lg:block ${theme === 'dark' ? 'bg-black' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-4 sticky top-2`}
@@ -261,7 +261,6 @@ const FarmChain: React.FC = () => {
             <div className="space-y-6 sticky top-28">
               {/* weather */}
               <WeatherSide/>
-
 
               {/* trending now */}
               <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-6`}>

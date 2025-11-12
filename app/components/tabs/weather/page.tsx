@@ -1,5 +1,5 @@
 'use client';
-
+import { useTheme } from 'next-themes'
 import React, { useState, useEffect } from 'react';
 import {
   MapPin,
@@ -64,6 +64,7 @@ const WeatherPage: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const { theme, setTheme } = useTheme();
 
   // ✅ Fetch weather using lat/lon
   const fetchWeather = async (lat: number, lon: number, fallbackCity?: string) => {
@@ -233,7 +234,7 @@ const WeatherPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* 🌤 Header */}
-      <div className="bg-gradient-to-br from-blue-500 via-sky-500 to-cyan-500 rounded-3xl shadow-2xl text-white p-6 py-10 md:py-8 md:px-8 lg:px-8 lg:py-10 relative overflow-hidden">
+      <div className={`${theme === 'dark' ? 'border-1 bg-gradient-to-br from- to-' : 'bg-gradient-to-br from-blue-500 to-cyan-500'} rounded-3xl shadow-2xl text-white p-6 py-10 md:py-8 md:px-8 lg:px-8 lg:py-10 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex items-center justify-between">
@@ -267,7 +268,7 @@ const WeatherPage: React.FC = () => {
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full bg-gray-200 rounded-2xl py-4 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 focus:outline-none focus:ring-2 focus:ring-green-500 transition"
+          className={`w-full ${theme === 'dark' ? 'border-1 ' : 'bg-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500 transition'} rounded-2xl py-4 pl-12 pr-14 sm:py-3.5 sm:pl-14 sm:pr-20 `}
         />
         <button
           type="button"
