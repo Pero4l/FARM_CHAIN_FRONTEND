@@ -351,7 +351,7 @@ const FarmChain: React.FC = () => {
                         <p className={`text-sm ${theme === 'dark' ? '' : 'text-gray-600'}`}>per bushel</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-lg text-gray-900">
+                        <p className={`font-bold text-lg  ${theme === 'dark' ? '' : 'text-gray-900'}`}>
                           {item.price}
                         </p>
                         <span
