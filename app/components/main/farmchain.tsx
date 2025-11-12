@@ -295,7 +295,7 @@ const FarmChain: React.FC = () => {
                   ].map((topic, index) => (
                     <button
                       key={index}
-                      className="w-full text-left p-3 hover:bg-gray-50 rounded-xl transition-colors group"
+                      className="w-full text-left p-3 hover:bg-white/15 rounded-xl transition-colors group"
                     >
                       <div className="flex items-center justify-between">
                         <div>
