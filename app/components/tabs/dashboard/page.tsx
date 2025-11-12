@@ -7,6 +7,7 @@ import {
   Target,
   Clock,
 } from "lucide-react";
+import { useTheme } from 'next-themes'
 
 type Insight = {
   title: string;
@@ -180,6 +181,9 @@ const posts: Post[] = [
 ];
 
 const dashboard = () => {
+
+    const { theme, setTheme } = useTheme();
+
   return (
     <div>
       <div className="space-y-8">
