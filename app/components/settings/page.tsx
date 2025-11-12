@@ -185,7 +185,10 @@ const handleThemeChange = (newTheme: ThemeOption) => {
 
         {/* Header */}
         <div className={`bg-gradient-to-br ${theme === 'dark' ? 'bg-black text-white' : ' from-green-600 via-emerald-600 to-teal-600'} rounded-2xl sm:rounded-3xl shadow-2xl text-white p-5 sm:p-8 lg:p-12 mb-6 sm:mb-8 relative overflow-hidden border border-gray-100`}>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+          <div 
+          className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30">
+
+          </div>
           
           <div className="relative z-10 flex flex-col space-y-5 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex-1">
@@ -242,7 +245,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
 
           <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Profile Card */}
-            <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow`}>
+            <div className={`${theme === 'dark' ? 'bg-black text-white rounded-2xl' : 'bg-white text-black'} sm:rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-8 lg:p-10 hover:shadow-2xl transition-shadow`}>
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-5 sm:mb-6 space-y-3 sm:space-y-0">
                 <div className="flex items-center space-x-2 sm:space-x-3">
                   <div className="bg-green-100 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
