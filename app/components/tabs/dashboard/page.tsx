@@ -245,7 +245,7 @@ const dashboard = () => {
             {posts.slice(0, 3).map((post) => (
               <div
                 key={post.id}
-                className={`flex items-center space-x-4 py-4 ${theme === 'dark' ? 'hover:bg-white/25 hover:px-2' : 'hover:bg-gray-50 '} rounded-2xl transition-colors cursor-pointer`}
+                className={`flex items-center space-x-4 py-4 ${theme === 'dark' ? 'hover:bg-white/15 hover:px-2' : 'hover:bg-gray-50 '} rounded-2xl transition-colors cursor-pointer`}
               >
                 <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
                   {post.avatar}
