@@ -264,8 +264,8 @@ const FarmChain: React.FC = () => {
 
 
               {/* trending now */}
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
+              <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-6`}>
+                <h3 className={`font-bold text-lg  mb-6 flex items-center  ${theme === 'dark' ? 'bg-black text-white' : 'text-gray-900'}`}>
                   <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
                   Trending Topics
                 </h3>
@@ -302,7 +302,7 @@ const FarmChain: React.FC = () => {
                           <p className="font-semibold text-green-600 group-hover:text-green-700">
                             {topic.tag}
                           </p>
-                          <p className="text-gray-500 text-xs">{topic.posts}</p>
+                          <p className={`${theme === 'dark' ? 'text-gray-100' : 'text-gray-500'} text-xs`}>{topic.posts}</p>
                         </div>
                         <span className="text-green-500 text-sm font-bold">
                           {topic.trend}
@@ -314,8 +314,8 @@ const FarmChain: React.FC = () => {
               </div>
 
               {/* market price */}
-              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6">
-                <h3 className="font-bold text-lg text-gray-900 mb-6 flex items-center">
+              <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-6`}>
+                <h3 className={`font-bold text-lg  mb-6 flex items-center  ${theme === 'dark' ? 'bg-black text-white' : 'text-gray-900'}`}>
                   <TrendingUp className="w-5 h-5 mr-2 text-green-500" />
                   Market Prices
                 </h3>
@@ -342,13 +342,13 @@ const FarmChain: React.FC = () => {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-3 bg-gray-50 rounded-xl"
+                      className={`flex items-center justify-between p-3 ${theme === 'dark' ? '' : 'bg-gray-50'} border-1 rounded-xl`}
                     >
                       <div>
-                        <p className="font-semibold text-gray-900">
+                        <p className={`font-semibold  ${theme === 'dark' ? '' : 'text-gray-900'}`}>
                           {item.crop}
                         </p>
-                        <p className="text-gray-600 text-sm">per bushel</p>
+                        <p className={`text-sm ${theme === 'dark' ? '' : 'text-gray-600'}`}>per bushel</p>
                       </div>
                       <div className="text-right">
                         <p className="font-bold text-lg text-gray-900">
