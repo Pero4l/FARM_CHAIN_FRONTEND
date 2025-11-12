@@ -73,25 +73,31 @@ const TabButton: React.FC<{
   isActive: boolean;
   onClick: (id: string) => void;
   badge?: number;
-}> = ({ id, icon: Icon, label, isActive, onClick, badge }) => (
+}> = ({ id, icon: Icon, label, isActive, onClick, badge }) => {
+  const { theme } = useTheme();
 
-  <button
-    onClick={() => onClick(id)}
-    className={`relative flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 w-full ${
-      isActive
-        ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg transform scale-105"
-        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:scale-105"
-    }`}
-  >
-    <Icon className="w-5 h-5" />
-    <span className="font-semibold">{label}</span>
-    {badge && badge > 0 && (
-      <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-        {badge}
-      </span>
-    )}
-  </button>
-);
+  return (
+    <button
+      onClick={() => onClick(id)}
+      className={`relative flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-300 w-full ${
+        isActive
+          ? "bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg transform scale-105"
+          : theme === "dark"
+          ? "text-white hover:bg-gray-800 hover:text-gray-100 hover:scale-105"
+          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:scale-105"
+      }`}
+    >
+      <Icon className="w-5 h-5" />
+      <span className="font-semibold">{label}</span>
+      {badge && badge > 0 && (
+        <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+          {badge}
+        </span>
+      )}
+    </button>
+  );
+};
+
 
 
 /* ================= MAIN COMPONENT ================= */
