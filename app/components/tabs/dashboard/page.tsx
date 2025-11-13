@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   TrendingUp,
@@ -182,7 +184,7 @@ const posts: Post[] = [
 
 const dashboard = () => {
 
-    const { theme, setTheme } = useTheme();
+const { theme, setTheme } = useTheme();
 
   return (
     <div>

@@ -106,6 +106,7 @@ const FarmChain: React.FC = () => {
   const [notifications, setNotifications] = useState(3);
   const [mainMenu, setMainMenu] = useState(false);
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
 
 
@@ -113,6 +114,16 @@ const FarmChain: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [activeTab]);
 
+
+    // Only render theme-dependent UI after hydration
+        React.useEffect(() => {
+          setMounted(true);
+        }, []);
+
+        if (!mounted) {
+          // Prevent rendering until client-side
+          return null;
+        }
   
   return (
     <>
