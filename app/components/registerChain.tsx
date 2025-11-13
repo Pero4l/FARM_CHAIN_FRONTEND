@@ -1,5 +1,7 @@
 'use client';
 import React, { useState, ChangeEvent } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface FormData {
   first_name: string;
@@ -70,6 +72,7 @@ const RegisterChain: React.FC = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
       setMessage('✅ Account created successfully!');
+      toast.success('Account created successfully!');
     } catch (err: any) {
       setMessage(`❌ ${err.message}`);
     } finally {
@@ -78,7 +81,20 @@ const RegisterChain: React.FC = () => {
   };
 
   return (
-    <div>
+    <div >
+      <ToastContainer
+  position="top-right"
+  autoClose={3000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+  theme="colored"
+/>
+
       <div>
         <div className="text-center mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
