@@ -341,7 +341,7 @@ const FarmChain: React.FC = () => {
                   ].map((item, i) => (
                     <div
                       key={i}
-                      className={`flex items-center justify-between p-3 ${theme === 'dark' ? '' : 'bg-gray-50'} border-1 rounded-xl`}
+                      className={`flex items-center justify-between p-3 ${theme === 'dark' ? 'border-1' : 'bg-gray-50'}  rounded-xl`}
                     >
                       <div>
                         <p className={`font-semibold  ${theme === 'dark' ? '' : 'text-gray-900'}`}>

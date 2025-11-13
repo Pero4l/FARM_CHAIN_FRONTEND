@@ -382,11 +382,11 @@ const feedPage = () => {
                 </div>
 
                 {/* Community Feed header */}
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center">
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900">
+                <div className={`${theme === 'dark' ? 'text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center`}>
+                  <h3 className={`text-lg sm:text-xl font-bold  ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                     Community Feed
                   </h3>
-                  <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
+                  <button className={`flex items-center space-x-1 sm:space-x-2 ${theme === 'dark' ? 'text-white' : 'text-gray-600'} hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}>
                     <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span className="font-semibold">Filter</span>
                   </button>
