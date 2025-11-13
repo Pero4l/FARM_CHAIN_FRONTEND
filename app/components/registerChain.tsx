@@ -167,7 +167,9 @@ const RegisterChain: React.FC = () => {
         {/* Step 1: Personal Information */}
         {currentStep === 1 && (
           <div className="space-y-5">
-            <div>
+           
+           <div className="flex gap-3">
+             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 First Name <span className="text-red-500">*</span>
               </label>
@@ -194,6 +196,7 @@ const RegisterChain: React.FC = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
               />
             </div>
+           </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
