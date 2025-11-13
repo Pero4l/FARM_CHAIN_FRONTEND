@@ -234,7 +234,7 @@ const WeatherPage: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* 🌤 Header */}
-      <div className={`${theme === 'dark' ? 'border-1 bg-gradient-to-br from- to-' : 'bg-gradient-to-br from-blue-500 to-cyan-500'} rounded-3xl shadow-2xl text-white p-6 py-10 md:py-8 md:px-8 lg:px-8 lg:py-10 relative overflow-hidden`}>
+      <div className={`${theme === 'dark' ? 'border-1 bg-gradient-to-br from-white/10 to-white/15' : 'bg-gradient-to-br from-blue-500 to-cyan-500'} rounded-3xl shadow-2xl text-white p-6 py-10 md:py-8 md:px-8 lg:px-8 lg:py-10 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
           <div className="flex items-center justify-between">
@@ -282,8 +282,8 @@ const WeatherPage: React.FC = () => {
       </div>
 
       {/* 📅 3-Day Forecast */}
-      <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-        <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+      <div className={`${theme === 'dark' ? 'text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-8`}>
+        <h3 className={`text-2xl font-bold  ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
           <Calendar className="w-7 h-7 mr-3 text-green-500" />
           3-Day Forecast
         </h3>
@@ -291,14 +291,14 @@ const WeatherPage: React.FC = () => {
           {weatherData.forecast.map((day, i) => (
             <div
               key={i}
-              className="text-center p-6 bg-gradient-to-br from-gray-50 to-blue-50 rounded-2xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+              className={`text-center p-6  ${theme === 'dark' ? 'border-1' : 'bg-gradient-to-br from-gray-50 to-blue-50'} rounded-2xl hover:shadow-lg transition-all duration-300 hover:scale-105`}
             >
-              <div className="font-bold text-lg text-gray-900 mb-3">{day.day}</div>
+              <div className={`font-bold text-lg  mb-3 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{day.day}</div>
               <div className="flex justify-center mb-4">{day.icon}</div>
-              <div className="text-sm text-gray-600 mb-2 capitalize">{day.condition}</div>
-              <div className="font-bold text-lg text-gray-900 mb-2">
+              <div className={`text-sm  mb-2 capitalize  ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`}>{day.condition}</div>
+              <div className={`font-bold text-lg  mb-2 ${theme === 'dark' ? 'text-white/50' : 'text-gray-900'}`}>
                 <span className="text-xl">{day.high}</span> /{" "}
-                <span className="text-gray-600">{day.low}</span>
+                <span className={`${theme === 'dark' ? 'text-white' : 'text-gray-600'}`}>{day.low}</span>
               </div>
               <div className="text-xs text-blue-600 font-semibold">
                 {day.precipitation} rain
@@ -310,8 +310,8 @@ const WeatherPage: React.FC = () => {
 
       {/* ⚠️ Smarter Farming Weather Alerts */}
       {weatherData.alerts.length > 0 && (
-  <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
-    <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+  <div className={`${theme === 'dark' ? 'text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-8`}>
+    <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
       <AlertCircle className="w-7 h-7 mr-3 text-orange-500" />
       Weather & Farming Advisory
     </h3>
@@ -343,12 +343,16 @@ const WeatherPage: React.FC = () => {
         }
 
         return (
-          <div
-            key={i}
-            className={`p-4 rounded-2xl border-l-4 ${
+                    <div
+                      key={i}
+                      className={`p-4 rounded-2xl border-l-4 ${
               alert.severity === "moderate"
-                ? "bg-orange-50 border-orange-500"
-                : "bg-blue-50 border-blue-500"
+                ? theme === "dark"
+                  ? "border border-orange-500"
+                  : "bg-orange-50 border-orange-500"
+                : theme === "dark"
+                  ? "border border-blue-500"
+                  : "bg-blue-50 border-blue-500"
             }`}
           >
             <div className="flex items-start space-x-3">
@@ -360,10 +364,10 @@ const WeatherPage: React.FC = () => {
                 }`}
               />
               <div>
-                <p className="font-semibold text-gray-900 mb-1">
+                <p className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-1`}>
                   {alert.message}
                 </p>
-                <p className="text-sm text-gray-700">{farmingAdvice}</p>
+                <p className={`text-sm ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>{farmingAdvice}</p>
               </div>
             </div>
           </div>

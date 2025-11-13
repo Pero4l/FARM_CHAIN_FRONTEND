@@ -189,7 +189,7 @@ const dashboard = () => {
       <div className="space-y-8">
 
         {/* hheader */}
-        <div className={`${theme === 'dark' ? "bg-black text-white border-2" : "bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600"} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
+        <div className={`${theme === 'dark' ? " bg-gradient-to-br from-white/10 to-white/15 text-white border-1" : "bg-gradient-to-br from-green-600 via-emerald-600 to-teal-600"} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between">

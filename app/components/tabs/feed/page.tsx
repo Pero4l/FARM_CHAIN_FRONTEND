@@ -14,6 +14,7 @@ import {
   Filter,
   Send
 } from "lucide-react";
+import { useTheme } from 'next-themes';
 
 type Post = {
   id: number;
@@ -34,6 +35,7 @@ type Post = {
   tags?: string[];
   category: string;
 };
+
 
 
 // POST CARD
@@ -178,6 +180,8 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => (
 
 const feedPage = () => {
 
+ const { theme, setTheme } = useTheme();
+
     const posts: Post[] = [
     {
       id: 1,
@@ -317,7 +321,7 @@ const feedPage = () => {
     <div>
         <div className="space-y-8 sm:px-6 md:px-0">
 
-                              <div className="bg-gradient-to-br from-green-600 via- to-green-900 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+                <div className={` ${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 text-white border-1' : 'bg-gradient-to-br from-green-600 via- to-green-900'} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
                 {/* subtle overlay */}
                 <div className="absolute inset-0 bg-black/10"></div>
                 
@@ -336,7 +340,7 @@ const feedPage = () => {
 
 
                 {/* Post input card */}
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6">
+                <div className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}>
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
                       U
@@ -344,24 +348,24 @@ const feedPage = () => {
                     <div className="flex-1">
                       <textarea
                         placeholder="What's happening on your farm today?"
-                        className="w-full p-3 sm:p-4 border border-gray-200 rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400 text-sm sm:text-base"
+                        className={`w-full p-3 sm:p-4 border border-gray-100 rounded-2xl resize-none  ${theme === 'dark' ? 'focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-100' : 'focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400'} text-sm sm:text-base`}
                         rows={3}
                       />
                       <div className="flex flex-wrap justify-between items-center mt-4 gap-2 sm:gap-4">
                         <div className="flex flex-wrap space-x-2 sm:space-x-4">
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap">
+                          <button className={`flex items-center space-x-1 sm:space-x-2  ${theme === 'dark' ? 'text-white' : 'text-gray-600'} hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}>
                             <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
                             <span>Photo</span>
                           </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap">
+                          <button className={`flex items-center space-x-1 sm:space-x-2  ${theme === 'dark' ? 'text-white' : 'text-gray-600'} hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap`}>
                             <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                             <span>Video</span>
                           </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap">
+                          <button className={`flex items-center space-x-1 sm:space-x-2  ${theme === 'dark' ? 'text-white' : 'text-gray-600'} hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap`}>
                             <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
                             <span>Audio</span>
                           </button>
-                          <button className="flex items-center space-x-1 sm:space-x-2 text-gray-600 hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap">
+                          <button className={`flex items-center space-x-1 sm:space-x-2  ${theme === 'dark' ? 'text-white' : 'text-gray-600'} hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap`}>
                             <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                             <span>Location</span>
                           </button>
