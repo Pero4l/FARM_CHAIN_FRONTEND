@@ -1,3 +1,4 @@
+'use client';
 import React from "react";
 // import Image from 'next/image';
 import {
@@ -336,7 +337,7 @@ const feedPage = () => {
                 </div>
 
                 <div className="mb-4">
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className={` leading-relaxed ${theme === 'dark' ? '' : 'text-gray-700'}`}>
                     {post.content}
                   </p>
 
@@ -412,22 +413,22 @@ const feedPage = () => {
 
               <div className="border-t border-gray-100 px-3 py-4">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-6">
-                    <button className="flex items-center space-x-2 text-gray-600 hover:text-red-500 transition-colors">
+                  <div className="flex items-center space-x-6 lg:space-x-10">
+                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-red-500 transition-colors`}>
                       <Heart className="w-5 h-5" />
                       <span className="font-semibold">{post.likes}</span>
                     </button>
-                    <button className="flex items-center space-x-2 text-gray-600 hover:text-blue-500 transition-colors">
+                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-blue-500 transition-colors`}>
                       <MessageSquare className="w-5 h-5" />
                       <span className="font-semibold">{post.comments}</span>
                     </button>
-                    <button className="flex items-center space-x-2 text-gray-600 hover:text-green-500 transition-colors">
+                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-green-500 transition-colors`}>
                       <Share className="w-5 h-5" />
                       <span className="font-semibold">{post.shares}</span>
                     </button>
                   </div>
 
-                  <div className="text-sm text-gray-500">
+                  <div className={`text-sm ${theme === 'dark' ? '' : ' text-gray-500'} hover:text-green-500 transition-colors`}>
                     <Eye className="w-4 h-4 inline mr-1" />
                     {post.likes + post.comments * 3} views
                   </div>
