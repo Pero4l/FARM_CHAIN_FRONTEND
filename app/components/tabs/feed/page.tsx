@@ -219,7 +219,7 @@ const feedPage = () => {
                 className={`w-full p-3 sm:p-4 border border-gray-100 rounded-2xl resize-none  ${
                   theme === "dark"
                     ? "focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-100"
-                    : "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent text-gray-700 placeholder-gray-400"
+                    : "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent border-2 border-gray-300 text-gray-700 placeholder-gray-400"
                 } text-sm sm:text-base`}
                 rows={3}
               />
