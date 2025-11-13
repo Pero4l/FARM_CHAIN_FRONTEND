@@ -88,6 +88,7 @@ const message = () => {
   return (
     <div>
       <div className="space-y-8">
+        {/* header */}
         <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 text-white border-1' : 'bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600'} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10">
@@ -103,16 +104,17 @@ const message = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+        {/* messages list */}
+        <div className={`${theme === 'dark' ? '' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 overflow-hidden`}>
           <div className="p-6 border-b border-gray-100">
             <div className="flex items-center justify-between">
-              <h3 className="text-xl font-bold text-gray-900">Conversations</h3>
+              <h3 className={`text-xl font-bold ${theme === 'dark' ? '' : 'text-gray-900 '}`}>Conversations</h3>
               <div className="flex items-center space-x-2">
                 <button
-                  className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+                  className={`p-2  rounded-xl transition-colors ${theme === 'dark' ? 'hover:bg-white/15 ' : ' hover:bg-gray-100'}`}
                   title="Call"
                 >
-                  <Phone className="w-5 h-5 text-gray-600" />
+                  <Phone className={`w-5 h-5  ${theme === 'dark' ? '' : 'text-gray-600'}`} />
                 </button>
                 <button className="bg-green-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-green-700 transition-colors flex items-center space-x-2">
                   <Mail className="w-4 h-4" />
