@@ -365,22 +365,22 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                 </div>
                 <div>
                   <h2 className={`text-xl sm:text-2xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Security</h2>
-                  <p className={`"${theme === 'dark' ? 'text-white' : 'text-gray-500'} text-xs sm:text-sm"`}>Protect your account</p>
+                  <p className={`${theme === 'dark' ? 'text-white' : 'text-gray-500'} text-xs sm:text-sm"`}>Protect your account</p>
                 </div>
               </div>
 
               <div className="space-y-3 sm:space-y-4">
 
                 {/* password */}
-                <div className={` ${theme === 'dark' ? 'bg-white' : 'bg-gradient-to-r from-amber-50 to-orange-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-100 hover:shadow-md transition-shadow`}>
+                <div className={` ${theme === 'dark' ? '' : 'bg-gradient-to-r from-amber-50 to-orange-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-amber-100 hover:shadow-md transition-shadow`}>
                   <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between space-y-3 xs:space-y-0">
                     <div className="flex items-center space-x-3 sm:space-x-4">
                       <div className="bg-amber-100 p-2 sm:p-3 rounded-lg sm:rounded-xl">
                         <Lock className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-sm sm:text-base text-gray-800">Password</h3>
-                        <p className="text-xs sm:text-sm text-gray-600">Last changed 3 months ago</p>
+                        <h3 className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Password</h3>
+                        <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`}>Last changed 3 months ago</p>
                       </div>
                     </div>
                     <button
@@ -393,15 +393,15 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                 </div>
 
                 {/* two-factor auth */}
-                <div className={` ${theme === 'dark' ? 'bg-white' : 'bg-gradient-to-r from-blue-50 to-indigo-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 hover:shadow-md transition-shadow`}>
+                <div className={` ${theme === 'dark' ? '' : 'bg-gradient-to-r from-blue-50 to-indigo-50'} rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 hover:shadow-md transition-shadow`}>
                   <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between space-y-3 xs:space-y-0">
                     <div className="flex items-center space-x-3 sm:space-x-4">
                       <div className="bg-blue-100 p-2 sm:p-3 rounded-lg sm:rounded-xl">
                         <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-sm sm:text-base text-gray-800">Two-Factor Auth</h3>
-                        <p className="text-xs sm:text-sm text-gray-600">Extra security layer</p>
+                        <h3 className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Two-Factor Auth</h3>
+                        <p className={`text-xs sm:text-sm ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`}>Extra security layer</p>
                       </div>
                     </div>
                     <button className="w-full xs:w-auto px-4 sm:px-6 py-2 sm:py-2.5 bg-blue-600 text-white rounded-lg sm:rounded-xl hover:bg-blue-700 font-bold transition-all shadow-md hover:shadow-lg text-sm sm:text-base">
