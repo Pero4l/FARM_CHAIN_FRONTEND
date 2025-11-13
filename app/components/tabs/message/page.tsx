@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import {
   Home,
@@ -39,6 +41,7 @@ import {
   PieChart,
   Search,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 type Message = {
   id: number;
@@ -81,10 +84,11 @@ const messages: Message[] = [
 ];
 
 const message = () => {
+  const { theme, setTheme } = useTheme();
   return (
     <div>
       <div className="space-y-8">
-        <div className="bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+        <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 text-white border-1' : 'bg-gradient-to-br from-purple-600 via-indigo-600 to-blue-600'} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
           <div className="absolute inset-0 bg-black/10"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between">
