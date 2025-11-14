@@ -47,6 +47,8 @@ const LoginPage = () => {
 
       toast.success("Login successfully!");
 
+      localStorage.setItem("farmchain_token", data.token);
+
       setTimeout(() => {
         router.push('/main');
       }, 2000);
