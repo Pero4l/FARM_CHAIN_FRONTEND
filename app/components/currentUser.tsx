@@ -4,7 +4,7 @@ const CurrentUser = () => {
 
   return (
     <>
-      
+      children
     </>
   )
 }
