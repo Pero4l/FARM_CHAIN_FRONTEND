@@ -1,10 +1,16 @@
 import React from 'react'
 import FarmChain from '../components/farm_chain/farmchain'
+import RequireAuth from '../components/RequireAuth'
 
 const Mainpage = () => {
   return (
     <div>
-      <FarmChain />
+        <RequireAuth>
+
+        <FarmChain />
+        
+        </RequireAuth>
+      
     </div>
   )
 }

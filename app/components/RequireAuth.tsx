@@ -11,7 +11,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
     const token = localStorage.getItem("farmchain_token");
 
     if (!token) {
-      router.replace("/auth"); // redirect user to login/register
+      router.replace("/auth/login"); // redirect user to login/register
     } else {
       setAllow(true); // allow showing the page
     }
