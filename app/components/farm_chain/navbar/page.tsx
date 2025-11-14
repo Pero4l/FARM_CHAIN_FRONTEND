@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { useTheme } from 'next-themes'
 import { useActiveTab } from "@/app/context/ActiveTabContext";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const MainNavPage = () => {
   const activeTabContext = useActiveTab();
@@ -17,6 +19,7 @@ const MainNavPage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
 
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -197,7 +200,7 @@ const MainNavPage = () => {
                       </button>
 
                       <hr className="my-2" />
-                      <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-100 rounded-xl transition-colors text-left">
+                      <button onClick={()=> router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-100 rounded-xl transition-colors text-left">
                         <LogOut className="w-4 h-4 text-red-600" />
                         <span className="text-sm font-medium text-red-600">Logout</span>
                       </button>
@@ -257,7 +260,7 @@ const MainNavPage = () => {
                     </button>
                     <hr className="my-2" />
 
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
+                    <button onClick={()=> router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
                       <LogOut className="w-4 h-4 text-red-600" />
                       <span className="text-sm font-medium text-red-600">Logout</span>
                     </button>

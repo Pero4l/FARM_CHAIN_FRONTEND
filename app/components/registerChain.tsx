@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -33,6 +34,7 @@ const RegisterChain: React.FC = () => {
   });
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const router = useRouter();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -72,13 +74,22 @@ const RegisterChain: React.FC = () => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
+      
       setMessage('✅ Account created successfully!');
+
       toast.success('Account created successfully!');
+
+      setTimeout(() => {
+        router.push('/auth/login');
+      }, 2000);
+
     } catch (err: any) {
       setMessage(`❌ ${err.message}`);
     } finally {
       setLoading(false);
     }
+
+
   };
 
   return (
