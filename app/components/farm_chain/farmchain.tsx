@@ -7,6 +7,7 @@ import {
   Store,
   Cloud,
   Plus,
+  Bot,
   Heart,
   MessageSquare,
   Share,
@@ -182,6 +183,14 @@ const FarmChain: React.FC = () => {
                   icon={BarChart3}
                   label="Analytics"
                   isActive={activeTab === "analytics"}
+                  onClick={setActiveTab}
+                />
+
+                  <TabButton
+                  id="AI_bot"
+                  icon={Bot}
+                  label="AI Bot"
+                  isActive={activeTab === "AI_bot"}
                   onClick={setActiveTab}
                 />
               </nav>

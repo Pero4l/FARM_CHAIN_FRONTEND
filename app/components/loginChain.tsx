@@ -48,6 +48,7 @@ const LoginPage = () => {
       toast.success("Login successfully!");
 
       localStorage.setItem("farmchain_token", data.token);
+      localStorage.setItem("farmchain_user", JSON.stringify(data.user));
 
       setTimeout(() => {
         router.push('/main');
@@ -96,6 +97,7 @@ const LoginPage = () => {
         )}
 
         <form className="space-y-5">
+          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Email or Phone
@@ -109,7 +111,8 @@ const LoginPage = () => {
               className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
             />
           </div>
-
+          
+          {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Password
