@@ -1,12 +1,11 @@
 'use client'
 import LoginPage from '@/app/components/loginChain';
-import RegisterChain from '@/app/components/registerChain';
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebookF } from "react-icons/fa6";
 
 const FarmChainAuth = () => {
   
-  const [isLogin, setIsLogin] = useState(true);
+//   const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 flex md:items-center justify-center p- pt-16">
