@@ -1,12 +1,18 @@
-import React from 'react'
+"use client";
 
-const CurrentUser = () => {
+import { useEffect, useState } from "react";
 
-  return (
-    <>
-      children
-    </>
-  )
+const CurrentUser = ({ children }: { children: React.ReactNode }) => {
+
+    const user = localStorage.getItem("farmchain_user");
+    if (!user) {
+        return <></>;
+    }
+
+
+
+
+  return  <>{children}</>
 }
 
 export default CurrentUser
