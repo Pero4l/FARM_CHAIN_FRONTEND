@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import Link from 'next/link';
 import { useState } from 'react';
 
 const LoginPage = () => {
@@ -8,8 +9,8 @@ const LoginPage = () => {
   return (
     <div>
         <div>
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
+              <div className="lg:text-center lg:mb-8 pt-16 md:pt-0 mb-14">
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
                 <p className="text-gray-600">Sign in to continue growing with us</p>
               </div>
 
@@ -61,6 +62,8 @@ const LoginPage = () => {
                 >
                   Sign In
                 </button>
+
+                <p className='text-center'>Don't have an account? <Link className='text-green-800' href='/auth/register'> sign up</Link></p>
               </form>
             </div>
     </div>

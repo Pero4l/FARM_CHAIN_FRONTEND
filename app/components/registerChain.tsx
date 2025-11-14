@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import React, { useState, ChangeEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -96,8 +97,8 @@ const RegisterChain: React.FC = () => {
 />
 
       <div>
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <div className="lg:text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Join Farm Chain
           </h2>
           <p className="text-gray-600">
@@ -250,6 +251,8 @@ const RegisterChain: React.FC = () => {
             >
               Continue
             </button>
+
+            <p className='text-center'>Already have an account? <Link className='text-green-800' href='/auth/login'> sign in</Link></p>
           </div>
         )}
 
@@ -371,6 +374,27 @@ const RegisterChain: React.FC = () => {
               />
             </div>
 
+            {/* TERMS AND CONDITION */}
+             <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                     <div className="flex items-start space-x-3">
+                       <input
+                         type="checkbox"
+                         className="mt-1 rounded border-gray-300"
+                       />
+                       <p className="text-gray-700 text-sm">
+                         I agree to the{' '}
+                         <button type="button" className="text-green-600 hover:text-green-700 font-medium underline">
+                           Terms of Service
+                         </button>{' '}
+                         and{' '}
+                         <button type="button" className="text-green-600 hover:text-green-700 font-medium underline">
+                           Privacy Policy
+                         </button>
+                       </p>
+                     </div>
+                   </div>
+
+            {/*  */}
             <div className="flex gap-3">
               <button
                 type="button"
