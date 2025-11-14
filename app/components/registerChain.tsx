@@ -74,7 +74,7 @@ const RegisterChain: React.FC = () => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Registration failed');
-      
+
       setMessage('✅ Account created successfully!');
 
       toast.success('Account created successfully!');
@@ -263,7 +263,7 @@ const RegisterChain: React.FC = () => {
               Continue
             </button>
 
-            <p className='text-center'>Already have an account? <Link className='text-green-800' href='/auth/login'> sign in</Link></p>
+            <p className='text-center text-black'>Already have an account? <Link className='text-green-800' href='/auth/login'> sign in</Link></p>
           </div>
         )}
 

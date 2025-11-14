@@ -106,7 +106,7 @@ const LoginPage = () => {
               value={loginData.user}
               onChange={handleChange}
               placeholder="Enter your email or phone"
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
             />
           </div>
 
@@ -121,7 +121,7 @@ const LoginPage = () => {
                 onChange={handleChange}
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none pr-12"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none pr-12"
               />
               <button
                 type="button"
@@ -155,7 +155,7 @@ const LoginPage = () => {
             {loading ? "Loading..." : "Sign In"}
           </button>
 
-          <p className="text-center">
+          <p className="text-center text-black">
             Don't have an account?{" "}
             <Link className="text-green-800" href="/auth/register">
               {" "}
