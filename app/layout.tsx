@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css"
+import "./globals.css";
 import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/navbar";
 import { ActiveTabProvider } from "./context/ActiveTabContext";
 import { ThemeProvider } from "next-themes";
-import CurrentUserProvider from "@/app/components/currentUser";
+import ClientProviders from "@/app/components/ClientProviders";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,19 +28,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en"
-    suppressHydrationWarning
-    >
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
-        <ActiveTabProvider>
-             <Navbar/>
-        {children}
-        <Footer/>
-        </ActiveTabProvider>
-        </ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* Client-side Providers should wrap everything */}
+        <ClientProviders>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
+            <ActiveTabProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </ActiveTabProvider>
+          </ThemeProvider>
+        </ClientProviders>
       </body>
     </html>
   );

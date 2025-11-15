@@ -2,7 +2,11 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 
-type User = any;
+type User = {
+  userId: number;
+  currentUser: string;
+  location: string;
+};
 
 type UserContextType = {
   user: User | null;
@@ -24,14 +28,15 @@ export default function CurrentUserProvider({ children }: { children: React.Reac
 
   useEffect(() => {
     const stored = localStorage.getItem("farmchain_user");
-    if (stored) {
-      setUser(JSON.parse(stored));
+    if (stored && stored !== "undefined" && stored !== "null") {
+      try {
+        setUser(JSON.parse(stored));
+      } catch {
+        console.warn("Corrupted farmchain_user value removed");
+        localStorage.removeItem("farmchain_user");
+      }
     }
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user, setUser }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 }

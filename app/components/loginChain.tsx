@@ -49,13 +49,12 @@ const LoginPage = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
+      
       setMessage("✅ Login successfully!");
-
       toast.success("Login successfully!");
 
-      localStorage.setItem("farmchain_token", data.token);
+      localStorage.setItem("farmchain_token", data.token ?? "");
       localStorage.setItem("farmchain_user", JSON.stringify(data.user));
-
       setUser(data.user);
 
       setTimeout(() => {

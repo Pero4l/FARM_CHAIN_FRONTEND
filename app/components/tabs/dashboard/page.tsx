@@ -185,8 +185,6 @@ const posts: Post[] = [
 
 const dashboard = () => {
   const user = useCurrentUser();
-
-  console.log(user, "current user in dashboard");
   
 
 const { theme, setTheme } = useTheme();
@@ -203,7 +201,7 @@ const { theme, setTheme } = useTheme();
               <div>
                 <h2 className="text-3xl font-black mb-2 flex items-center">
                   <Zap className="w-8 h-8 mr-3" />
-                  Welcome back, {user ? "hhh" : 'Farmer'} 🌱
+                  Welcome back, {user.user?.currentUser ?? 'Farmer'} 🌱
                 </h2>
                 <p className="text-green-100 text-lg">
                   Your farm is thriving. Here's what's happening today.
