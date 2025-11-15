@@ -22,6 +22,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { useTheme } from 'next-themes'
+import {useCurrentUser} from '@/app/components/currentUser';
 
 interface Profile {
   name: string;
@@ -55,7 +56,7 @@ export default function SettingsPage() {
   });
   const [editing, setEditing] = useState(false);
   const [tempProfile, setTempProfile] = useState<Profile>(profile);
-  const [image, setImage] = useState('https://randomuser.me/api/portraits/men/32.jpg');
+  const [image, setImage] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s');
   const [preview, setPreview] = useState<string | null>(null);
   
   const [notifications, setNotifications] = useState<Notifications>({
@@ -144,6 +145,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
   showSuccessMessage();
 };
 
+const user = useCurrentUser();
 
   const showSuccessMessage = () => {
     setShowSuccess(true);
@@ -266,7 +268,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                         <User className={`w-3 h-3 sm:w-4 sm:h-4 ${theme === 'dark' ? '' : 'text-gray-800'}`} />
                         <span className={`text-xs font-semibold ${theme === 'dark' ? '' : 'text-gray-800'} uppercase tracking-wide`}>Full Name</span>
                       </div>
-                      <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-base sm:text-lg`}>{profile.name}</p>
+                      <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-base sm:text-lg`}>{user.user?.currentUser}</p>
                     </div>
                     
                     <div className={`${theme === 'dark' ? '' : 'bg-gray-50'} rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100`}>
@@ -274,7 +276,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                         <Mail className={`w-3 h-3 sm:w-4 sm:h-4 ${theme === 'dark' ? '' : 'text-gray-800'}`}/>
                         <span className={`text-xs font-semibold ${theme === 'dark' ? '' : 'text-gray-800'} uppercase tracking-wide`}>Email</span>
                       </div>
-                      <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-sm sm:text-lg break-all`}>{profile.email}</p>
+                      <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-sm sm:text-lg break-all`}>{user.user?.email}</p>
                     </div>
                   </div>
                   <div className={`${theme === 'dark' ? '' : 'bg-gray-50'} rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-100`}>
@@ -282,7 +284,7 @@ const handleThemeChange = (newTheme: ThemeOption) => {
                       <MapPin className={`w-3 h-3 sm:w-4 sm:h-4 ${theme === 'dark' ? '' : 'text-gray-800'}`}/>
                       <span className={`text-xs font-semibold ${theme === 'dark' ? '' : 'text-gray-800'} uppercase tracking-wide`}>Location</span>
                     </div>
-                    <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-sm sm:text-lg`}>{profile.location}</p>
+                    <p className={`font-bold ${theme === 'dark' ? '' : 'text-gray-800'} text-sm sm:text-lg`}>{user.user?.location}</p>
                   </div>
                   <button
                     onClick={handleStartEdit}

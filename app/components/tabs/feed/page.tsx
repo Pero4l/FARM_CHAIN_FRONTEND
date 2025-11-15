@@ -41,13 +41,13 @@ type Post = {
 
 const feedPage = () => {
   const { theme, setTheme } = useTheme();
-
+  const avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
   const posts: Post[] = [
     {
       id: 1,
       farmer: "Sarah Johnson",
       location: "Iowa, USA",
-      avatar: "SJ",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "2 hours ago",
       verified: true,
       farmSize: "50 acres",
@@ -76,7 +76,7 @@ const feedPage = () => {
       id: 2,
       farmer: "AgriTech Solutions",
       location: "California, USA",
-      avatar: "AS",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "4 hours ago",
       verified: true,
       farmSize: "2,500 acres",
@@ -97,7 +97,7 @@ const feedPage = () => {
       id: 3,
       farmer: "Miguel Rodriguez",
       location: "Texas, USA",
-      avatar: "MR",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "8 hours ago",
       verified: false,
       farmSize: "15 acres",
@@ -115,7 +115,7 @@ const feedPage = () => {
       id: 4,
       farmer: "Sarah Johnson",
       location: "Iowa, USA",
-      avatar: "SJ",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "2 hours ago",
       verified: true,
       farmSize: "50 acres",
@@ -140,7 +140,7 @@ const feedPage = () => {
       id: 5,
       farmer: "AgriTech Solutions",
       location: "California, USA",
-      avatar: "AS",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "4 hours ago",
       verified: true,
       farmSize: "2,500 acres",
@@ -161,7 +161,7 @@ const feedPage = () => {
       id: 6,
       farmer: "Miguel Rodriguez",
       location: "Texas, USA",
-      avatar: "MR",
+      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
       time: "8 hours ago",
       verified: false,
       farmSize: "15 acres",
@@ -210,8 +210,8 @@ const feedPage = () => {
           } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-              U
+            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
+              <img src={avatar} alt="" />
             </div>
             <div className="flex-1">
               <textarea
@@ -303,7 +303,7 @@ const feedPage = () => {
                   <div className="flex items-start space-x-4">
                     <div className="relative">
                       <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        {post.avatar}
+                        <img src={post.avatar} alt="" />
                       </div>
                       {post.verified && (
                         <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
@@ -411,6 +411,8 @@ const feedPage = () => {
                 )}
               </div>
 
+
+                {/* Action btn */}
               <div className="border-t border-gray-100 px-3 py-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">

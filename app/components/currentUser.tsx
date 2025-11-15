@@ -6,6 +6,8 @@ type User = {
   userId: number;
   currentUser: string;
   location: string;
+  email: string;
+  avatarUrl: string;
 };
 
 type UserContextType = {
