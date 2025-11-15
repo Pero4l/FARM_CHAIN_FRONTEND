@@ -1,10 +1,14 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {useCurrentUser} from '@/app/components/currentUser';
+
+
 
 interface LoginData {
   user: string;
@@ -20,6 +24,8 @@ const LoginPage = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const { setUser } = useCurrentUser();
+
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -49,6 +55,8 @@ const LoginPage = () => {
 
       localStorage.setItem("farmchain_token", data.token);
       localStorage.setItem("farmchain_user", JSON.stringify(data.user));
+
+      setUser(data.user);
 
       setTimeout(() => {
         router.push('/main');

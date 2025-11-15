@@ -5,6 +5,7 @@ import Footer from "./components/layout/footer";
 import Navbar from "./components/layout/navbar";
 import { ActiveTabProvider } from "./context/ActiveTabContext";
 import { ThemeProvider } from "next-themes";
+import CurrentUserProvider from "@/app/components/currentUser";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
