@@ -85,7 +85,7 @@ const LoginPage = () => {
         theme="colored"
       />
       <div>
-        <div className="lg:text-center lg:mb-8 pt-16 md:pt-0 mb-14">
+        <div className="lg:text-center lg:mb-8 pt-5 md:pt-0 mb-14">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">
             Welcome Back!
           </h2>

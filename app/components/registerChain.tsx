@@ -309,12 +309,12 @@ const RegisterChain: React.FC = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none bg-white"
               >
                 <option value="">Select your country</option>
-                <option value="ng">Nigeria</option>
-                <option value="us">United States</option>
-                <option value="uk">United Kingdom</option>
-                <option value="ke">Kenya</option>
-                <option value="in">India</option>
-                <option value="za">South Africa</option>
+                <option value="Nigeria">Nigeria</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="kenya">Kenya</option>
+                <option value="India">India</option>
+                <option value="South Africa">South Africa</option>
               </select>
             </div>
 
