@@ -1,4 +1,7 @@
+'use client';
+
 import React from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { FaPlus } from "react-icons/fa";
 import { SlSettings } from "react-icons/sl";
@@ -6,6 +9,7 @@ import { useTheme } from 'next-themes'
 
 const profile = () => {
 const { theme, setTheme } = useTheme();
+const [isFollowed, setIsFollowed] = useState(false);
 
   return (
     <div>
@@ -21,8 +25,8 @@ const { theme, setTheme } = useTheme();
                 className=" rounded-b-4xl rounded-t-2xl mx-auto  w-[100%] h-[90%] md:h-[230px] object-cover "
               />
               <div className="absolute top-3 right-4 lg:right-7">
-                <button className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">
-                  <p className="text-sm font-bold">follow</p>
+                <button onClick={()=> setIsFollowed(!isFollowed)} className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">
+                  <p className="text-sm font-bold">{isFollowed ? 'Follow' : 'Unfollow'}</p>
                   <FaPlus className="font-bold" size={10} />
                 </button>
               </div>
