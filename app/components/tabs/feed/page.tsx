@@ -210,8 +210,8 @@ const feedPage = () => {
           } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
-            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg">
-              <img src={avatar} alt="" />
+            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full ">
+              <img className="rounded-full" src={avatar} alt="" />
             </div>
             <div className="flex-1">
               <textarea
@@ -302,8 +302,8 @@ const feedPage = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
                     <div className="relative">
-                      <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
-                        <img src={post.avatar} alt="" />
+                      <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
+                        <img className="rounded-full" src={post.avatar} alt="" />
                       </div>
                       {post.verified && (
                         <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />

@@ -163,7 +163,7 @@ const LoginPage = () => {
             disabled={loading}
             className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 rounded-xl font-bold hover:shadow-lg transition-all"
           >
-            {loading ? "Loading..." : "Sign In"}
+            {loading ? "Login..." : "Sign In"}
           </button>
 
           <p className="text-center text-black">
