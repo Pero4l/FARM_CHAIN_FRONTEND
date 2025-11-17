@@ -20,6 +20,7 @@ const MainNavPage = () => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
+  const avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
 
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -168,7 +169,7 @@ const MainNavPage = () => {
                 <PlusCircle className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
               </button>
 
-              <button onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Messages">
+              <button onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }} className={`relative p-3 ${theme === 'dark' ? 'hover:bg-white/20' : 'hover:bg-gray-100'} rounded-xl transition-colors`} title="Messages">
                 <MessageCircle className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
                 {message > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
@@ -177,8 +178,8 @@ const MainNavPage = () => {
                 )}
               </button>
 
-              <button onClick={() => { setActiveTab("notification"); setIsMenuOpen(false); }} className="relative p-3 hover:bg-gray-100 rounded-xl transition-colors" title="Notifications">
-                <Bell className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
+              <button onClick={() => { setActiveTab("notification"); setIsMenuOpen(false); }} className={`relative p-3 ${theme === 'dark' ? 'hover:bg-white/20' : 'hover:bg-gray-100'} rounded-xl transition-colors`} title="Notifications">
+                <Bell className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} /> 
                 {notifications > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {notifications}
@@ -189,9 +190,9 @@ const MainNavPage = () => {
               <div className="relative hidden md:flex" ref={menuRef}>
                 <div
                   onClick={() => setUserOption(prev => !prev)}
-                  className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
+                  className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
                 >
-                  UP
+                  <img className='rounded-full' src={avatar} alt="" />
                 </div>
 
                 {userOption && (
@@ -226,6 +227,8 @@ const MainNavPage = () => {
             </div>
           </div>
 
+
+                {/* Mobile */}
           <div className='lg:hidden flex gap-2'>
             <label
               htmlFor="mobile-menu-toggle"
@@ -248,9 +251,9 @@ const MainNavPage = () => {
             <div className="relative md:hidden bottom-2" ref={menuRef}>
               <div
                 onClick={() => setUserOption(prev => !prev)}
-                className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold cursor-pointer hover:scale-110 transition-transform"
+                className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
               >
-                U
+                <img className='rounded-full' src={avatar} alt="" />
               </div>
 
               {userOption && (
