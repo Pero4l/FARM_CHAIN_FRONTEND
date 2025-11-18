@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import {MapPin, CheckCircle} from "lucide-react";
+import {MapPin, CheckCircle, Briefcase} from "lucide-react";
 import { SlSettings } from "react-icons/sl";
 import { useTheme } from 'next-themes';
 import { useCurrentUser } from "@/app/components/currentUser";
@@ -84,8 +84,11 @@ const Profile = () => {
                 {userProfile?.location ?? "Unknown Location"}
               </p>
 
+
+             
+
                 {/* bio */}
-              <p className="text-gray-300 text-[15px] mb-7 mt-2">
+              <p className={theme === 'dark' ? 'text-gray-400 mt-4 mb-7 md:text-xl' : 'text-gray-800 mt-4 mb-7 md:text-xl'}>
                 {userProfile?.bio ?? "No bio available."}
               </p>
 
