@@ -22,7 +22,7 @@ const [isFollowed, setIsFollowed] = useState(false);
                 alt="profile"
                 width={100}
                 height={100}
-                className=" rounded-b-4xl rounded-t-2xl mx-auto  w-[100%] h-[90%] md:h-[230px] object-cover "
+                className=" rounded-b-3xl rounded-t-2xl mx-auto  w-[100%] h-[90%] md:h-[230px] object-cover "
               />
               <div className="absolute top-3 right-4 lg:right-7">
                 <button onClick={()=> setIsFollowed(!isFollowed)} className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">

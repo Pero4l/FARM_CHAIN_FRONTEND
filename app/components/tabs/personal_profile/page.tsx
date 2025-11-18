@@ -9,7 +9,7 @@ import { useCurrentUser } from "@/app/components/currentUser";
 
 const Profile = () => {
   const { theme } = useTheme();
-  const { userProfile } = useCurrentUser();   // ⬅️ THIS is what you want
+  const { userProfile } = useCurrentUser(); 
 
   return (
     <div>
@@ -23,7 +23,7 @@ const Profile = () => {
                 alt="profile"
                 width={100}
                 height={100}
-                className="rounded-b-4xl rounded-t-2xl mx-auto w-[100%] h-[90%] md:h-[230px] object-cover"
+                className="rounded-b-3xl rounded-t-2xl mx-auto w-[100%] h-[90%] md:h-[230px] object-cover"
               />
 
               <div className="absolute bottom-0 translate-y-1/4 translate-x-7 w-40 h-40 rounded-full bg-white shadow-md flex items-center justify-center">
@@ -99,15 +99,15 @@ const Profile = () => {
               <div className="flex justify-between items-center mb-8">
                 <div>
                   <p className="font-black">72.89K</p>
-                  <p className="text-gray-400">Likes</p>
+                  <p className="text-gray-500">Likes</p>
                 </div>
                 <div>
                   <p className="font-black">7.9K</p>
-                  <p className="text-gray-400">Posts</p>
+                  <p className="text-gray-500">Posts</p>
                 </div>
                 <div>
                   <p className="font-black">2.6K</p>
-                  <p className="text-gray-400">Views</p>
+                  <p className="text-gray-500">Views</p>
                 </div>
               </div>
             
