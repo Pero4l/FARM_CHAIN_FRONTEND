@@ -24,12 +24,12 @@ const [isFollowed, setIsFollowed] = useState(false);
                 height={100}
                 className=" rounded-b-4xl rounded-t-2xl mx-auto  w-[100%] h-[90%] md:h-[230px] object-cover "
               />
-              <div className="absolute top-3 right-4 lg:right-7">
+              {/* <div className="absolute top-3 right-4 lg:right-7">
                 <button onClick={()=> setIsFollowed(!isFollowed)} className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">
                   <p className="text-sm font-bold">{isFollowed ? 'Unfollow' : 'Follow'}</p>
                   <FaPlus className={isFollowed ? 'hidden' : 'font-bold'} size={10} />
                 </button>
-              </div>
+              </div> */}
               <div className=" absolute bottom-0  translate-y-1/4 translate-x-7 w-40 h-40 rounded-full bg-white shadow-md flex items-center justify-center">
                 <img
                   src="https://i.pravatar.cc/300"

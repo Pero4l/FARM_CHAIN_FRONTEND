@@ -43,9 +43,9 @@ const [isFollowed, setIsFollowed] = useState(false);
                 <div className="flex items-center justify-between">
                   <p className="font-black text-3xl mb-2"> Dev peter </p>
 
-                  <p className="text-3xl">
+                  {/* <p className="text-3xl">
                     <SlSettings />
-                  </p>
+                  </p> */}
                 </div>
                 <p className="text-gray-400 text-sm mb-5 mt-2">
                   product Designer who focuses on simplicity and usability

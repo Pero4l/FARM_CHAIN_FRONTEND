@@ -16,6 +16,7 @@ import {
   Send,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useActiveTab } from "@/app/context/ActiveTabContext";
 
 type Post = {
   id: number;
@@ -40,6 +41,8 @@ type Post = {
 
 
 const feedPage = () => {
+    const activeTabContext = useActiveTab();
+    const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
   const { theme, setTheme } = useTheme();
   const avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
   const posts: Post[] = [
@@ -210,7 +213,7 @@ const feedPage = () => {
           } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
-            <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full ">
+            <div onClick={() => { setActiveTab("profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full ">
               <img className="rounded-full" src={avatar} alt="" />
             </div>
             <div className="flex-1">
@@ -302,7 +305,7 @@ const feedPage = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
                     <div className="relative">
-                      <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
+                      <div onClick={() => { setActiveTab("user_profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
                         <img className="rounded-full" src={post.avatar} alt="" />
                       </div>
                       {post.verified && (
