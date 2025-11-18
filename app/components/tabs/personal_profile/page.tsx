@@ -85,7 +85,11 @@ const Profile = () => {
               </p>
 
 
-             
+              {/* organization */}
+              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}>
+                <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
+                {userProfile?.location ?? "Unknown Location"}
+              </p>
 
                 {/* bio */}
               <p className={theme === 'dark' ? 'text-gray-400 mt-4 mb-7 md:text-xl' : 'text-gray-800 mt-4 mb-7 md:text-xl'}>
