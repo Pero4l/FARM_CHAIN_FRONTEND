@@ -140,7 +140,7 @@ const MainNavPage = () => {
 
                         <label
                       htmlFor="mobile-menu-toggle"
-                      onClick={() => { setActiveTab("analytics"); setIsMenuOpen(false); }}
+                      onClick={() => { setActiveTab("ai"); setIsMenuOpen(false); }}
                       className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
