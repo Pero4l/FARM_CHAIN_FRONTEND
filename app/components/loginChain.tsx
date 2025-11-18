@@ -63,8 +63,8 @@ const LoginPage = () => {
       localStorage.setItem("farmchain_user", JSON.stringify(data.user));
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userProfile", JSON.stringify(data.profile));
-      setUserProfile(data.profile);
-       setUser(data.user);
+      // setUserProfile(data.profile);
+      //  setUser(data.user);
 
 
       

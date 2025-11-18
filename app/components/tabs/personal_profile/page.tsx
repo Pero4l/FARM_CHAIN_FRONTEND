@@ -79,7 +79,7 @@ const Profile = () => {
 
 
               {/* location */}
-              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}>
+              <p className={theme === 'dark' ? 'text-gray-400 mb-2' : 'text-gray-800 mb-2'}>
                 <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
                 {userProfile?.location ?? "Unknown Location"}
               </p>
@@ -88,7 +88,7 @@ const Profile = () => {
               {/* organization */}
               <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}>
                 <Briefcase className="inline-block w-4 h-4 mr-1 mb-1" />
-                {userProfile?.organization ?? "Unknown organization"}
+                {userProfile?.organization ?? "Organization"}
               </p>
 
                 {/* bio */}

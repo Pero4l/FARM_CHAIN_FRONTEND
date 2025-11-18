@@ -74,7 +74,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <Home className="w-4 h-4" />
@@ -85,7 +85,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("feed"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <TrendingUp className="w-4 h-4" />
@@ -96,7 +96,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("marketplace"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <Store className="w-4 h-4" />
@@ -107,7 +107,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("messages"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <MessageCircle className="w-4 h-4" />
@@ -118,7 +118,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("weather"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <Cloud className="w-4 h-4" />
@@ -129,7 +129,7 @@ const MainNavPage = () => {
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("analytics"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <BarChart3 className="w-4 h-4" />
@@ -141,7 +141,7 @@ const MainNavPage = () => {
                         <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("ai"); setIsMenuOpen(false); }}
-                      className="px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer text-sm flex items-center"
+                      className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
                     >
                       <p suppressHydrationWarning className={`w-4 h-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mr-2`}>
                         <Bot className="w-4 h-4" />
@@ -195,22 +195,23 @@ const MainNavPage = () => {
                   <img className='rounded-full' src={avatar} alt="" />
                 </div>
 
+                {/* lg user */}
                 {userOption && (
                   <div className={`absolute right-0 top-14 w-52 rounded-2xl shadow-xl border border-gray-100 z-50 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
                     <div className="p-3 space-y-1">
                       <button
                         onClick={() => { setActiveTab("profile"); setUserOption(false) }}
-                        className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                        className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-black/10'} rounded-xl transition-colors text-left`}>
                         <User className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
                         <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Profile</span>
                       </button>
 
-                      <button className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                      <button className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-black/10'} rounded-xl transition-colors text-left`}>
                         <Award className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
                         <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Achievements</span>
                       </button>
 
-                      <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-gray-500' : 'hover:bg-gray-50'} rounded-xl transition-colors text-left`}>
+                      <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className={`w-full flex items-center space-x-3 px-3 py-2 ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-black/10'} rounded-xl transition-colors text-left`}>
                         <Settings className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
                         <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Settings</span>
                       </button>
