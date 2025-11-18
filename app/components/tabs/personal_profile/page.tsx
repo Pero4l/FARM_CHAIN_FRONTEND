@@ -88,7 +88,7 @@ const Profile = () => {
               {/* organization */}
               <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}>
                 <Briefcase className="inline-block w-4 h-4 mr-1 mb-1" />
-                {userProfile?.location ?? "Unknown Location"}
+                {userProfile?.organization ?? "Unknown Location"}
               </p>
 
                 {/* bio */}
