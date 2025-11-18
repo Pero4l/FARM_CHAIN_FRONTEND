@@ -71,8 +71,15 @@ const Profile = () => {
               </div>
 
 
+              {/* followers */}
+              <div className="flex text-sm gap-4 mb-4">
+                <p className=""><span className="font-bold">{userProfile?.followers ?? 0 }</span> followers</p>
+                <p><span className="font-bold">{userProfile?.following ?? 0 }</span> following</p>
+              </div>
+
+
               {/* location */}
-              <p className="text-gray-400 mb-4 text-sm">
+              <p className={theme === 'dark' ? 'text-gray-400' : 'text-gray-800'}>
                 <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
                 {userProfile?.location ?? "Unknown Location"}
               </p>

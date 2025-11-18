@@ -66,6 +66,8 @@ type UserProfile = {
   organization: string;
   verified: boolean;
   share_account: string;
+  followers: number;
+  following: number;
 };
 
 type UserContextType = {
