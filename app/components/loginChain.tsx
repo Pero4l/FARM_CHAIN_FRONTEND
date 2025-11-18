@@ -10,6 +10,7 @@ import {useCurrentUser} from '@/app/components/currentUser';
 
 
 
+
 interface LoginData {
   user: string;
   password: string;
@@ -25,6 +26,7 @@ const LoginPage = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const { setUser } = useCurrentUser();
+  const { setUserProfile } = useCurrentUser();
 
 
   const handleChange = (
@@ -49,13 +51,24 @@ const LoginPage = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
+      console.log("Profile",data.profile);
+      console.log("Users",data.user);
+      
+
       
       setMessage("✅ Login successfully!");
       toast.success("Login successfully!");
 
       localStorage.setItem("farmchain_token", data.token ?? "");
       localStorage.setItem("farmchain_user", JSON.stringify(data.user));
-      setUser(data.user);
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userProfile", JSON.stringify(data.profile));
+      setUserProfile(data.profile);
+       setUser(data.user);
+
+
+      
+
 
       setTimeout(() => {
         router.push('/main');
