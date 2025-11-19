@@ -51,9 +51,6 @@ const LoginPage = () => {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
-      console.log("Profile",data.profile);
-      console.log("Users",data.user);
-      
 
       
       setMessage("✅ Login successfully!");

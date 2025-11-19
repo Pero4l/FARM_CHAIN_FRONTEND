@@ -6,10 +6,40 @@ import Image from "next/image";
 import { FaPlus } from "react-icons/fa";
 import { SlSettings } from "react-icons/sl";
 import { useTheme } from 'next-themes'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { json } from "stream/consumers";
 
-const userProfile = () => {
+
+const UserProfile = () => {
 const { theme, setTheme } = useTheme();
 const [isFollowed, setIsFollowed] = useState(false);
+const [loading, setLoading] = useState<boolean>(false);
+
+
+
+const getUserById = async (id: string) => {
+  setLoading(true);
+
+  try {
+    const res = await fetch(`https://farmchain.onrender.com/user/${id}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Failed to fetch user");
+
+    console.log("User:", data);
+    return data;
+
+  } catch (err: any) {
+    console.error("❌", err.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div>
@@ -73,4 +103,4 @@ const [isFollowed, setIsFollowed] = useState(false);
   );
 };
 
-export default userProfile;
+export default UserProfile;
