@@ -1,11 +1,13 @@
 // ...existing code...
-'use client'
+"use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 type ActiveTabContextType = {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  selectedUserId: string | null;
+  setSelectedUserId: (id: string | null) => void;
 };
 
 const ActiveTabContext = createContext<ActiveTabContextType | undefined>(
@@ -64,8 +66,13 @@ export const ActiveTabProvider: React.FC<{ children: React.ReactNode }> = ({
     setActiveTabState(tab);
   };
 
+  // Optional: keep track of a selected user id so other components can render a profile
+  const [selectedUserId, setSelectedUserId] = useState<string | null>(null);
+
   return (
-    <ActiveTabContext.Provider value={{ activeTab, setActiveTab }}>
+    <ActiveTabContext.Provider
+      value={{ activeTab, setActiveTab, selectedUserId, setSelectedUserId }}
+    >
       {children}
     </ActiveTabContext.Provider>
   );
@@ -73,7 +80,8 @@ export const ActiveTabProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useActiveTab = () => {
   const ctx = useContext(ActiveTabContext);
-  if (!ctx) throw new Error("useActiveTab must be used within ActiveTabProvider");
+  if (!ctx)
+    throw new Error("useActiveTab must be used within ActiveTabProvider");
   return ctx;
 };
 // ...existing code...

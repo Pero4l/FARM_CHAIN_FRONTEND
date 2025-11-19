@@ -1,86 +1,174 @@
-'use client';
+"use client";
 
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { MapPin, CheckCircle, Briefcase } from "lucide-react";
 import { FaPlus } from "react-icons/fa";
-import { SlSettings } from "react-icons/sl";
-import { useTheme } from 'next-themes'
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { json } from "stream/consumers";
+import { useTheme } from "next-themes";
+import { useSearchParams } from "next/navigation";
 
+const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
+  const token = localStorage.getItem("farmchain_token");
+  const { theme } = useTheme();
+  const searchParams = useSearchParams();
+  // prefer prop userId (passed from a parent/context). If not provided, fall back to query param.
+  const userId = propUserId ?? searchParams.get("id") ?? undefined;
 
-const UserProfile = () => {
-const { theme, setTheme } = useTheme();
-const [isFollowed, setIsFollowed] = useState(false);
-const [loading, setLoading] = useState<boolean>(false);
+  const [isFollowed, setIsFollowed] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState<any>(null);
 
+  const getUserById = async (id: string) => {
+    setLoading(true);
 
+    try {
+      const res = await fetch(`https://farmchain.onrender.com/user/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-const getUserById = async (id: string) => {
-  setLoading(true);
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to fetch user");
 
-  try {
-    const res = await fetch(`https://farmchain.onrender.com/user/${id}`, {
-      method: "GET",
-      headers: { "Content-Type": "application/json" },
-    });
+      return data;
+    } catch (err: any) {
+      console.error("❌", err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Failed to fetch user");
+  useEffect(() => {
+    if (userId) {
+      getUserById(userId).then((data) => setUser(data));
+    }
+  }, [userId]);
 
-    console.log("User:", data);
-    return data;
-
-  } catch (err: any) {
-    console.error("❌", err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  console.log(user);
 
   return (
     <div>
       <div className="flex justify-center lg:mt-2 mb-2 md:mb-3 px-">
-        <div suppressHydrationWarning className={`${theme === 'dark' ? 'border-1' : 'bg-white'} shadow-2xl rounded-2xl p- pb-5 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px]`}>
+        <div
+          suppressHydrationWarning
+          className={`${
+            theme === "dark" ? "border-1" : "bg-white"
+          } shadow-2xl rounded-2xl p- pb-5 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px]`}
+        >
           <div>
             <div className="relative">
-              <Image
-                src="/pexels-pixabay-209831.jpg"
+              <img
+                src={
+                  user?.cover_avatar ||
+                  "https://images.unsplash.com/photo-1503264116251-35a269479413?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y292ZXIlMjBhdmF0YXJ8ZW58MHx8MHx8fDA%3D&w=1000&q=80"
+                }
                 alt="profile"
                 width={100}
                 height={100}
                 className=" rounded-b-3xl rounded-t-2xl mx-auto  w-[100%] h-[90%] md:h-[230px] object-cover "
               />
+
               <div className="absolute top-3 right-4 lg:right-7">
-                <button onClick={()=> setIsFollowed(!isFollowed)} className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900">
-                  <p className="text-sm font-bold">{isFollowed ? 'Unfollow' : 'Follow'}</p>
-                  <FaPlus className={isFollowed ? 'hidden' : 'font-bold'} size={10} />
+                <button
+                  onClick={() => setIsFollowed(!isFollowed)}
+                  className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900"
+                >
+                  <p className="text-sm font-bold">
+                    {isFollowed ? "Unfollow" : "Follow"}
+                  </p>
+                  <FaPlus
+                    className={isFollowed ? "hidden" : "font-bold"}
+                    size={10}
+                  />
                 </button>
               </div>
+
               <div className=" absolute bottom-0  translate-y-1/4 translate-x-7 w-40 h-40 rounded-full bg-white shadow-md flex items-center justify-center">
                 <img
-                  src="https://i.pravatar.cc/300"
+                  src={
+                    user?.avatar ||
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"
+                  }
                   alt="User Avatar"
                   className="w-38 rounded-full object-cover"
                 />
+                {user?.verified === false && (
+                  <CheckCircle className="absolute -bottom-9 right-50 w-7 h-7 text-blue-500 bg-white rounded-full" />
+                  // <div className="absolute bottom-7 left-44 bg-blue-500 text-white rounded-full p-1 border-2 border-white">
+                  //   <svg
+                  //     xmlns="http://www.w3.org/2000/svg"
+                  //     className="h-5 w-5"
+                  //     viewBox="0 0 20 20"
+                  //     fill="currentColor"
+                  //   >
+                  //     <path
+                  //       fillRule="evenodd"
+                  //       d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  //       clipRule="evenodd"
+                  //     />
+                  //   </svg>
+                  // </div>
+                )}
               </div>
             </div>
+
             <div className=" mx-6 mt-12">
               <div className="">
+                {/* Name */}
                 <div className="flex items-center justify-between">
-                  <p className="font-black text-3xl mb-2"> Dev peter </p>
-
-                  {/* <p className="text-3xl">
-                    <SlSettings />
-                  </p> */}
+                  <p className="font-black text-3xl mb-2">
+                    {user ? user.name : "Loading..."}
+                  </p>
                 </div>
-                <p className="text-gray-400 text-sm mb-5 mt-2">
-                  product Designer who focuses on simplicity and usability
+
+                {/* followers */}
+                <div className="flex text-sm gap-4 mb-4">
+                  <p className="">
+                    <span className="font-bold">{user?.followers ?? 0}</span>{" "}
+                    followers
+                  </p>
+                  <p>
+                    <span className="font-bold">{user?.following ?? 0}</span>{" "}
+                    following
+                  </p>
+                </div>
+
+                {/* location */}
+                <p
+                  className={
+                    theme === "dark"
+                      ? "text-gray-400 mb-2"
+                      : "text-gray-800 mb-2"
+                  }
+                >
+                  <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
+                  {user?.location ?? "Unknown Location"}
+                </p>
+
+                {/* organization */}
+                <p
+                  className={
+                    theme === "dark" ? "text-gray-400" : "text-gray-800"
+                  }
+                >
+                  <Briefcase className="inline-block w-4 h-4 mr-1 mb-1" />
+                  {user?.organization ?? "Organization"}
+                </p>
+
+                <p
+                  className={
+                    theme === "dark"
+                      ? "text-gray-400 mt-4 mb-7 md:text-xl"
+                      : "text-gray-800 mt-4 mb-7 md:text-xl"
+                  }
+                >
+                  {user?.bio ?? "No bio available."}
                 </p>
               </div>
+
               <div className="flex justify-between items-center mb-8 md:mb-">
                 <div>
                   <p className="font-black">72.89K</p>

@@ -99,7 +99,7 @@ const TabButton: React.FC<{
 
 /* ================= MAIN COMPONENT ================= */
 const FarmChain: React.FC = () => {
-  const { activeTab, setActiveTab } = useActiveTab();
+  const { activeTab, setActiveTab, selectedUserId } = useActiveTab();
   const [notifications, setNotifications] = useState(3);
   const [mainMenu, setMainMenu] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -247,7 +247,9 @@ const FarmChain: React.FC = () => {
               {activeTab === "settings" && <SettingsPage />}
 
               {/* User Profile */}
-              {activeTab === "user_profile" && <UserProfile />}
+              {activeTab === "user_profile" && (
+                <UserProfile userId={selectedUserId ?? undefined} />
+              )}
             </div>
 
             {/* TABS END */}

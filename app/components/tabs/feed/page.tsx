@@ -1,6 +1,7 @@
 'use client';
 import React from "react";
 // import Image from 'next/image';
+import Link from "next/link";
 import {
   Heart,
   MessageSquare,
@@ -304,7 +305,9 @@ const feedPage = () => {
               <div className="p-3">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
-                    <div className="relative">
+                   
+                   <Link href="/user/id">
+                     <div className="relative">
                       <div onClick={() => { setActiveTab("user_profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
                         <img className="rounded-full" src={post.avatar} alt="" />
                       </div>
@@ -312,6 +315,7 @@ const feedPage = () => {
                         <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
                       )}
                     </div>
+                   </Link>
 
                     <div className="flex-1">
                       <div className="flex items-center space-x-7 mb-1">
