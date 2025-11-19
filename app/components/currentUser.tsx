@@ -43,8 +43,6 @@
 //   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 // }
 
-
-
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -81,11 +79,16 @@ const UserContext = createContext<UserContextType | null>(null);
 
 export const useCurrentUser = () => {
   const ctx = useContext(UserContext);
-  if (!ctx) throw new Error("useCurrentUser must be used inside CurrentUserProvider");
+  if (!ctx)
+    throw new Error("useCurrentUser must be used inside CurrentUserProvider");
   return ctx;
 };
 
-export default function CurrentUserProvider({ children }: { children: React.ReactNode }) {
+export default function CurrentUserProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [user, setUser] = useState<User | null>(null);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
 
@@ -93,20 +96,31 @@ export default function CurrentUserProvider({ children }: { children: React.Reac
     const storedUser = localStorage.getItem("farmchain_user");
     const storedProfile = localStorage.getItem("userProfile");
 
-    if (storedUser && storedUser !== "undefined") {
+    const safeParse = (value: string | null) => {
+      if (!value) return null;
+      // guard against literal string values stored by mistake
+      if (value === "undefined" || value === "null") return null;
       try {
-        setUser(JSON.parse(storedUser));
+        return JSON.parse(value);
       } catch {
-        localStorage.removeItem("farmchain_user");
+        return null;
       }
+    };
+
+    const parsedUser = safeParse(storedUser);
+    const parsedProfile = safeParse(storedProfile);
+
+    if (parsedUser && typeof parsedUser === "object") {
+      setUser(parsedUser as User);
+    } else {
+      // remove corrupt values so subsequent loads are clean
+      if (storedUser) localStorage.removeItem("farmchain_user");
     }
 
-    if (storedProfile && storedProfile !== "undefined") {
-      try {
-        setUserProfile(JSON.parse(storedProfile));
-      } catch {
-        localStorage.removeItem("userProfile");
-      }
+    if (parsedProfile && typeof parsedProfile === "object") {
+      setUserProfile(parsedProfile as UserProfile);
+    } else {
+      if (storedProfile) localStorage.removeItem("userProfile");
     }
   }, []);
 
@@ -116,14 +130,16 @@ export default function CurrentUserProvider({ children }: { children: React.Reac
   }, [user]);
 
   useEffect(() => {
-    if (userProfile) localStorage.setItem("userProfile", JSON.stringify(userProfile));
+    if (userProfile)
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
     else localStorage.removeItem("userProfile");
   }, [userProfile]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, userProfile, setUserProfile }}>
+    <UserContext.Provider
+      value={{ user, setUser, userProfile, setUserProfile }}
+    >
       {children}
     </UserContext.Provider>
   );
 }
-
