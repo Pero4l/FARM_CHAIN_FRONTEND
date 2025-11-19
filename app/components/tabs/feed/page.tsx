@@ -306,7 +306,7 @@ const feedPage = () => {
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
                    
-                   <Link href="/user/id">
+                   <Link href="">
                      <div className="relative">
                       <div onClick={() => { setActiveTab("user_profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
                         <img className="rounded-full" src={post.avatar} alt="" />

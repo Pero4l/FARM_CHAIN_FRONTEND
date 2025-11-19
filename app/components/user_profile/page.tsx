@@ -6,6 +6,8 @@ import { MapPin, CheckCircle, Briefcase } from "lucide-react";
 import { FaPlus } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useSearchParams } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const token = localStorage.getItem("farmchain_token");
@@ -41,9 +43,34 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
     }
   };
 
+  const FollowUser = async (id: string) => {
+    try {
+      const res = await fetch(`https://farmchain.onrender.com/user/follow`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ followed_id: Number(id) }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to follow user");
+
+      toast.success(data.message || "Action successful!");
+
+      return data;
+    } catch (err: any) {
+      console.error("❌", err.message);
+    }
+  };
+
   useEffect(() => {
     if (userId) {
-      getUserById(userId).then((data) => setUser(data));
+      getUserById(userId).then((data) => {
+        setUser(data);
+        setIsFollowed(data?.isFollowed ?? false);
+      });
     }
   }, [userId]);
 
@@ -51,6 +78,18 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
 
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
       <div className="flex justify-center lg:mt-2 mb-2 md:mb-3 px-">
         <div
           suppressHydrationWarning
@@ -73,16 +112,37 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
 
               <div className="absolute top-3 right-4 lg:right-7">
                 <button
-                  onClick={() => setIsFollowed(!isFollowed)}
-                  className=" bg-green-600 text-white  flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900"
+                  disabled={loading}
+                  onClick={async () => {
+                    if (!userId) return;
+
+                    setLoading(true); // start loading
+
+                    const res = await FollowUser(userId);
+
+                    if (res) {
+                      // backend returns "following: true/false"
+                      setIsFollowed(res.following);
+                    }
+
+                    setLoading(false); // stop loading
+                  }}
+                  className=" bg-green-600 text-white flex gap-2 items-center py-1.5 px-4 rounded-full hover:text-white hover:bg-green-900 disabled:opacity-50"
                 >
                   <p className="text-sm font-bold">
-                    {isFollowed ? "Unfollow" : "Follow"}
+                    {loading
+                      ? isFollowed
+                        ? "Unfollowing..."
+                        : "Following..."
+                      : isFollowed
+                      ? "Unfollow"
+                      : "Follow"}
                   </p>
-                  <FaPlus
-                    className={isFollowed ? "hidden" : "font-bold"}
-                    size={10}
-                  />
+
+                  {/* Hide icon when loading or unfollowing */}
+                  {!loading && !isFollowed && (
+                    <FaPlus className="font-bold" size={10} />
+                  )}
                 </button>
               </div>
 
@@ -95,7 +155,9 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                   alt="User Avatar"
                   className="w-38 rounded-full object-cover"
                 />
-                {user?.verified === false && (
+               
+              </div>
+               {user?.verified === false && (
                   <CheckCircle className="absolute -bottom-9 right-50 w-7 h-7 text-blue-500 bg-white rounded-full" />
                   // <div className="absolute bottom-7 left-44 bg-blue-500 text-white rounded-full p-1 border-2 border-white">
                   //   <svg
@@ -112,7 +174,6 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                   //   </svg>
                   // </div>
                 )}
-              </div>
             </div>
 
             <div className=" mx-6 mt-12">
