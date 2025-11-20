@@ -56,7 +56,7 @@ import MarketPage from "../tabs/market_place/page";
 import AnalyticsPage from "../tabs/analytics/page";
 import Feed from "../tabs/feed/page";
 import Notification from "../tabs/notification/page";
-import UserProfile from "../user_profile/page";
+import UserProfile from "../user_profile/UserProfile";
 
 // SIDE BAR
 import WeatherSide from "../tabs/weather/weather_side/page";
@@ -248,7 +248,9 @@ const FarmChain: React.FC = () => {
 
               {/* User Profile */}
               {activeTab === "user_profile" && (
-                <UserProfile userId={selectedUserId ?? undefined} />
+                <React.Suspense fallback={null}>
+                  <UserProfile userId={selectedUserId ?? undefined} />
+                </React.Suspense>
               )}
             </div>
 

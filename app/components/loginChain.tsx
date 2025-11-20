@@ -37,46 +37,50 @@ const LoginPage = () => {
 
    const router = useRouter();
 
+
   const handleLogin = async () => {
-    setMessage("");
+  setMessage("");
+  setLoading(true);
 
-    setLoading(true);
-    try {
-      const res = await fetch("https://farmchain.onrender.com/user/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(loginData),
-      });
+  try {
+    const res = await fetch("https://farmchain.onrender.com/user/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(loginData),
+    });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Login failed");
 
+    setMessage("✅ Login successfully!");
+    toast.success("Login successfully!");
 
-      
-      setMessage("✅ Login successfully!");
-      toast.success("Login successfully!");
-
+    // Only run on client
+    if (typeof window !== "undefined") {
       localStorage.setItem("farmchain_token", data.token ?? "");
       localStorage.setItem("farmchain_user", JSON.stringify(data.user));
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userProfile", JSON.stringify(data.profile));
-      // setUserProfile(data.profile);
-      //  setUser(data.user);
-
-
-      
-
-
-      setTimeout(() => {
-        router.push('/main');
-      }, 2000);
-      
-    } catch (err: any) {
-      setMessage(`❌ ${err.message}`);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    setUserProfile(data.profile);
+    setUser(data.user);
+
+    console.log(data.user);
+    console.log(data.profile);
+    
+    
+
+    setTimeout(() => {
+      router.push("/main");
+    }, 2000);
+  } catch (err: any) {
+    setMessage(`❌ ${err.message}`);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
  
 

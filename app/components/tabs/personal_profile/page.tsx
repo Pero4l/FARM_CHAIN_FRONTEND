@@ -142,7 +142,7 @@ const Profile = () => {
                     <h3 className="text-lg font-bold mb-3">Edit Profile</h3>
 
                     <label className="block mb-3">
-                      <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                      <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-900'}`}>
                         Organization
                       </span>
                       <input
@@ -159,7 +159,7 @@ const Profile = () => {
                     </label>
 
                     <label className="block mb-4">
-                      <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Bio</span>
+                      <span className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-900'}`}>Bio</span>
                       <textarea
                         value={profile.bio}
                         onChange={(e) =>
