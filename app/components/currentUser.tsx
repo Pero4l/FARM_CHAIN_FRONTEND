@@ -43,8 +43,6 @@
 //   return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>;
 // }
 
-
-
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
@@ -75,59 +73,91 @@ type UserContextType = {
   setUser: (u: User | null) => void;
   userProfile: UserProfile | null;
   setUserProfile: (p: UserProfile | null) => void;
+  logout: () => void;
 };
 
 const UserContext = createContext<UserContextType | null>(null);
 
 export const useCurrentUser = () => {
   const ctx = useContext(UserContext);
-  if (!ctx) throw new Error("useCurrentUser must be used inside CurrentUserProvider");
+  if (!ctx)
+    throw new Error("useCurrentUser must be used inside CurrentUserProvider");
   return ctx;
 };
 
-export default function CurrentUserProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("farmchain_user");
-    const storedProfile = localStorage.getItem("userProfile");
-
-    if (storedUser && storedUser !== "undefined") {
+export default function CurrentUserProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  // Initialize from localStorage synchronously on first render in the client.
+  // `use client` at the top ensures this component runs only on the client.
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      if (typeof window === "undefined") return null;
+      const s = localStorage.getItem("farmchain_user");
+      if (!s || s === "undefined" || s === "null") return null;
+      return JSON.parse(s);
+    } catch (err) {
+      // if corrupted, remove the key and start fresh
       try {
-        setUser(JSON.parse(storedUser));
-      } catch {
         localStorage.removeItem("farmchain_user");
-      }
+      } catch {}
+      return null;
     }
+  });
 
-    if (storedProfile && storedProfile !== "undefined") {
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(() => {
+    try {
+      if (typeof window === "undefined") return null;
+      const s = localStorage.getItem("userProfile");
+      if (!s || s === "undefined" || s === "null") return null;
+      return JSON.parse(s);
+    } catch (err) {
       try {
-        setUserProfile(JSON.parse(storedProfile));
-      } catch {
         localStorage.removeItem("userProfile");
-      }
+      } catch {}
+      return null;
     }
-  }, []);
+  });
 
-  console.log(user, "USERS");
-  console.log(userProfile, "PROFILE");
-  
-
+  // Keep localStorage in sync whenever these values change.
   useEffect(() => {
-    if (user) localStorage.setItem("farmchain_user", JSON.stringify(user));
-    else localStorage.removeItem("farmchain_user");
+    if (typeof window === "undefined") return;
+    try {
+      if (user) localStorage.setItem("farmchain_user", JSON.stringify(user));
+      else localStorage.removeItem("farmchain_user");
+    } catch {}
   }, [user]);
 
   useEffect(() => {
-    if (userProfile) localStorage.setItem("userProfile", JSON.stringify(userProfile));
-    else localStorage.removeItem("userProfile");
+    if (typeof window === "undefined") return;
+    try {
+      if (userProfile)
+        localStorage.setItem("userProfile", JSON.stringify(userProfile));
+      else localStorage.removeItem("userProfile");
+    } catch {}
   }, [userProfile]);
 
+  // Explicit logout helper that clears user state and all related storage keys.
+  const logout = () => {
+    setUser(null);
+    setUserProfile(null);
+    try {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("farmchain_user");
+        localStorage.removeItem("userProfile");
+        localStorage.removeItem("farmchain_token");
+        localStorage.removeItem("isLoggedIn");
+      }
+    } catch {}
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, userProfile, setUserProfile }}>
+    <UserContext.Provider
+      value={{ user, setUser, userProfile, setUserProfile, logout }}
+    >
       {children}
     </UserContext.Provider>
   );
 }
-
