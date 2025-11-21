@@ -43,6 +43,9 @@ const Profile = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [edit]);
 
+  console.log(userProfile);
+  
+
   return (
     <div>
       <div className="flex justify-center lg:mt-2 mb-2 md:mb-3">
@@ -71,22 +74,11 @@ const Profile = () => {
 
               {/* <CheckCircle className="absolute -bottom-9 right-50 w-7 h-7 text-blue-500 bg-white rounded-full" /> */}
 
-              {userProfile?.verified === true && (
-                <CheckCircle className="absolute -bottom-9 right-50 w-7 h-7 text-blue-500 bg-white rounded-full" />
-                // <div className="absolute bottom-7 left-44 bg-blue-500 text-white rounded-full p-1 border-2 border-white">
-                //   <svg
-                //     xmlns="http://www.w3.org/2000/svg"
-                //     className="h-5 w-5"
-                //     viewBox="0 0 20 20"
-                //     fill="currentColor"
-                //   >
-                //     <path
-                //       fillRule="evenodd"
-                //       d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                //       clipRule="evenodd"
-                //     />
-                //   </svg>
-                // </div>
+              {userProfile?.verified === false && (
+                <CheckCircle
+                  aria-hidden="true"
+                  className="absolute -bottom-8 left-[158px] sm:left-16 md:left-40 lg:left-[9.7rem] xl:left-[9.9rem] w-8 h-8 text-blue-500 bg-white rounded-full border-2 border-white p-[2px] shadow"
+                />
               )}
             </div>
 
