@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useCurrentUser } from "@/app/components/currentUser";
 import {
   Image as ImageIcon,
   Video,
@@ -11,6 +12,7 @@ import {
   Send,
   X,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const CreatePost: React.FC = () => {
   const [content, setContent] = useState("");
@@ -23,13 +25,9 @@ const CreatePost: React.FC = () => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [videoPreviews, setVideoPreviews] = useState<string[]>([]);
 
-  const [token, setToken] = useState<string | null>(null);
+  const { token } = useCurrentUser();
 
-  // Load token from localStorage
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    setToken(t);
-  }, []);
+  const {theme} = useTheme()
 
   // ---------------------------------------
   // IMAGE UPLOAD
@@ -64,33 +62,63 @@ const CreatePost: React.FC = () => {
     setVideoPreviews(videoPreviews.filter((_, index) => index !== i));
   };
 
+  // cleanup created object URLs to avoid memory leaks
+  useEffect(() => {
+    return () => {
+      imagePreviews.forEach((src) => {
+        try {
+          URL.revokeObjectURL(src);
+        } catch {}
+      });
+      videoPreviews.forEach((src) => {
+        try {
+          URL.revokeObjectURL(src);
+        } catch {}
+      });
+    };
+    // only run on unmount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // ---------------------------------------
   // SUBMIT FORM
   // ---------------------------------------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!token) {
+      alert("❌ You are not authenticated. Please log in.");
+      return;
+    }
+
     const formData = new FormData();
 
-    // Append files under different fields
+    // Append images and videos
     images.forEach((file) => formData.append("images", file));
     videos.forEach((file) => formData.append("videos", file));
 
-    // Text fields
-    formData.append("content", content);
-    formData.append("farmSize", farmSize);
-    formData.append("tags", tags);
-    formData.append("category", category);
+    // Append text fields
+    formData.append("content", content || "");
+    formData.append("farmSize", farmSize || "");
+    formData.append("tags", tags || "");
+    formData.append("category", category || "general");
 
     try {
       const res = await fetch("https://farmchain.onrender.com/post/create", {
         method: "POST",
         headers: {
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          Authorization: `Bearer ${token}`,
         },
         body: formData,
         credentials: "include",
       });
+
+      if (!res.ok) {
+        // Log response text for debugging
+        const text = await res.text().catch(() => "No response text");
+        console.error("Server response:", text);
+        throw new Error(`Failed to create post. Status: ${res.status}`);
+      }
 
       const data = await res.json();
 
@@ -107,17 +135,18 @@ const CreatePost: React.FC = () => {
         setImagePreviews([]);
         setVideoPreviews([]);
       } else {
-        alert("❌ " + data.message);
+        alert("❌ " + (data.message || "Unknown error"));
       }
-    } catch (error) {
-      console.error("ERROR:", error);
+    } catch (error: any) {
+      console.error("Fetch error:", error);
       alert("❌ Something went wrong while creating the post.");
     }
   };
 
   return (
     <div className="max-w-2xl md:max-w-full">
-      <div className="bg-gradient-to-br from-green-700 to-emerald-500 rounded-3xl shadow-xl text-white p-8 py-10 mb-5 relative overflow-hidden">
+      {/* Header */}
+      <div className={`${theme === 'dark' ? 'bg-black border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
 
         <div className="relative z-10">
@@ -125,7 +154,7 @@ const CreatePost: React.FC = () => {
             <Leaf className="w-7 h-7" />
             <span>Create New Post</span>
           </h2>
-          <p className="text-green-100 text-lg pt-2">
+          <p className={`${theme === 'dark' ? 'text-white' : 'text-green-100'} text-lg pt-2`}>
             Share your latest farming update 🌾
           </p>
         </div>
@@ -133,11 +162,11 @@ const CreatePost: React.FC = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-3xl shadow-lg border border-gray-100 p-6 space-y-6"
+        className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white '} rounded-3xl shadow-lg border border-gray-100 p-6 space-y-6`}
       >
         {/* CONTENT */}
         <div>
-          <label className="flex items-center font-semibold text-gray-700 mb-2">
+          <label className={`flex items-center font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-700'} mb-2`}>
             <FileText className="w-4 h-4 mr-2" /> Post Content
           </label>
           <textarea
@@ -152,7 +181,7 @@ const CreatePost: React.FC = () => {
 
         {/* FARM SIZE */}
         <div>
-          <label className="flex items-center font-semibold text-gray-700 mb-2">
+          <label className={`flex items-center font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-700'} mb-2`}>
             <Grid className="w-4 h-4 mr-2" /> Farm Size (e.g. 5 acres)
           </label>
           <input
@@ -165,7 +194,7 @@ const CreatePost: React.FC = () => {
 
         {/* TAGS */}
         <div>
-          <label className="flex items-center font-semibold text-gray-700 mb-2">
+          <label className={`flex items-center font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-700'} mb-2`}>
             <Tag className="w-4 h-4 mr-2" /> Tags
           </label>
           <input
@@ -179,13 +208,13 @@ const CreatePost: React.FC = () => {
 
         {/* CATEGORY */}
         <div>
-          <label className="flex items-center font-semibold text-gray-700 mb-2">
+          <label className={`flex items-center font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-700'} mb-2`}>
             <ImageIcon className="w-4 h-4 mr-2" /> Category
           </label>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
+            className={`w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
           >
             <option value="general">General</option>
             <option value="crop">Crop</option>
@@ -197,7 +226,7 @@ const CreatePost: React.FC = () => {
 
         {/* UPLOAD MEDIA */}
         <div className="border-t pt-4">
-          <h3 className="font-bold text-gray-800 mb-3 flex items-center">
+          <h3 className={`font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-800'} mb-3 flex items-center`}>
             <Upload className="w-5 h-5 mr-2" /> Upload Photos & Videos
           </h3>
 
@@ -205,7 +234,9 @@ const CreatePost: React.FC = () => {
             {/* Images */}
             <label className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-green-400 rounded-2xl p-6 cursor-pointer hover:bg-green-50 transition-colors">
               <ImageIcon className="w-10 h-10 text-green-500 mb-2" />
-              <span className="text-gray-600 text-sm">Upload Images (max 10)</span>
+              <span className="text-gray-600 text-sm">
+                Upload Images (max 10)
+              </span>
               <input
                 type="file"
                 accept="image/*"
@@ -218,7 +249,9 @@ const CreatePost: React.FC = () => {
             {/* Videos */}
             <label className="flex-1 flex flex-col items-center justify-center border-2 border-dashed border-blue-400 rounded-2xl p-6 cursor-pointer hover:bg-blue-50 transition-colors">
               <Video className="w-10 h-10 text-blue-500 mb-2" />
-              <span className="text-gray-600 text-sm">Upload Videos (max 4)</span>
+              <span className="text-gray-600 text-sm">
+                Upload Videos (max 4)
+              </span>
               <input
                 type="file"
                 accept="video/*"
@@ -234,7 +267,10 @@ const CreatePost: React.FC = () => {
             <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
               {imagePreviews.map((src, i) => (
                 <div key={i} className="relative group">
-                  <img src={src} className="w-full h-24 object-cover rounded-xl shadow" />
+                  <img
+                    src={src}
+                    className="w-full h-24 object-cover rounded-xl shadow"
+                  />
                   <button
                     type="button"
                     onClick={() => removeImage(i)}
@@ -247,7 +283,11 @@ const CreatePost: React.FC = () => {
 
               {videoPreviews.map((src, i) => (
                 <div key={i} className="relative group">
-                  <video src={src} controls className="w-full h-24 object-cover rounded-xl shadow" />
+                  <video
+                    src={src}
+                    controls
+                    className="w-full h-24 object-cover rounded-xl shadow"
+                  />
                   <button
                     type="button"
                     onClick={() => removeVideo(i)}

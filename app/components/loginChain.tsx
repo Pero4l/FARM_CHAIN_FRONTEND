@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {useCurrentUser} from '@/app/components/currentUser';
-
-
-
+import { useCurrentUser } from "@/app/components/currentUser";
 
 interface LoginData {
   user: string;
@@ -25,9 +22,7 @@ const LoginPage = () => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const { setUser } = useCurrentUser();
-  const { setUserProfile } = useCurrentUser();
-
+  const { setUser, setUserProfile, setToken } = useCurrentUser();
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -35,58 +30,54 @@ const LoginPage = () => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-   const router = useRouter();
-
+  const router = useRouter();
 
   const handleLogin = async () => {
-  setMessage("");
-  setLoading(true);
+    setMessage("");
+    setLoading(true);
 
-  try {
-    const res = await fetch("https://farmchain.onrender.com/user/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(loginData),
-    });
+    try {
+      const res = await fetch("https://farmchain.onrender.com/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(loginData),
+      });
 
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || "Login failed");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Login failed");
 
-    setMessage("✅ Login successfully!");
-    toast.success("Login successfully!");
+      setMessage("✅ Login successfully!");
+      toast.success("Login successfully!");
 
-    // Only run on client
-    if (typeof window !== "undefined") {
-      localStorage.setItem("farmchain_token", data.token ?? "");
-      localStorage.setItem("farmchain_user", JSON.stringify(data.user));
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userProfile", JSON.stringify(data.profile));
+      // Only run on client
+      if (typeof window !== "undefined") {
+        localStorage.setItem("farmchain_token", data.token ?? "");
+        localStorage.setItem("farmchain_user", JSON.stringify(data.user));
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userProfile", JSON.stringify(data.profile));
+      }
+
+      // update context
+      setToken(data.token ?? null);
+      setUserProfile(data.profile);
+      setUser(data.user);
+
+      console.log(data.user);
+      console.log(data.profile);
+
+      setTimeout(() => {
+        router.push("/main");
+      }, 2000);
+    } catch (err: any) {
+      setMessage(`❌ ${err.message}`);
+    } finally {
+      setLoading(false);
     }
-
-    setUserProfile(data.profile);
-    setUser(data.user);
-
-    console.log(data.user);
-    console.log(data.profile);
-    
-    
-
-    setTimeout(() => {
-      router.push("/main");
-    }, 2000);
-  } catch (err: any) {
-    setMessage(`❌ ${err.message}`);
-  } finally {
-    setLoading(false);
-  }
-};
-
-
- 
+  };
 
   return (
     <div>
-           <ToastContainer
+      <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -133,7 +124,7 @@ const LoginPage = () => {
               className="w-full px-4 py-3 border border-gray-300 rounded-xl text-black focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
             />
           </div>
-          
+
           {/* Password */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

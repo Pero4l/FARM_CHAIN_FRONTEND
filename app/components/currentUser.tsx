@@ -74,6 +74,8 @@ type UserContextType = {
   userProfile: UserProfile | null;
   setUserProfile: (p: UserProfile | null) => void;
   logout: () => void;
+  token: string | null;
+  setToken: (t: string | null) => void;
 };
 
 const UserContext = createContext<UserContextType | null>(null);
@@ -121,6 +123,20 @@ export default function CurrentUserProvider({
     }
   });
 
+  const [token, setToken] = useState<string | null>(() => {
+    try {
+      if (typeof window === "undefined") return null;
+      const s = localStorage.getItem("farmchain_token");
+      if (!s || s === "undefined" || s === "null") return null;
+      return s;
+    } catch (err) {
+      try {
+        localStorage.removeItem("farmchain_token");
+      } catch {}
+      return null;
+    }
+  });
+
   // Keep localStorage in sync whenever these values change.
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -139,6 +155,14 @@ export default function CurrentUserProvider({
     } catch {}
   }, [userProfile]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      if (token) localStorage.setItem("farmchain_token", token);
+      else localStorage.removeItem("farmchain_token");
+    } catch {}
+  }, [token]);
+
   // Explicit logout helper that clears user state and all related storage keys.
   const logout = () => {
     setUser(null);
@@ -155,7 +179,15 @@ export default function CurrentUserProvider({
 
   return (
     <UserContext.Provider
-      value={{ user, setUser, userProfile, setUserProfile, logout }}
+      value={{
+        user,
+        setUser,
+        userProfile,
+        setUserProfile,
+        logout,
+        token,
+        setToken,
+      }}
     >
       {children}
     </UserContext.Provider>

@@ -428,6 +428,13 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                   alt="User Avatar"
                   className="w-38 rounded-full object-cover"
                 />
+
+                 {user?.verified === false && (
+                    <CheckCircle
+                   aria-hidden="true"
+                  className="absolute -bottom-8 left-[158px] sm:left-16 md:left-40 lg:left-[9.7rem] xl:left-[9.9rem] w-8 h-8 text-blue-500 bg-white rounded-full border-2 border-white p-[2px] shadow"
+                      />
+                  )}
               </div>
             </div>
 
