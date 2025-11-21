@@ -43,7 +43,7 @@ const Profile = () => {
     return () => window.removeEventListener("keydown", onKey);
   }, [edit]);
 
-  console.log(userProfile);
+  // console.log(userProfile);
   
 
   return (
