@@ -57,6 +57,7 @@ import AnalyticsPage from "../tabs/analytics/page";
 import Feed from "../tabs/feed/page";
 import Notification from "../tabs/notification/page";
 import UserProfile from "../user_profile/UserProfile";
+import AIChat from "../tabs/ai_bot/page";
 
 // SIDE BAR
 import WeatherSide from "../tabs/weather/weather_side/page";
@@ -252,6 +253,9 @@ const FarmChain: React.FC = () => {
                   <UserProfile userId={selectedUserId ?? undefined} />
                 </React.Suspense>
               )}
+
+               {/* Ai bot */}
+              {activeTab === "AI_bot" && <AIChat />}
             </div>
 
             {/* TABS END */}
