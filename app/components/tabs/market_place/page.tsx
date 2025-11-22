@@ -132,19 +132,19 @@ const MarketPage = () => {
                             <div className="grid grid-cols-3 gap-6">
                               <div className="text-center">
                                 <div className="text-2xl font-bold">2,847</div>
-                                <div className="text-blue-200 text-sm">
+                                <div className={`text-sm ${ theme === 'dark' ? 'text-white' : 'text-blue-200' } `}>
                                   Active Listings
                                 </div>
                               </div>
                               <div className="text-center">
                                 <div className="text-2xl font-bold">$4.2M</div>
-                                <div className="text-blue-200 text-sm">
+                                <div className={`text-sm ${ theme === 'dark' ? 'text-white' : 'text-blue-200' } `}>
                                   Total Volume
                                 </div>
                               </div>
                               <div className="text-center">
                                 <div className="text-2xl font-bold">98.5%</div>
-                                <div className="text-blue-200 text-sm">
+                                <div className={`  text-sm${ theme === 'dark' ? 'text-white' : 'text-blue-200' }`}>
                                   Success Rate
                                 </div>
                               </div>
@@ -185,26 +185,29 @@ const MarketPage = () => {
                               <div className="p-6">
                                 <div className="flex items-start justify-between mb-4">
                                   <div className="flex-1">
-                                    <h3 className="font-bold text-xl text-gray-900 mb-2">
+                                    <h3 className={`${theme === 'dark' ? 'text-white' : 'text-gray-900'} font-bold text-xl  mb-2` }>
                                       {item.title}
                                     </h3>
                                     <div className="flex items-center space-x-4 mb-2">
-                                      <span className="text-3xl font-black text-green-600">
+                                      <span
+                                        className={`text-3xl font-black text-green-600 ${ theme === 'dark' ? 'text-green-400' : 'text-green-600' }`}>
                                         {item.price}
                                       </span>
-                                      <span className="text-gray-500 text-sm">
+                                      <span
+                                        className={`text-sm ${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}  >
                                         ({item.pricePerUnit})
                                       </span>
                                     </div>
+
                                     {item.quantity && (
-                                      <p className="text-gray-600 font-medium">
+                                      <p className={`font-medium ${ theme === 'dark' ? ' text-white' : 'text-gray-600 '}`}>
                                         Quantity: {item.quantity}
                                       </p>
                                     )}
                                   </div>
                                   <div className="flex items-center space-x-1">
                                     <Star className="w-4 h-4 text-yellow-500 fill-current" />
-                                    <span className="text-sm font-semibold text-gray-700">
+                                    <span className={`${ theme === 'dark' ? 'text-white' : ' text-gray-700'} text-sm font-semibold`}>
                                       {item.rating}
                                     </span>
                                   </div>
@@ -212,30 +215,30 @@ const MarketPage = () => {
         
                                 <div className="space-y-3 mb-6">
                                   <div className="flex items-center justify-between text-sm">
-                                    <span className="text-gray-500">Seller:</span>
-                                    <span className="font-semibold text-gray-900">
+                                    <span className={`${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}>Seller:</span>
+                                    <span className={` font-semibold ${ theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
                                       {item.seller}
                                     </span>
                                   </div>
                                   <div className="flex items-center justify-between text-sm">
-                                    <span className="text-gray-500">Location:</span>
-                                    <span className="font-medium text-gray-700 flex items-center">
+                                    <span className={`${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}>Location:</span>
+                                    <span className={` ont-medium flex items-center${ theme === 'dark' ? 'text-white' : 'text-gray-700 '}`}>
                                       <MapPin className="w-4 h-4 mr-1" />
                                       {item.location}
                                     </span>
                                   </div>
                                   {item.condition && (
                                     <div className="flex items-center justify-between text-sm">
-                                      <span className="text-gray-500">Condition:</span>
-                                      <span className="font-medium text-gray-700">
+                                      <span className={`${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}>Condition:</span>
+                                      <span className={` font-medium ${ theme === 'dark' ? 'text-white' : 'text-gray-700'} `}>
                                         {item.condition}
                                       </span>
                                     </div>
                                   )}
                                   {item.harvestDate && (
                                     <div className="flex items-center justify-between text-sm">
-                                      <span className="text-gray-500">Harvest:</span>
-                                      <span className="font-medium text-green-600">
+                                      <span className={`${ theme === 'dark' ? 'text-white' : 'text-gray-500'  }`}>Harvest:</span>
+                                      <span className={` font-medium  ${ theme === 'dark' ? 'text-white' : 'text-green-700' }`}>
                                         {item.harvestDate}
                                       </span>
                                     </div>
