@@ -110,7 +110,6 @@ const CreatePost: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-        credentials: "include",
       });
 
       if (!res.ok) {
@@ -146,7 +145,7 @@ const CreatePost: React.FC = () => {
   return (
     <div className="max-w-2xl md:max-w-full">
       {/* Header */}
-      <div className={`${theme === 'dark' ? 'bg-black border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
+      <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
 
         <div className="relative z-10">
@@ -174,7 +173,7 @@ const CreatePost: React.FC = () => {
             onChange={(e) => setContent(e.target.value)}
             rows={4}
             placeholder="What's happening on your farm today?"
-            className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
             required
           />
         </div>
@@ -188,7 +187,7 @@ const CreatePost: React.FC = () => {
             type="text"
             value={farmSize}
             onChange={(e) => setFarmSize(e.target.value)}
-            className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
           />
         </div>
 
@@ -202,7 +201,7 @@ const CreatePost: React.FC = () => {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             placeholder="e.g. corn harvest irrigation"
-            className="w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
+            className="w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none"
           />
         </div>
 
@@ -214,7 +213,7 @@ const CreatePost: React.FC = () => {
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className={`w-full border border-gray-200 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
+            className={`w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
           >
             <option value="general">General</option>
             <option value="crop">Crop</option>

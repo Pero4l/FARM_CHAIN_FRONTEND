@@ -49,7 +49,7 @@ const MainNavPage = () => {
     <>
       {/* HEADER */}
       <header className={`${theme === 'dark' ? 'bg-black text-white' : 'bg-white/80'} backdrop-blur-md border-b border-gray-200 fixed w-full top-0 z-50 shadow-sm`}>
-        <div className="max-w-[1600px] mx-auto px-3">
+        <div className="max-w-[1600px] mx-auto px-2">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center space-x-8">
               <div className="flex items-center space-x-3">
@@ -69,7 +69,7 @@ const MainNavPage = () => {
                     </div>
                   </div>
 
-                  {/* Mobile dropdown */}
+                  {/* Mobile nav search and add btn */}
                   <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40`}>
                     <label
                       htmlFor="mobile-menu-toggle"
@@ -187,6 +187,7 @@ const MainNavPage = () => {
                 )}
               </button>
 
+                {/*  */}
               <div className="relative hidden md:flex" ref={menuRef}>
                 <div
                   onClick={() => setUserOption(prev => !prev)}
@@ -231,23 +232,23 @@ const MainNavPage = () => {
 
                 {/* Mobile */}
           <div className='lg:hidden flex gap-2'>
-            <label
-              htmlFor="mobile-menu-toggle"
-              className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden"
-            >
-              <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
-                {isMenuOpen ? <X /> : <Menu />}
-              </span>
+          <label
+            htmlFor="mobile-menu-toggle"
+            className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-[87%] md:w-[100%] "
+          >
+            <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
+              {isMenuOpen ? <X /> : <Menu />}
+            </span>
 
-              <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-6 py-2.5 w-full">
-                <Search className="w-5 h-5 text-gray-500 mr-3" />
-                <input
-                  type="text"
-                  placeholder="Search farmers, products, insights..."
-                  className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400 w-full md:w-[630px]"
-                />
-              </div>
-            </label>
+            <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-4 md:px-6 py-2.5 w-full min-w-0">
+              <Search className="w-5 h-5 text-gray-500 mr-3" />
+              <input
+                type="text"
+                placeholder="Search farmers, products, insights..."
+                className="bg-transparent flex-1 min-w-0 outline-none text-gray-700 placeholder-gray-400"
+              />
+            </div>
+          </label>
 
             <div className="relative md:hidden bottom-2" ref={menuRef}>
               <div

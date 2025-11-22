@@ -32,7 +32,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Client-side Providers should wrap everything */}
         <ClientProviders>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem={false}>
             <ActiveTabProvider>
               <Navbar />
               {children}

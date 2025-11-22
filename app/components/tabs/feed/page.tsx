@@ -302,7 +302,7 @@ const feedPage = () => {
               key={post.id}
               className={`${theme === 'dark' ? '' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
             >
-              <div className="p-3">
+              <div className="p-3 py-5">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
                    
@@ -420,7 +420,7 @@ const feedPage = () => {
 
 
                 {/* Action btn */}
-              <div className="border-t border-gray-100 px-3 py-4">
+              <div className="border-t border-gray-100 px-3 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">
                     <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-red-500 transition-colors`}>

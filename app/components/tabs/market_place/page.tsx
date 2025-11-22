@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 import {
   MessageCircle,
@@ -8,6 +10,7 @@ import {
   ShoppingCart,
   CheckCircle,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 
 type MarketplaceItem = {
   id: number;
@@ -38,6 +41,8 @@ type MarketplaceItem = {
 };
 
 const MarketPage = () => {
+
+  const { theme } = useTheme();
 
      const marketplaceItems: MarketplaceItem[] = [
     {
@@ -110,7 +115,7 @@ const MarketPage = () => {
     <div>
          <div className="space-y-8">
                         {/* market header */}
-                        <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600 rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden">
+                        <div className={`${theme === 'dark' ? "border-1 bg-gradient-to-br from-white/10 to-white/15 " : "bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-600"} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
                           <div className="absolute inset-0 bg-black/10"></div>
                           <div className="relative z-10">
                             <div className="flex items-center justify-between mb-6">
@@ -118,7 +123,7 @@ const MarketPage = () => {
                                 <h2 className="text-3xl font-black mb-2">
                                   Farm Marketplace 🛒
                                 </h2>
-                                <p className="text-blue-100 text-lg">
+                                <p className={theme === 'dark' ? 'text-white text-lg' :  'text-blue-100 text-lg'}>
                                   Buy, sell, and trade agricultural products & equipment
                                 </p>
                               </div>
@@ -152,12 +157,12 @@ const MarketPage = () => {
                           {marketplaceItems.map((item) => (
                             <div
                               key={item.id}
-                              className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                              className={` ${theme === 'dark' ? 'bg-black text-white' : 'bg-white'} rounded-b-3xl shadow-xl border-1 border-gray-100 hover:shadow-2xl transition-all duration-300 hover:scale-105`}
                             >
                               <div
                                 className={`h-48 ${item.image} flex items-center justify-center text-white text-6xl relative`}
                               >
-                                <div className="absolute inset-0 bg-black/20"></div>
+                                <div className="absolute inset-0 bg-black/20 "></div>
                                 <span className="relative z-10">
                                   {item.category === "equipment"
                                     ? "🚜"
