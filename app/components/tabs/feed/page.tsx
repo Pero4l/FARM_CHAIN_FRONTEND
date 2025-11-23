@@ -1,6 +1,5 @@
-'use client';
-import React from "react";
-// import Image from 'next/image';
+"use client";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Heart,
@@ -18,15 +17,22 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
+import axios from "axios";
+import { useCurrentUser } from "@/app/components/currentUser";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+dayjs.extend(relativeTime);
 
+// Keep your Post type as you defined it
 type Post = {
   id: number;
+  user_id: number;
   farmer: string;
   location: string;
   avatar: string;
   time: string;
   verified: boolean;
-  farmSize: string;
+  farmSize?: string;
   content: string;
   images?: string[];
   video?: string[];
@@ -37,149 +43,65 @@ type Post = {
   price?: string;
   tags?: string[];
   category: string;
+  createdAt: string;
 };
 
+const FeedPage: React.FC = () => {
+  // state holds an array of posts
+  const [data, setData] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const activeTabContext = useActiveTab();
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
+  const { theme } = useTheme();
+  const { token } = useCurrentUser();
 
-const feedPage = () => {
-    const activeTabContext = useActiveTab();
-    const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
-  const { theme, setTheme } = useTheme();
-  const avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
-  const posts: Post[] = [
-    {
-      id: 1,
-      farmer: "Sarah Johnson",
-      location: "Iowa, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "2 hours ago",
-      verified: true,
-      farmSize: "50 acres",
-      content:
-        "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
-      images: [
-        "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg",
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s",
-      ],
-      video: [
-        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4",
-        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4",
-      ],
-      likes: 142,
-      comments: 34,
-      shares: 18,
-      type: "success-story",
-      tags: [
-        "#OrganicFarming",
-        "#CompanionPlanting",
-        "#SustainableAgriculture",
-      ],
-      category: "small-scale",
-    },
-    {
-      id: 2,
-      farmer: "AgriTech Solutions",
-      location: "California, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "4 hours ago",
-      verified: true,
-      farmSize: "2,500 acres",
-      content:
-        "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: [
-        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4",
-        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4",
-      ],
-      likes: 1200,
-      comments: 67,
-      shares: 45,
-      type: "alert",
-      tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"],
-      category: "commercial",
-    },
-    {
-      id: 3,
-      farmer: "Miguel Rodriguez",
-      location: "Texas, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "8 hours ago",
-      verified: false,
-      farmSize: "15 acres",
-      content:
-        "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.",
-      likes: 67,
-      comments: 29,
-      shares: 12,
-      type: "trade",
-      price: "$1,200 value",
-      tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"],
-      category: "small-scale",
-    },
-    {
-      id: 4,
-      farmer: "Sarah Johnson",
-      location: "Iowa, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "2 hours ago",
-      verified: true,
-      farmSize: "50 acres",
-      content:
-        "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?",
-      images: [
-        "https://barbadostoday.bb/wp-content/uploads/2021/02/farmer-pic-1024x640.jpg",
-        "https://african.land/oc-content/plugins/blog/img/blog/698.jpg",
-      ],
-      likes: 142,
-      comments: 34,
-      shares: 18,
-      type: "success-story",
-      tags: [
-        "#OrganicFarming",
-        "#CompanionPlanting",
-        "#SustainableAgriculture",
-      ],
-      category: "small-scale",
-    },
-    {
-      id: 5,
-      farmer: "AgriTech Solutions",
-      location: "California, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "4 hours ago",
-      verified: true,
-      farmSize: "2,500 acres",
-      content:
-        "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.",
-      video: [
-        "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4",
-        "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4",
-      ],
-      likes: 289,
-      comments: 67,
-      shares: 45,
-      type: "alert",
-      tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"],
-      category: "commercial",
-    },
-    {
-      id: 6,
-      farmer: "Miguel Rodriguez",
-      location: "Texas, USA",
-      avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-      time: "8 hours ago",
-      verified: false,
-      farmSize: "15 acres",
-      content:
-        "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.",
-      likes: 67,
-      comments: 29,
-      shares: 12,
-      type: "trade",
-      price: "$1,200 value",
-      tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"],
-      category: "small-scale",
-    },
-  ];
+  // Fetch posts
+  async function fetchPosts() {
+    if (!token) {
+      // if there's no token we still might want to fetch public posts or bail out
+      // here we'll try to fetch but without Authorization header as fallback
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await axios.get(
+        "https://farmchain.onrender.com/post/all",
+        {
+          headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+              }
+            : undefined,
+        }
+      );
+
+      // expect response.data.posts to be an array
+      const posts = response?.data?.posts ?? [];
+
+      if (!Array.isArray(posts)) {
+        console.warn("Expected posts array but received:", posts);
+        setData([]);
+      } else {
+        setData(posts as Post[]);
+      }
+    } catch (err: any) {
+      console.error("Error fetching posts:", err);
+      setError(err?.message ?? "Failed to fetch posts");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const avatar = data[0]?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
 
   return (
     <div>
@@ -214,8 +136,13 @@ const feedPage = () => {
           } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
-            <div onClick={() => { setActiveTab("profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full ">
-              <img className="rounded-full" src={avatar} alt="" />
+            <div
+              onClick={() => {
+                setActiveTab("profile");
+              }}
+              className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full "
+            >
+              <img className="rounded-full" src={avatar} alt="avatar" />
             </div>
             <div className="flex-1">
               <textarea
@@ -297,54 +224,86 @@ const feedPage = () => {
 
         {/* Posts list */}
         <div className="space-y-8">
-          {posts.map((post) => (
+          {loading && <div className="text-center text-4xl py-6">Loading posts...</div>}
+
+          {error && (
+            <div className="text-center text-red-500 py-6">{error}</div>
+          )}
+
+          {!loading && !error && data.length === 0 && (
+            <div className="text-center text-4xl py-6">No posts to show</div>
+          )}
+
+          {data.map((post) => (
             <div
               key={post.id}
-              className={`${theme === 'dark' ? '' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
+              className={`${
+                theme === "dark" ? "" : "bg-white"
+              } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
             >
               <div className="p-3 py-5">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-start space-x-4">
-                   
-                   <Link href="">
-                     <div className="relative">
-                      <div onClick={() => { setActiveTab("user_profile") }} className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
-                        <img className="rounded-full" src={post.avatar} alt="" />
+                    <Link
+                      href={{
+                        pathname: "/main",
+                        query: { id: post.user_id },
+                      }}
+                    >
+                      <div className="relative">
+                        <div
+                          onClick={() => {
+                            setActiveTab("user_profile");
+                          }}
+                          className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full "
+                        >
+                          <img
+                            className="rounded-full"
+                            src={post.avatar || avatar}
+                            alt=""
+                          />
+                        </div>
+                        {post.verified === false && (
+                          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
+                        )}
                       </div>
-                      {post.verified && (
-                        <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
-                      )}
-                    </div>
-                   </Link>
+                    </Link>
 
                     <div className="flex-1">
                       <div className="flex items-center space-x-7 mb-1">
-                        <h3 className={`font-bold text-lg  ${theme === 'dark' ? '' : 'text-gray-900'}`}>
+                        <h3
+                          className={`font-bold text-lg  ${
+                            theme === "dark" ? "" : "text-gray-900"
+                          }`}
+                        >
                           {post.farmer}
                         </h3>
                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-                          {post.category === "commercial"
-                            ? "Commercial"
-                            : post.category === "cooperative"
-                            ? "Cooperative"
-                            : "Small Scale"}
+                          {post.category}
                         </span>
                       </div>
 
-                      <div className={`flex items-center space-x-5 text-sm ${theme === 'dark' ? '' : 'text-gray-500'}`}>
+                      <div
+                        className={`flex items-center space-x-5 text-sm ${
+                          theme === "dark" ? "" : "text-gray-500"
+                        }`}
+                      >
                         <div className="flex items-center">
                           <MapPin className="w-4 h-4 mr-1 " />
                           {post.location}
                         </div>
-                        {/* <span>{post.farmSize}</span> */}•
-                        <span> {post.time}</span>
+                        <span>• {dayjs(post.createdAt).fromNow()}</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-4">
-                  <p className={` leading-relaxed ${theme === 'dark' ? '' : 'text-gray-700'}`}>
+                  <p
+                    className={` leading-relaxed ${
+                      theme === "dark" ? "" : "text-gray-700"
+                    }`}
+                  >
                     {post.content}
                   </p>
 
@@ -409,35 +368,45 @@ const feedPage = () => {
                         />
                       </div>
                     ))}
-
-                    {/* <div className="relative z-10 text-center">
-      <Video className="w-16 h-16 mx-auto mb-3" />
-      <p className="font-bold text-lg">Watch Full Video</p>
-    </div> */}
                   </div>
                 )}
               </div>
 
-
-                {/* Action btn */}
+              {/* Action btn */}
               <div className="border-t border-gray-100 px-3 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">
-                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-red-500 transition-colors`}>
+                    <button
+                      className={`flex items-center space-x-2 ${
+                        theme === "dark" ? "" : "text-gray-600"
+                      } hover:text-red-500 transition-colors`}
+                    >
                       <Heart className="w-5 h-5" />
                       <span className="font-semibold">{post.likes}</span>
                     </button>
-                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-blue-500 transition-colors`}>
+                    <button
+                      className={`flex items-center space-x-2 ${
+                        theme === "dark" ? "" : "text-gray-600"
+                      } hover:text-blue-500 transition-colors`}
+                    >
                       <MessageSquare className="w-5 h-5" />
                       <span className="font-semibold">{post.comments}</span>
                     </button>
-                    <button className={`flex items-center space-x-2 ${theme === 'dark' ? '' : 'text-gray-600'} hover:text-green-500 transition-colors`}>
+                    <button
+                      className={`flex items-center space-x-2 ${
+                        theme === "dark" ? "" : "text-gray-600"
+                      } hover:text-green-500 transition-colors`}
+                    >
                       <Share className="w-5 h-5" />
                       <span className="font-semibold">{post.shares}</span>
                     </button>
                   </div>
 
-                  <div className={`text-sm ${theme === 'dark' ? '' : ' text-gray-500'} hover:text-green-500 transition-colors`}>
+                  <div
+                    className={`text-sm ${
+                      theme === "dark" ? "" : " text-gray-500"
+                    } hover:text-green-500 transition-colors`}
+                  >
                     <Eye className="w-4 h-4 inline mr-1" />
                     {post.likes + post.comments * 3} views
                   </div>
@@ -451,4 +420,11 @@ const feedPage = () => {
   );
 };
 
-export default feedPage;
+export default FeedPage;
+
+// const posts: Post[] = [
+//  // { // id: 1, // farmer: "Farmer", 
+// // location: "Iowa, USA",
+//  // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", 
+// 
+// time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg", // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s", // ], // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 2, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 1200, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 3, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // { // id: 4, // farmer: "Sarah Johnson", // location: "Iowa, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://barbadostoday.bb/wp-content/uploads/2021/02/farmer-pic-1024x640.jpg", // "https://african.land/oc-content/plugins/blog/img/blog/698.jpg", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 5, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 289, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 6, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // ];
