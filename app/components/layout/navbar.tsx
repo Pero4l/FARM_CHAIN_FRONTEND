@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "../atoms/button";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const Navbar = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                  Farm Chain
+                  FarmChain
                 </h1>
                 <p className="text-xs text-gray-500 font-medium">
                   Connecting Agriculture

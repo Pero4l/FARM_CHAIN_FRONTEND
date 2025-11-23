@@ -100,7 +100,7 @@ const HeroPage = () => {
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto pt-7 px-6 relative z-10">
+        <div className="max-w-7xl mx-auto pt-2 px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
@@ -117,7 +117,7 @@ const HeroPage = () => {
                   <br />
                   Thrive.
                 </h1>
-                <p className="text-xl text-white leading-relaxed font-medium max-w-xl">
+                <p className="text-xl text-white leading-relaxed max-w-xl">
                   Join the world's largest farming community where knowledge
                   flows freely, trades happen securely, and every harvest brings
                   us closer together.

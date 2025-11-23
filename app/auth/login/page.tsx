@@ -1,14 +1,14 @@
 'use client'
-import RegisterChain from '@/app/components/registerChain';
+import LoginPage from '@/app/components/loginChain';
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebookF } from "react-icons/fa6";
 
 const FarmChainAuth = () => {
   
-  const [isLogin, setIsLogin] = useState(true);
+//   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 flex items-center md:justify-center pt-20 lg:pt-22 mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-emerald-50 flex md:items-center justify-center p- pt-16">
       <div className="w-full max-w-md">
         {/* Logo */}
         {/* <div className="flex items-center justify-center space-x-3 mb-8">
@@ -49,8 +49,9 @@ const FarmChainAuth = () => {
         </div> */}
 
         {/* Form Container */}
-        <div className="bg-white lg:rounded-3xl shadow-xl p-8">
-          <RegisterChain/>
+        <div className="bg-white min-h-screen md:min-h-0 lg:rounded-3xl shadow-xl p-8">
+          <LoginPage/>
+
           {/* Social Login */}
           <div className="mt-8">
             <div className="relative">
@@ -79,6 +80,8 @@ const FarmChainAuth = () => {
               </button>
             </div>
           </div>
+
+
         </div>
       </div>
     </div>
