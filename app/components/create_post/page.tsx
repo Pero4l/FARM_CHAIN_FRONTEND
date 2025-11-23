@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useCurrentUser } from "@/app/components/currentUser";
 import {
   Image as ImageIcon,
@@ -13,8 +13,15 @@ import {
   X,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useActiveTab } from "@/app/context/ActiveTabContext";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CreatePost: React.FC = () => {
+   const activeTabContext = useActiveTab();
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
+
   const [content, setContent] = useState("");
   const [farmSize, setFarmSize] = useState("");
   const [tags, setTags] = useState("");
@@ -24,14 +31,18 @@ const CreatePost: React.FC = () => {
   const [videos, setVideos] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [videoPreviews, setVideoPreviews] = useState<string[]>([]);
+  const [progress, setProgress] = useState(0);
+  const [loading, setLoading] = useState<boolean>(false);
+
 
   const { token } = useCurrentUser();
+  const { theme } = useTheme();
 
-  const {theme} = useTheme()
+  const cancelToken = useRef<any>(null);
 
-  // ---------------------------------------
+  // -----------------------------
   // IMAGE UPLOAD
-  // ---------------------------------------
+  // -----------------------------
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     const newFiles = [...images, ...files].slice(0, 10);
@@ -40,18 +51,39 @@ const CreatePost: React.FC = () => {
     setImagePreviews(newFiles.map((f) => URL.createObjectURL(f)));
   };
 
-  // ---------------------------------------
-  // VIDEO UPLOAD
-  // ---------------------------------------
-  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    const newFiles = [...videos, ...files].slice(0, 4);
+  // -----------------------------
+  // VIDEO UPLOAD + THUMBNAIL
+  // -----------------------------
+  const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []).slice(0, 4);
+    setVideos(files);
 
-    setVideos(newFiles);
-    setVideoPreviews(newFiles.map((f) => URL.createObjectURL(f)));
+    // Generate thumbnails for preview
+    const previews: string[] = await Promise.all(
+      files.map((file) => generateVideoThumbnail(file))
+    );
+    setVideoPreviews(previews);
   };
 
-  // Remove media
+  const generateVideoThumbnail = (file: File) => {
+    return new Promise<string>((resolve) => {
+      const video = document.createElement("video");
+      video.src = URL.createObjectURL(file);
+      video.currentTime = 1;
+      video.onloadeddata = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 320;
+        canvas.height = 180;
+        const ctx = canvas.getContext("2d");
+        if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg"));
+      };
+    });
+  };
+
+  // -----------------------------
+  // REMOVE MEDIA
+  // -----------------------------
   const removeImage = (i: number) => {
     setImages(images.filter((_, index) => index !== i));
     setImagePreviews(imagePreviews.filter((_, index) => index !== i));
@@ -62,68 +94,48 @@ const CreatePost: React.FC = () => {
     setVideoPreviews(videoPreviews.filter((_, index) => index !== i));
   };
 
-  // cleanup created object URLs to avoid memory leaks
+  // -----------------------------
+  // CLEANUP
+  // -----------------------------
   useEffect(() => {
     return () => {
-      imagePreviews.forEach((src) => {
-        try {
-          URL.revokeObjectURL(src);
-        } catch {}
-      });
-      videoPreviews.forEach((src) => {
-        try {
-          URL.revokeObjectURL(src);
-        } catch {}
-      });
+      imagePreviews.forEach((src) => URL.revokeObjectURL(src));
+      videoPreviews.forEach((src) => URL.revokeObjectURL(src));
     };
-    // only run on unmount
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ---------------------------------------
-  // SUBMIT FORM
-  // ---------------------------------------
+  // -----------------------------
+  // SUBMIT FORM WITH PROGRESS + CANCEL
+  // -----------------------------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!token) {
-      alert("❌ You are not authenticated. Please log in.");
-      return;
-    }
+    if (!token) return toast.error("You are not authenticated, Please log in.");
 
     const formData = new FormData();
-
-    // Append images and videos
-    images.forEach((file) => formData.append("images", file));
-    videos.forEach((file) => formData.append("videos", file));
-
-    // Append text fields
+    images.forEach((img) => formData.append("images", img));
+    videos.forEach((vid) => formData.append("videos", vid));
     formData.append("content", content || "");
     formData.append("farmSize", farmSize || "");
     formData.append("tags", tags || "");
     formData.append("category", category || "general");
 
+    cancelToken.current = axios.CancelToken.source();
+    setLoading(true)
+
     try {
-      const res = await fetch("https://farmchain.onrender.com/post/create", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const res = await axios.post(
+        "https://farmchain.onrender.com/post/create",
+        formData,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          onUploadProgress: (e) => setProgress(Math.round((e.total ? (e.loaded * 100) / e.total : 100))),
+          cancelToken: cancelToken.current.token,
+        }
+      );
 
-      if (!res.ok) {
-        // Log response text for debugging
-        const text = await res.text().catch(() => "No response text");
-        console.error("Server response:", text);
-        throw new Error(`Failed to create post. Status: ${res.status}`);
-      }
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert("✅ Post created successfully!");
-
+      if (res.data.success) {
+        toast.success("Post created successfully!");
         // Reset form
         setContent("");
         setFarmSize("");
@@ -133,19 +145,30 @@ const CreatePost: React.FC = () => {
         setVideos([]);
         setImagePreviews([]);
         setVideoPreviews([]);
+        setProgress(0);
+        setLoading(false)
+
+        setTimeout(()=> {
+            setActiveTab("feed")
+        }, 2000)
+
       } else {
-        alert("❌ " + (data.message || "Unknown error"));
+        toast.error("❌ " + (res.data.message || "Unknown error"));
       }
     } catch (error: any) {
-      console.error("Fetch error:", error);
-      alert("❌ Something went wrong while creating the post.");
+      if (axios.isCancel(error)) toast.warn("Upload cancelled");
+      else toast.error("❌ Something went wrong, try again!");
     }
+  };
+
+  const handleCancel = () => {
+    if (cancelToken.current) cancelToken.current.cancel("User cancelled upload");
   };
 
   return (
     <div className="max-w-2xl md:max-w-full">
-      {/* Header */}
-      <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
+      <ToastContainer />
+       <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
 
         <div className="relative z-10">
@@ -215,11 +238,11 @@ const CreatePost: React.FC = () => {
             onChange={(e) => setCategory(e.target.value)}
             className={`w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
           >
-            <option value="general">General</option>
-            <option value="crop">Crop</option>
-            <option value="livestock">Livestock</option>
-            <option value="equipment">Equipment</option>
-            <option value="market">Market</option>
+            <option value="General">General</option>
+            <option value="Crop">Crop</option>
+            <option value="Livestock">Livestock</option>
+            <option value="Equipment">Equipment</option>
+            <option value="Market">Market</option>
           </select>
         </div>
 
@@ -302,12 +325,29 @@ const CreatePost: React.FC = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="bg-green-600 text-white px-6 py-3 w-full rounded-xl font-semibold hover:bg-green-700 transition-colors flex items-center justify-center space-x-2"
         >
-          <Send className="w-5 h-5" />
-          <span>Post Update</span>
+          <Send className={`w-5 h-5 ${loading ? "hidden" : ""}`} />
+          <span>{loading ? "Uploading...." : "Post Update"}</span>
         </button>
+
+          {progress > 0 && (
+        <div className="w-full bg-gray-300 h-2 rounded mt-2">
+          <div className="bg-green-500 h-2 rounded" style={{ width: `${progress}%` }} />
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={handleCancel}
+        className={`bg-red-500 text-white px-4 py-2 rounded mt- w-full ${loading ? "" : "hidden "}`}
+      >
+        Cancel Upload
+      </button>
       </form>
+    
+      
     </div>
   );
 };

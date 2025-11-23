@@ -17,7 +17,7 @@ interface FormData {
   password: string;
 }
 
-const RegisterChain: React.FC = () => {
+  const RegisterChain: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [currentStep, setCurrentStep] = useState<number>(1);

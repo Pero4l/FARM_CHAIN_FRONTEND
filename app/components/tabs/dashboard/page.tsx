@@ -203,7 +203,7 @@ const { theme, setTheme } = useTheme();
                   <Zap className="w-8 h-8 mr-3" />
                   Welcome back, {user.user?.currentUser ?? 'Farmer'} 🌱
                 </h2>
-                <p className="text-green-100 text-lg">
+                <p className={` text-lg ${theme === 'dark' ? 'text-white' : 'text-green-100'}`}>
                   Your farm is thriving. Here's what's happening today.
                 </p>
               </div>
