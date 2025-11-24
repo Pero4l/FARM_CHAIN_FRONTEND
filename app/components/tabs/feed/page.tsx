@@ -14,6 +14,7 @@ import {
   Mic,
   Filter,
   Send,
+  ClockFading
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
@@ -270,7 +271,7 @@ const FeedPage: React.FC = () => {
                     </Link>
 
                     <div className="flex-1">
-                      <div className="flex items-center space-x-7 mb-1">
+                      <div className="flex items-center space-x-4 mb-1">
                         <h3
                           className={`font-bold text-lg  ${
                             theme === "dark" ? "" : "text-gray-900"
@@ -284,15 +285,19 @@ const FeedPage: React.FC = () => {
                       </div>
 
                       <div
-                        className={`flex items-center space-x-5 text-sm ${
+                        className={`flex flex-col-reverse  md:space-x-7 text-sm ${
                           theme === "dark" ? "" : "text-gray-500"
                         }`}
                       >
                         <div className="flex items-center">
-                          <MapPin className="w-4 h-4 mr-1 " />
+                          <MapPin className="w-3 h-3 mr-1 " />
                           {post.location}
                         </div>
-                        <span>• {dayjs(post.createdAt).fromNow()}</span>
+                        {/*  */}
+                        <div className="flex items-center ">
+                          <ClockFading className="w-3 h-3 mr-1"/>
+                          {dayjs(post.createdAt).fromNow()}
+                          </div>
                       </div>
                     </div>
                   </div>
