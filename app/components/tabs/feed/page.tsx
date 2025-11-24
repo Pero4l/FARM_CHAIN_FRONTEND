@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import {
   Heart,
   MessageSquare,
@@ -137,13 +138,14 @@ const FeedPage: React.FC = () => {
           } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
+            {/* top img */}
             <div
               onClick={() => {
                 setActiveTab("profile");
               }}
               className="w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-600 border-none rounded-full "
             >
-              <img className="rounded-full" src={avatar} alt="avatar" />
+              <img className="rounded-full w-[70px] h-[55px]" src={avatar} alt="avatar" />
             </div>
             <div className="flex-1">
               <textarea
@@ -252,6 +254,7 @@ const FeedPage: React.FC = () => {
                       }}
                     >
                       <div className="relative">
+                        {/* profile post img */}
                         <div
                           onClick={() => {
                             setActiveTab("user_profile");
@@ -259,9 +262,11 @@ const FeedPage: React.FC = () => {
                           className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full "
                         >
                           <img
-                            className="rounded-full"
+                           
+                            className="h-[55px] w-[70px] rounded-full"
                             src={post.avatar || avatar}
                             alt=""
+                            
                           />
                         </div>
                         {post.verified === false && (
@@ -343,10 +348,13 @@ const FeedPage: React.FC = () => {
                         key={i}
                         className="rounded-2xl w-full relative overflow-hidden"
                       >
-                        <img
+                        <Image
                           src={img}
-                          alt="..."
+                          width={500}
+                          height={300}
+                          alt="Images"
                           className="object-cover w-full h-full"
+                          unoptimized
                         />
                         <div className="absolute inset-0 bg-black/10"></div>
                       </div>

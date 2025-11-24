@@ -70,13 +70,14 @@ type UserProfile = {
 
 type UserContextType = {
   user: User | null;
-  setUser: (u: User | null) => void;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   userProfile: UserProfile | null;
-  setUserProfile: (p: UserProfile | null) => void;
+  setUserProfile: React.Dispatch<React.SetStateAction<UserProfile | null>>;
   logout: () => void;
   token: string | null;
-  setToken: (t: string | null) => void;
+  setToken: React.Dispatch<React.SetStateAction<string | null>>;
 };
+
 
 const UserContext = createContext<UserContextType | null>(null);
 
