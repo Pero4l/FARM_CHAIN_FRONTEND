@@ -271,7 +271,7 @@ const FeedPage: React.FC = () => {
                     </Link>
 
                     <div className="flex-1">
-                      <div className="flex items-center space-x-4 mb-1">
+                      <div className="flex items-center space-x-7 mb-1">
                         <h3
                           className={`font-bold text-lg  ${
                             theme === "dark" ? "" : "text-gray-900"
