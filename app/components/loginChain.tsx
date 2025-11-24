@@ -67,7 +67,7 @@ const LoginPage = () => {
 
       setTimeout(() => {
         router.push("/main");
-      }, 2000);
+      }, 1000);
     } catch (err: any) {
       setMessage(`❌ ${err.message}`);
     } finally {
