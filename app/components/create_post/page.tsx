@@ -51,35 +51,44 @@ const CreatePost: React.FC = () => {
     setImagePreviews(newFiles.map((f) => URL.createObjectURL(f)));
   };
 
-  // -----------------------------
-  // VIDEO UPLOAD + THUMBNAIL
-  // -----------------------------
-  const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []).slice(0, 4);
-    setVideos(files);
+ // -----------------------------
+// VIDEO UPLOAD + THUMBNAIL FIXED
+// -----------------------------
+const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const files = Array.from(e.target.files || []).slice(0, 4); // max 4
+  setVideos(files);
 
-    // Generate thumbnails for preview
-    const previews: string[] = await Promise.all(
-      files.map((file) => generateVideoThumbnail(file))
-    );
-    setVideoPreviews(previews);
-  };
+  // Generate thumbnails reliably
+  const previews: string[] = [];
+  for (const file of files) {
+    previews.push(await generateVideoThumbnail(file));
+  }
+  setVideoPreviews(previews);
+};
 
-  const generateVideoThumbnail = (file: File) => {
-    return new Promise<string>((resolve) => {
-      const video = document.createElement("video");
-      video.src = URL.createObjectURL(file);
-      video.currentTime = 1;
-      video.onloadeddata = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = 320;
-        canvas.height = 180;
-        const ctx = canvas.getContext("2d");
-        if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg"));
-      };
-    });
-  };
+const generateVideoThumbnail = (file: File) => {
+  return new Promise<string>((resolve) => {
+    const video = document.createElement("video");
+    video.preload = "metadata";
+    video.muted = true;
+    video.src = URL.createObjectURL(file);
+
+    video.onloadedmetadata = () => {
+      video.currentTime = Math.min(1, video.duration / 2); // safer frame
+    };
+
+    video.onseeked = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 320;
+      canvas.height = 180;
+      const ctx = canvas.getContext("2d");
+      if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(video.src); // free memory
+      resolve(canvas.toDataURL("image/jpeg"));
+    };
+  });
+};
+
 
   // -----------------------------
   // REMOVE MEDIA
@@ -238,11 +247,12 @@ const CreatePost: React.FC = () => {
             onChange={(e) => setCategory(e.target.value)}
             className={`w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
           >
-            <option value="General">General</option>
-            <option value="Crop">Crop</option>
-            <option value="Livestock">Livestock</option>
-            <option value="Equipment">Equipment</option>
-            <option value="Market">Market</option>
+           <option value="general">General</option>
+<option value="crop">Crop</option>
+<option value="livestock">Livestock</option>
+<option value="equipment">Equipment</option>
+<option value="market">Market</option>
+
           </select>
         </div>
 
@@ -275,52 +285,54 @@ const CreatePost: React.FC = () => {
                 Upload Videos (max 4)
               </span>
               <input
-                type="file"
-                accept="video/*"
-                multiple
-                hidden
-                onChange={handleVideoChange}
-              />
+              id="videoInput"
+              type="file"
+              accept="video/*"
+              multiple
+              hidden
+              onChange={handleVideoChange}
+            />
             </label>
           </div>
 
-          {/* PREVIEWS */}
-          {(imagePreviews.length > 0 || videoPreviews.length > 0) && (
-            <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
-              {imagePreviews.map((src, i) => (
-                <div key={i} className="relative group">
-                  <img
-                    src={src}
-                    className="w-full h-24 object-cover rounded-xl shadow"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeImage(i)}
-                    className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
+         {/* PREVIEWS */}
+{(imagePreviews.length > 0 || videoPreviews.length > 0) && (
+  <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
+    {imagePreviews.map((src, i) => (
+      <div key={i} className="relative group">
+        <img
+          src={src}
+          className="w-full h-24 object-cover rounded-xl shadow"
+        />
+        <button
+          type="button"
+          onClick={() => removeImage(i)}
+          className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    ))}
 
-              {videoPreviews.map((src, i) => (
-                <div key={i} className="relative group">
-                  <video
-                    src={src}
-                    controls
-                    className="w-full h-24 object-cover rounded-xl shadow"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => removeVideo(i)}
-                    className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+    {videos.map((file, i) => (
+      <div key={i} className="relative group">
+        <video
+          src={URL.createObjectURL(file)} // <-- FIXED: use the File directly
+          controls
+          className="w-full h-24 object-cover rounded-xl shadow"
+        />
+        <button
+          type="button"
+          onClick={() => removeVideo(i)}
+          className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
 
         <button

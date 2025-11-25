@@ -38,7 +38,7 @@ type Post = {
   farmSize?: string;
   content: string;
   images?: string[];
-  video?: string[];
+  videos?: string[];
   likes: number;
   comments: number;
   shares: number;
@@ -107,7 +107,7 @@ const FeedPage: React.FC = () => {
   }, []);
 
   const avatar = data[0]?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
-
+console.log("Posts data:", data);
   return (
     <div>
       <div className="space-y-8 sm:px-6 md:px-0">
@@ -492,10 +492,10 @@ const FeedPage: React.FC = () => {
                 )}
 
                 {/* VIDEO */}
-                {post.video && (
+                {post.videos && (
                   <div className=" rounded-2xl   grid md:grid-cols-2 gap-3 text-white relative overflow-hidden">
                     <div className="absolute inset-0 "></div>
-                    {post.video.map((vid: string, i: number) => (
+                    {post.videos.map((vid: string, i: number) => (
                       <div
                         key={i}
                         className="relative w-full rounded-2xl overflow-hidden"
@@ -503,6 +503,7 @@ const FeedPage: React.FC = () => {
                         <video
                           autoPlay
                           controls
+                          
                           playsInline
                           src={vid}
                           className="h-[500px] object-cover"
