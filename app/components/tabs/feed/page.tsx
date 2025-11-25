@@ -298,7 +298,7 @@ const FeedPage: React.FC = () => {
 
                         <div className="flex items-center space-x-2 ml-30 lg:ml-[560px]">
                         <button
-                          className={`p-1 text-gray-100 hover:text-gray-500 rounded-full ${post.user_id == id ? '' : 'hidden'}`}
+                          className={`p-1 ${theme === 'dark' ? "text-gray-100 hover:text-gray-500" : "text-gray-600 hover:text-gray-500"} rounded-full ${post.user_id == id ? '' : 'hidden'}`}
                           aria-label="more"
                           onClick={(e) => {
                           e.stopPropagation();
