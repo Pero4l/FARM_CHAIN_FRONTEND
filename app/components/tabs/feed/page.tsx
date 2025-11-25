@@ -312,7 +312,7 @@ const FeedPage: React.FC = () => {
                         {/* Modal (hidden by default) */}
                         <div
                           id={`post-modal-${post.id}`}
-                          className=" hidden fixed inset-0 z-50 flex items-center justify-center"
+                          className="hidden fixed inset-0 z-50 flex items-center justify-center"
                           onClick={(e) => {
                           // click on overlay closes modal
                           if (e.target === e.currentTarget) {
@@ -324,7 +324,7 @@ const FeedPage: React.FC = () => {
                           <div className="absolute inset-0 bg-black/50" />
 
                           <div
-                          className={`relative z-10 ${theme === 'dark' ? "border-1 bg-black" : " bg-white dark:bg-slate-900"} rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+                          className={`relative z-10 ${theme === 'dark' ? "border-1 bg-black" : " bg-white dark:bg-white"} rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
                           onClick={(e) => e.stopPropagation()}
                           >
                           <h4 className="text-lg font-bold mb-2">
