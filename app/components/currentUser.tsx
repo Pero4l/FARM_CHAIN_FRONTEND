@@ -21,6 +21,8 @@ type UserProfile = {
   share_account: string;
   followers: number;
   following: number;
+  totalPost: number;
+  posts: Array<any>;
 };
 
 type UserContextType = {
