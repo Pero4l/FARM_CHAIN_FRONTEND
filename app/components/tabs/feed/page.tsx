@@ -248,194 +248,157 @@ console.log("Posts data:", data);
               } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
             >
               <div className="p-3 py-5">
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-start space-x-4">
-                    <Link
-                      href={{
-                        pathname: "/main",
-                        query: { id: post.user_id },
-                      }}
-                    >
-                      <div className="relative">
-                        {/* profile post img */}
-                        <div
-                          onClick={() => {
-                            setActiveTab("user_profile");
-                          }}
-                          className="w-14 h-14  rounded-full "
-                        >
-                          <img
-                           
-                            className="h-full w-full rounded-full"
-                            src={post.avatar || avatar}
-                            alt=""
-                            
-                          />
-                        </div>
-                        {post.verified === false && (
-                          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
-                        )}
-                      </div>
-                    </Link>
+                <div className="flex items-start justify-between mb-4 w-full">
+  <div className="flex items-start space-x-4 w-full">
+    {/* Avatar / Profile */}
+    <Link
+      href={{
+        pathname: "/main",
+        query: { id: post.user_id },
+      }}
+    >
+      <div className="relative">
+        <div
+          onClick={() => setActiveTab("user_profile")}
+          className="w-14 h-14 rounded-full overflow-hidden"
+        >
+          <img
+            className="h-full w-full object-cover rounded-full"
+            src={post.avatar || avatar}
+            alt=""
+          />
+        </div>
 
-                    <div className="flex-1">
+        {post.verified === false && (
+          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
+        )}
+      </div>
+    </Link>
 
-                    <div className="flex items-center w-full">
-                      <div className="flex items-center space-x-3 min-w-0 flex-1">
-                        <div className="min-w-0">
-                          <h3
-                            className={`font-bold text-lg truncate ${
-                              theme === "dark" ? "" : "text-gray-900"
-                            }`}
-                          >
-                            {post.farmer}
-                          </h3>
-                        </div>
-                        <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-                          {post.category}
-                        </span>
-                      </div>
+    {/* Main Content */}
+    <div className="flex-1 min-w-0">
 
-                        <div className="flex items-center space-x-2 ml-30 lg:ml-[560px]">
-                        <button
-                          className={`p-1 ${theme === 'dark' ? "text-gray-100 hover:text-gray-500" : "text-gray-600 hover:text-gray-500"} rounded-full ${post.user_id == id ? '' : 'hidden'}`}
-                          aria-label="more"
-                          onClick={(e) => {
-                          e.stopPropagation();
-                          const m = document.getElementById(`post-modal-${post.id}`);
-                          if (m) m.classList.remove("hidden");
-                          }}
-                        >
-                          <EllipsisVertical />
-                        </button>
+      {/* Name + Category + Menu Button */}
+      <div className="flex items-start w-full">
+        {/* Name + Category */}
+        <div className="flex items-center space-x-3 flex-1 min-w-0">
+          <h3
+            className={`font-bold text-lg truncate ${
+              theme === "dark" ? "" : "text-gray-900"
+            }`}
+          >
+            {post.farmer}
+          </h3>
 
-                        {/* Modal (hidden by default) */}
-                        <div
-                          id={`post-modal-${post.id}`}
-                          className="hidden fixed inset-0 z-50 flex items-center justify-center"
-                          onClick={(e) => {
-                          // click on overlay closes modal
-                          if (e.target === e.currentTarget) {
-                            const m = document.getElementById(`post-modal-${post.id}`);
-                            m?.classList.add("hidden");
-                          }
-                          }}
-                        >
-                          <div className="absolute inset-0 bg-black/50" />
+          <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold whitespace-nowrap">
+            {post.category}
+          </span>
+        </div>
 
-                          <div
-                          className={`relative z-10 ${theme === 'dark' ? "border-1 bg-black" : " bg-white dark:bg-white"} rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
-                          onClick={(e) => e.stopPropagation()}
-                          >
-                          <h4 className="text-lg font-bold mb-2">
-                            Manage post
-                          </h4>
+        {/* Menu button (push to the right with ml-auto) */}
+        <div className="ml-auto flex items-center">
+          <button
+            className={`p-1 ${
+              theme === "dark"
+                ? "text-gray-100 hover:text-gray-400"
+                : "text-gray-600 hover:text-gray-500"
+            } rounded-full ${post.user_id == id ? "" : "hidden"}`}
+            aria-label="more"
+            onClick={(e) => {
+              e.stopPropagation();
+              const m = document.getElementById(`post-modal-${post.id}`);
+              m?.classList.remove("hidden");
+            }}
+          >
+            <EllipsisVertical />
+          </button>
+        </div>
 
-                          {/* <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 truncate">
-                            {post.content}
-                          </p> */}
+        {/* Modal */}
+        <div
+          id={`post-modal-${post.id}`}
+          className="hidden fixed inset-0 z-50 flex items-center justify-center"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              document
+                .getElementById(`post-modal-${post.id}`)
+                ?.classList.add("hidden");
+            }
+          }}
+        >
+          <div className="absolute inset-0 bg-black/50" />
 
-                          <div className="flex justify-end gap-3">
-                            {/* <button
-                            className="px-3 py-2 rounded-lg bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
-                            onClick={async (e) => {
-                              e.stopPropagation();
-                              // simple inline edit using prompt to avoid extra hooks/state
-                              const newContent = window.prompt(
-                              "Edit post content",
-                              post.content
-                              );
-                              if (newContent === null) return;
-                              try {
-                              await axios.patch(
-                                `https://farmchain.onrender.com/post/${post.id}`,
-                                { content: newContent },
-                                {
-                                headers: token
-                                  ? { Authorization: `Bearer ${token}` }
-                                  : undefined,
-                                }
-                              );
-                              // refresh posts list
-                              await fetchPosts();
-                              const m = document.getElementById(
-                                `post-modal-${post.id}`
-                              );
-                              m?.classList.add("hidden");
-                              } catch (err) {
-                              console.error(err);
-                              alert("Failed to update post");
-                              }
-                            }}
-                            >
-                            Edit
-                            </button> */}
+          <div
+            className={`relative z-10 ${
+              theme === "dark" ? "bg-black border" : "bg-white"
+            } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h4 className="text-lg font-bold mb-4">Manage post</h4>
 
-                            <button
-  className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
-  onClick={async (e) => {
-    e.stopPropagation();
-    if (!window.confirm("Are you sure you want to delete this post?")) return;
+            <div className="flex justify-end gap-3">
+              <button
+                className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  if (!window.confirm("Are you sure you want to delete this post?"))
+                    return;
 
-    try {
-      await axios.delete(
-        `https://farmchain.onrender.com/post/delete`,
-         {
-    headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-    data: { id: post.id }
-  }
-      );
+                  await axios.delete(
+                    `https://farmchain.onrender.com/post/delete`,
+                    {
+                      headers: token
+                        ? { Authorization: `Bearer ${token}` }
+                        : undefined,
+                      data: { id: post.id },
+                    }
+                  );
 
-      await fetchPosts();
+                  await fetchPosts();
+                  document
+                    .getElementById(`post-modal-${post.id}`)
+                    ?.classList.add("hidden");
+                }}
+              >
+                Delete
+              </button>
 
-      const m = document.getElementById(`post-modal-${post.id}`);
-      m?.classList.add("hidden");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to delete post");
-    }
-  }}
->
-  Delete
-</button>
+              <button
+                className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  document
+                    .getElementById(`post-modal-${post.id}`)
+                    ?.classList.add("hidden");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      {/* Location + Time */}
+      <div
+        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
+          theme === "dark" ? "" : "text-gray-500"
+        }`}
+      >
+        <div className="flex items-center">
+          <MapPin className="w-3 h-3 mr-1" />
+          {post.location}
+        </div>
 
-                            <button
-                            className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const m = document.getElementById(
-                              `post-modal-${post.id}`
-                              );
-                              m?.classList.add("hidden");
-                            }}
-                            >
-                            Cancel
-                            </button>
-                          </div>
-                          </div>
-                        </div>
-                        </div>
-                    </div>
+        <div className="flex items-center">
+          <ClockFading className="w-3 h-3 mr-1" />
+          {dayjs(post.createdAt).fromNow()}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-                      <div
-                        className={`flex flex-col-reverse  md:space-x-7 text-sm ${
-                          theme === "dark" ? "" : "text-gray-500"
-                        }`}
-                      >
-                        <div className="flex items-center">
-                          <MapPin className="w-3 h-3 mr-1 " />
-                          {post.location}
-                        </div>
-                        {/*  */}
-                        <div className="flex items-center ">
-                          <ClockFading className="w-3 h-3 mr-1"/>
-                          {dayjs(post.createdAt).fromNow()}
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
                 <div className="mb-4">
                   <p
@@ -501,9 +464,8 @@ console.log("Posts data:", data);
                         className="relative w-full rounded-2xl overflow-hidden"
                       >
                         <video
-                          autoPlay
+                         
                           controls
-                          
                           playsInline
                           src={vid}
                           className="h-[500px] object-cover"
