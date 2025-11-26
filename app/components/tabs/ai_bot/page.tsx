@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import ReactMarkdown from 'react-markdown';
 
+
 type Message = {
   id: number;
   text: string;
@@ -94,14 +95,14 @@ const AIChat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-[80vh] bg-gray-50">
+    <div className="flex flex-col h-[80vh] border-1">
       {/* Header */}
       <div
         className={`${
           theme === 'dark'
-            ? 'bg-gradient-to-br from-white/10 to-white/20 text-white border border-white/10'
+            ? 'bg-gradient-to-br from-white/10 to-white/20 text-white border-1'
             : 'bg-gradient-to-br from-green-600 via-green-400 to-green-600 text-white'
-        } rounded-3xl shadow-2xl p-8 relative overflow-hidden`}
+        } rounded-b-3xl shadow-2xl p-8 relative overflow-hidden`}
       >
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
@@ -145,7 +146,7 @@ const AIChat: React.FC = () => {
       </div>
 
       {/* Input Area */}
-      <div className="flex p-4 border-t bg-white">
+      <div className={`flex p-4 border-t ${theme === 'dark' ? "" : "bg-white"}`}>
         <input
           type="text"
           placeholder="Type your message..."

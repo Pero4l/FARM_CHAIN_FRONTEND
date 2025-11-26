@@ -128,7 +128,7 @@ const message = () => {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className="p-6 hover:bg-gray-50 cursor-pointer transition-colors"
+                className={`p-6 ${theme === 'dark' ? "hover:bg-white/15" : "hover:bg-gray-50"} cursor-pointer transition-colors`}
               >
                 <div className="flex items-center space-x-4">
                   <div className="relative">
@@ -142,18 +142,18 @@ const message = () => {
 
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      <h4 className="font-semibold text-gray-900">
+                      <h4 className={`font-semibold ${theme === 'dark' ? "" : "text-gray-900"}`}>
                         {message.sender}
                       </h4>
-                      <span className="text-sm text-gray-500">
+                      <span className={`text-sm ${theme === 'dark' ? "" : "text-gray-900"}`}>
                         {message.time}
                       </span>
                     </div>
                     <p
                       className={`text-sm ${
                         message.unread
-                          ? "text-gray-900 font-medium"
-                          : "text-gray-600"
+                          ? `${theme === 'dark' ? "" : "text-gray-900 font-medium"}`
+                          : `${theme === 'dark' ? "text-gray-400" : "text-gray-600"}`
                       }`}
                     >
                       {message.lastMessage}
