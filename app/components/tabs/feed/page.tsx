@@ -16,7 +16,7 @@ import {
   Filter,
   Send,
   ClockFading,
-  EllipsisVertical
+  EllipsisVertical,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
@@ -54,7 +54,7 @@ const FeedPage: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-   const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
@@ -106,8 +106,10 @@ const FeedPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const avatar = data[0]?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
-console.log("Posts data:", data);
+  const avatar =
+    data[0]?.avatar ||
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
+  console.log("Posts data:", data);
   return (
     <div>
       <div className="space-y-8 sm:px-6 md:px-0">
@@ -148,7 +150,11 @@ console.log("Posts data:", data);
               }}
               className="w-14 h-14  border-none rounded-full "
             >
-              <img className="rounded-full w-full h-full" src={avatar} alt="avatar" />
+              <img
+                className="rounded-full w-full h-full"
+                src={avatar}
+                alt="avatar"
+              />
             </div>
             <div className="flex-1">
               <textarea
@@ -230,7 +236,9 @@ console.log("Posts data:", data);
 
         {/* Posts list */}
         <div className="space-y-8">
-          {loading && <div className="text-center text-4xl py-6">Loading posts...</div>}
+          {loading && (
+            <div className="text-center text-4xl py-6">Loading posts...</div>
+          )}
 
           {error && (
             <div className="text-center text-red-500 py-6">{error}</div>
@@ -249,156 +257,164 @@ console.log("Posts data:", data);
             >
               <div className="p-3 py-5">
                 <div className="flex items-start justify-between mb-4 w-full">
-  <div className="flex items-start space-x-4 w-full">
-    {/* Avatar / Profile */}
-    <Link
-      href={{
-        pathname: "/main",
-        query: { id: post.user_id },
-      }}
-    >
-      <div className="relative">
-        <div
-          onClick={() => setActiveTab("user_profile")}
-          className="w-14 h-14 rounded-full overflow-hidden"
-        >
-          <img
-            className="h-full w-full object-cover rounded-full"
-            src={post.avatar || avatar}
-            alt=""
-          />
-        </div>
+                  <div className="flex items-start space-x-4 w-full">
+                    {/* Avatar / Profile */}
+                    <Link
+                      href={{
+                        pathname: "/main",
+                        query: { id: post.user_id },
+                      }}
+                    >
+                      <div className="relative">
+                        <div
+                          onClick={() => setActiveTab("user_profile")}
+                          className="w-14 h-14 rounded-full overflow-hidden"
+                        >
+                          <img
+                            className="h-full w-full object-cover rounded-full"
+                            src={post.avatar || avatar}
+                            alt=""
+                          />
+                        </div>
 
-        {post.verified === false && (
-          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
-        )}
-      </div>
-    </Link>
+                        {post.verified === false && (
+                          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
+                        )}
+                      </div>
+                    </Link>
 
-    {/* Main Content */}
-    <div className="flex-1 min-w-0">
+                    {/* Main Content */}
+                    <div className="flex-1 min-w-0">
+                      {/* Name + Category + Menu Button */}
+                      <div className="flex items-start w-full">
+                        {/* Name + Category */}
+                        <div className="flex items-center space-x-3 flex-1 min-w-0">
+                          <h3
+                            className={`font-bold text-lg truncate ${
+                              theme === "dark" ? "" : "text-gray-900"
+                            }`}
+                          >
+                            {post.farmer}
+                          </h3>
 
-      {/* Name + Category + Menu Button */}
-      <div className="flex items-start w-full">
-        {/* Name + Category */}
-        <div className="flex items-center space-x-3 flex-1 min-w-0">
-          <h3
-            className={`font-bold text-lg truncate ${
-              theme === "dark" ? "" : "text-gray-900"
-            }`}
-          >
-            {post.farmer}
-          </h3>
+                          <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold whitespace-nowrap">
+                            {post.category}
+                          </span>
+                        </div>
 
-          <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold whitespace-nowrap">
-            {post.category}
-          </span>
-        </div>
+                        {/* Menu button (push to the right with ml-auto) */}
+                        <div className="ml-auto flex items-center">
+                          <button
+                            className={`p-1 ${
+                              theme === "dark"
+                                ? "text-gray-100 hover:text-gray-400"
+                                : "text-gray-600 hover:text-gray-500"
+                            } rounded-full ${
+                              post.user_id == id ? "" : "hidden"
+                            }`}
+                            aria-label="more"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const m = document.getElementById(
+                                `post-modal-${post.id}`
+                              );
+                              m?.classList.remove("hidden");
+                            }}
+                          >
+                            <EllipsisVertical />
+                          </button>
+                        </div>
 
-        {/* Menu button (push to the right with ml-auto) */}
-        <div className="ml-auto flex items-center">
-          <button
-            className={`p-1 ${
-              theme === "dark"
-                ? "text-gray-100 hover:text-gray-400"
-                : "text-gray-600 hover:text-gray-500"
-            } rounded-full ${post.user_id == id ? "" : "hidden"}`}
-            aria-label="more"
-            onClick={(e) => {
-              e.stopPropagation();
-              const m = document.getElementById(`post-modal-${post.id}`);
-              m?.classList.remove("hidden");
-            }}
-          >
-            <EllipsisVertical />
-          </button>
-        </div>
+                        {/* Modal */}
+                        <div
+                          id={`post-modal-${post.id}`}
+                          className="hidden fixed inset-0 z-50 flex items-center justify-center"
+                          onClick={(e) => {
+                            if (e.target === e.currentTarget) {
+                              document
+                                .getElementById(`post-modal-${post.id}`)
+                                ?.classList.add("hidden");
+                            }
+                          }}
+                        >
+                          <div className="absolute inset-0 bg-black/50" />
 
-        {/* Modal */}
-        <div
-          id={`post-modal-${post.id}`}
-          className="hidden fixed inset-0 z-50 flex items-center justify-center"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              document
-                .getElementById(`post-modal-${post.id}`)
-                ?.classList.add("hidden");
-            }
-          }}
-        >
-          <div className="absolute inset-0 bg-black/50" />
+                          <div
+                            className={`relative z-10 ${
+                              theme === "dark" ? "bg-black border" : "bg-white"
+                            } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <h4 className="text-lg font-bold mb-4">
+                              Manage post
+                            </h4>
 
-          <div
-            className={`relative z-10 ${
-              theme === "dark" ? "bg-black border" : "bg-white"
-            } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h4 className="text-lg font-bold mb-4">Manage post</h4>
+                            <div className="flex justify-end gap-3">
+                              <button
+                                className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+                                onClick={async (e) => {
+                                  e.stopPropagation();
+                                  if (
+                                    !window.confirm(
+                                      "Are you sure you want to delete this post?"
+                                    )
+                                  )
+                                    return;
 
-            <div className="flex justify-end gap-3">
-              <button
-                className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
-                onClick={async (e) => {
-                  e.stopPropagation();
-                  if (!window.confirm("Are you sure you want to delete this post?"))
-                    return;
+                                  await axios.delete(
+                                    `https://farmchain.onrender.com/post/delete`,
+                                    {
+                                      headers: token
+                                        ? { Authorization: `Bearer ${token}` }
+                                        : undefined,
+                                      data: { id: post.id },
+                                    }
+                                  );
 
-                  await axios.delete(
-                    `https://farmchain.onrender.com/post/delete`,
-                    {
-                      headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : undefined,
-                      data: { id: post.id },
-                    }
-                  );
+                                  await fetchPosts();
+                                  document
+                                    .getElementById(`post-modal-${post.id}`)
+                                    ?.classList.add("hidden");
+                                }}
+                              >
+                                Delete
+                              </button>
 
-                  await fetchPosts();
-                  document
-                    .getElementById(`post-modal-${post.id}`)
-                    ?.classList.add("hidden");
-                }}
-              >
-                Delete
-              </button>
+                              <button
+                                className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  document
+                                    .getElementById(`post-modal-${post.id}`)
+                                    ?.classList.add("hidden");
+                                }}
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
 
-              <button
-                className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  document
-                    .getElementById(`post-modal-${post.id}`)
-                    ?.classList.add("hidden");
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+                      {/* Location + Time */}
+                      <div
+                        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
+                          theme === "dark" ? "" : "text-gray-500"
+                        }`}
+                      >
+                        <div className="flex items-center">
+                          <MapPin className="w-3 h-3 mr-1" />
+                          {post.location}
+                        </div>
 
-      {/* Location + Time */}
-      <div
-        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
-          theme === "dark" ? "" : "text-gray-500"
-        }`}
-      >
-        <div className="flex items-center">
-          <MapPin className="w-3 h-3 mr-1" />
-          {post.location}
-        </div>
-
-        <div className="flex items-center">
-          <ClockFading className="w-3 h-3 mr-1" />
-          {dayjs(post.createdAt).fromNow()}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
+                        <div className="flex items-center">
+                          <ClockFading className="w-3 h-3 mr-1" />
+                          {dayjs(post.createdAt).fromNow()}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="mb-4">
                   <p
@@ -433,73 +449,76 @@ console.log("Posts data:", data);
                 )}
 
                 {/* IMAGE */}
-{/* IMAGE */}
-{(post.images?.length ?? 0) > 0 && (
-  <div
-    className={
-      post.images?.length === 1
-        ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
-        : "grid grid-cols-2 gap-3 mb-4"
-    }
-  >
-    {post.images?.map((img: string, i: number) => (
-      <div
-        key={i}
-        className={
-          post.images?.length === 1
-            ? "w-full h-full"
-            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
-        }
-      >
-        <Image
-          src={img}
-          width={800}
-          height={800}
-          alt="Images"
-          className={
-            post.images?.length === 1
-              ? "object-cover w-full h-full rounded-2xl"
-              : "object-cover w-full h-full"
-          }
-          unoptimized
-        />
-        <div className="absolute inset-0 bg-black/10"></div>
-      </div>
-    ))}
-  </div>
-)}
+                {/* IMAGE */}
+                {(post.images?.length ?? 0) > 0 && (
+                  <div
+                    className={
+                      post.images?.length === 1
+                        ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
+                        : "grid grid-cols-2 gap-3 mb-4"
+                    }
+                  >
+                    {post.images?.map((img: string, i: number) => (
+                      <div
+                        key={i}
+                        className={
+                          post.images?.length === 1
+                            ? "w-full h-full"
+                            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
+                        }
+                      >
+                        <Image
+                          src={img}
+                          width={800}
+                          height={800}
+                          alt="Images"
+                          className={
+                            post.images?.length === 1
+                              ? "object-cover w-full h-full rounded-2xl"
+                              : "object-cover w-full h-full"
+                          }
+                          unoptimized
+                        />
+                        <div className="absolute inset-0 "></div>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-{/* VIDEO */}
-{post.videos && post.videos.length > 0 && (
-  <div className="grid gap-3 mb-4">
-    {post.videos.map((vid: string, i: number) => (
-      <div
-        key={i}
-        className="relative w-full rounded-2xl overflow-hidden bg-black"
-      >
-        <video
-          controls
-          playsInline
-          src={vid}
-          className="w-full h-auto max-h-[600px] object-contain"
-          onLoadedMetadata={(e) => {
-            const video = e.target as HTMLVideoElement;
-            const isPortrait = video.videoHeight > video.videoWidth;
+                {/* VIDEO */}
+                {post.videos && post.videos.length > 0 && (
+                  <div className="grid gap-3 mb-4">
+                    {post.videos.map((vid: string, i: number) => (
+                      <div
+                        key={i}
+                        className="relative w-full rounded-2xl overflow-hidden bg-black"
+                      >
+                        <video
+                          controls
+                          playsInline
+                          src={vid}
+                          className="w-full h-auto max-h-[600px] object-contain"
+                          onLoadedMetadata={(e) => {
+                            const video = e.target as HTMLVideoElement;
+                            const isPortrait =
+                              video.videoHeight > video.videoWidth;
 
-            if (isPortrait) {
-              video.classList.remove("object-cover");
-              video.classList.add("object-contain", "max-h-[600px]");
-            } else {
-              video.classList.remove("object-contain");
-              video.classList.add("object-cover", "h-[450px]");
-            }
-          }}
-        />
-      </div>
-    ))}
-  </div>
-)}
-
+                            if (isPortrait) {
+                              video.classList.remove("object-cover");
+                              video.classList.add(
+                                "object-contain",
+                                "max-h-[600px]"
+                              );
+                            } else {
+                              video.classList.remove("object-contain");
+                              video.classList.add("object-cover", "h-[450px]");
+                            }
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Action btn */}
@@ -553,13 +572,11 @@ console.log("Posts data:", data);
 export default FeedPage;
 
 // const posts: Post[] = [
-//  // { // id: 1, // farmer: "Farmer", 
+//  // { // id: 1, // farmer: "Farmer",
 // // location: "Iowa, USA",
-//  // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", 
-// 
+//  // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
+//
 // time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg", // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s", // ], // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 2, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 1200, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 3, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // { // id: 4, // farmer: "Sarah Johnson", // location: "Iowa, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://barbadostoday.bb/wp-content/uploads/2021/02/farmer-pic-1024x640.jpg", // "https://african.land/oc-content/plugins/blog/img/blog/698.jpg", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 5, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 289, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 6, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // ];
-
-
 
 // "use client";
 
