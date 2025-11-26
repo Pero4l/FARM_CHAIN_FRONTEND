@@ -62,8 +62,8 @@ const LoginPage = () => {
       setUserProfile(data.profile);
       setUser(data.user);
 
-      console.log(data.user);
-      console.log(data.profile);
+      // console.log(data.user);
+      // console.log(data.profile);
 
       setTimeout(() => {
         router.push("/main");

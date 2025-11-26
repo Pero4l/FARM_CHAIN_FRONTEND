@@ -433,47 +433,73 @@ console.log("Posts data:", data);
                 )}
 
                 {/* IMAGE */}
-                {post.images && post.images.length > 0 && (
-                  <div className="grid md:grid-cols-2 gap-3 mb-4">
-                    {post.images.map((img: string, i: number) => (
-                      <div
-                        key={i}
-                        className="rounded-2xl w-full relative overflow-hidden"
-                      >
-                        <Image
-                          src={img}
-                          width={500}
-                          height={300}
-                          alt="Images"
-                          className="object-cover w-full h-full"
-                          unoptimized
-                        />
-                        <div className="absolute inset-0 bg-black/10"></div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+{/* IMAGE */}
+{(post.images?.length ?? 0) > 0 && (
+  <div
+    className={
+      post.images?.length === 1
+        ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
+        : "grid grid-cols-2 gap-3 mb-4"
+    }
+  >
+    {post.images?.map((img: string, i: number) => (
+      <div
+        key={i}
+        className={
+          post.images?.length === 1
+            ? "w-full h-full"
+            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
+        }
+      >
+        <Image
+          src={img}
+          width={800}
+          height={800}
+          alt="Images"
+          className={
+            post.images?.length === 1
+              ? "object-cover w-full h-full rounded-2xl"
+              : "object-cover w-full h-full"
+          }
+          unoptimized
+        />
+        <div className="absolute inset-0 bg-black/10"></div>
+      </div>
+    ))}
+  </div>
+)}
 
-                {/* VIDEO */}
-                {post.videos && (
-                  <div className=" rounded-2xl   grid md:grid-cols-2 gap-3 text-white relative overflow-hidden">
-                    <div className="absolute inset-0 "></div>
-                    {post.videos.map((vid: string, i: number) => (
-                      <div
-                        key={i}
-                        className="relative w-full rounded-2xl overflow-hidden"
-                      >
-                        <video
-                         
-                          controls
-                          playsInline
-                          src={vid}
-                          className="h-[500px] object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
+{/* VIDEO */}
+{post.videos && post.videos.length > 0 && (
+  <div className="grid gap-3 mb-4">
+    {post.videos.map((vid: string, i: number) => (
+      <div
+        key={i}
+        className="relative w-full rounded-2xl overflow-hidden bg-black"
+      >
+        <video
+          controls
+          playsInline
+          src={vid}
+          className="w-full h-auto max-h-[600px] object-contain"
+          onLoadedMetadata={(e) => {
+            const video = e.target as HTMLVideoElement;
+            const isPortrait = video.videoHeight > video.videoWidth;
+
+            if (isPortrait) {
+              video.classList.remove("object-cover");
+              video.classList.add("object-contain", "max-h-[600px]");
+            } else {
+              video.classList.remove("object-contain");
+              video.classList.add("object-cover", "h-[450px]");
+            }
+          }}
+        />
+      </div>
+    ))}
+  </div>
+)}
+
               </div>
 
               {/* Action btn */}

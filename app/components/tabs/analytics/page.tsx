@@ -1,7 +1,7 @@
- 'use client'
+"use client"
+
 import React from 'react'
 import { useTheme } from "next-themes";
-
 import {
   BarChart3,
   PieChart,
@@ -24,7 +24,8 @@ type AnalyticsData = {
 };
 
 const analyticsPage = () => {
-const { theme, setTheme } = useTheme();
+
+    const { theme } = useTheme();
       const analyticsData: AnalyticsData = {
     farmPerformance: [
       {
@@ -67,7 +68,7 @@ const { theme, setTheme } = useTheme();
   return (
     <div>
          <div className="space-y-8">
-                <div className={`  rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden${theme === 'dark' ? 'bg-black border-1' : 'bg-gradient-to-br from-purple-600 via-pink-600 to-red-600'} `}>
+                <div className={`${theme === 'dark' ? "bg-gradient-to-br from-white/10 to-white/15 text-white border-1" : "bg-gradient-to-br from-purple-600 via-pink-600 to-red-600"} rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}>
                   <div className="absolute inset-0 bg-black/10"></div>
                   <div className="relative z-10">
                     <div className="flex items-center justify-between">
@@ -88,7 +89,7 @@ const { theme, setTheme } = useTheme();
                   {analyticsData.farmPerformance.map((metric, i) => (
                     <div
                       key={i}
-                      className={`rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105 ${theme === 'dark' ? 'bg-black border-1' : 'bg-white'} ` }
+                      className={`${theme === 'dark' ? "text-white border-1" : "bg-white"} rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-xl transition-all duration-300 hover:scale-105`}
                     >
                       <div className="flex items-center justify-between mb-4">
                         <div className="p-3 rounded-xl bg-purple-100 text-purple-600">
@@ -104,18 +105,18 @@ const { theme, setTheme } = useTheme();
                           {metric.change}
                         </span>
                       </div>
-                      <h3 className={`  text-sm font-medium mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-600'} `}>
+                      <h3 className={`${theme === 'dark' ? "" : "text-gray-600"} text-sm font-medium mb-2`}>
                         {metric.metric}
                       </h3>
-                      <p className={` text-2xl font-black ${theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
+                      <p className={`text-2xl font-black ${theme === 'dark' ? "" : "text-gray-900"}`}>
                         {metric.value}
                       </p>
                     </div>
                   ))}
                 </div>
 
-                <div className={` rounded-3xl shadow-xl border border-gray-100 p-8 ${theme === 'dark' ? 'bg-black' : 'bg-white'} `}>
-                  <h3 className={` text-2xl font-bold mb-6 flex items-center"${theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
+                <div className={`${theme === 'dark' ? "" : "bg-white "} rounded-3xl shadow-xl border border-gray-100 p-8`}>
+                  <h3 className={`text-2xl font-bold ${theme === 'dark' ? "" : "text-gray-900"} mb-6 flex items-center`}>
                     <PieChart className="w-7 h-7 mr-3 text-purple-500" />
                     Crop Overview
                   </h3>
@@ -126,7 +127,7 @@ const { theme, setTheme } = useTheme();
                         className="border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-all duration-300"
                       >
                         <div className="flex items-center justify-between mb-4">
-                          <h4 className={`text-xl font-bold  ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                          <h4 className={`text-xl font-bold ${theme === 'dark' ? "" : "text-gray-900"}`}>
                             {crop.crop}
                           </h4>
                           <span className="text-2xl font-black text-green-600">
@@ -135,14 +136,14 @@ const { theme, setTheme } = useTheme();
                         </div>
                         <div className="grid grid-cols-2 gap-4 text-sm">
                           <div>
-                            <span className={`${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}>Planted:</span>
-                            <span className={`font-semibold  ml-2${ theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
+                            <span className="text-gray-500">Planted:</span>
+                            <span className={`font-semibold ${theme === 'dark' ? "" : "text-gray-900"} ml-2`}>
                               {crop.planted}
                             </span>
                           </div>
                           <div>
-                            <span className={` ${ theme === 'dark' ? 'text-white' : 'text-gray-500'}`}>Expected:</span>
-                            <span className={`font-semibold ml-2 ${ theme === 'dark' ? 'text-white' : 'text-gray-900'} `}>
+                            <span className="text-gray-500">Expected:</span>
+                            <span className={`font-semibold ${theme === 'dark' ? "" : "text-gray-900"} ml-2`}>
                               {crop.expected}
                             </span>
                           </div>
