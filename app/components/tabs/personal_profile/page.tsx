@@ -51,7 +51,7 @@ const Profile = () => {
   const { userProfile, setUserProfile, token } = useCurrentUser();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState<boolean>(false);
   const [saving, setSaving] = useState(false);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -682,7 +682,7 @@ const Profile = () => {
           }
           unoptimized
         />
-        <div className="absolute inset-0 "></div>
+        <div className="absolute inset-0 pointer-events-none "></div>
       </div>
     ))}
   </div>

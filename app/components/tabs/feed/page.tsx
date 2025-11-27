@@ -109,7 +109,8 @@ const FeedPage: React.FC = () => {
   const avatar =
     data[0]?.avatar ||
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
-  console.log("Posts data:", data);
+
+  // console.log("Posts data:", data);
   return (
     <div>
       <div className="space-y-8 sm:px-6 md:px-0">
@@ -479,7 +480,7 @@ const FeedPage: React.FC = () => {
                           }
                           unoptimized
                         />
-                        <div className="absolute inset-0 "></div>
+                        <div className="absolute inset-0 pointer-events-none"></div>
                       </div>
                     ))}
                   </div>
