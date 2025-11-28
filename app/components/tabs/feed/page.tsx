@@ -455,8 +455,8 @@ const FeedPage: React.FC = () => {
                   <div
                     className={
                       post.images?.length === 1
-                        ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
-                        : "grid grid-cols-2 gap-3 mb-4"
+                        ? "w- h- mb-4 rounded-2xl overflow-hidden object-cover"
+                        : "grid grid-cols-1 md:grid-cols-2 gap-3 mb-4"
                     }
                   >
                     {post.images?.map((img: string, i: number) => (
@@ -468,17 +468,16 @@ const FeedPage: React.FC = () => {
                             : "rounded-2xl w-full h-[250px] relative overflow-hidden"
                         }
                       >
-                        <Image
+                        <img
                           src={img}
-                          width={800}
-                          height={800}
+                         
                           alt="Images"
                           className={
                             post.images?.length === 1
                               ? "object-cover w-full h-full rounded-2xl"
                               : "object-cover w-full h-full"
                           }
-                          unoptimized
+                          
                         />
                         <div className="absolute inset-0 pointer-events-none"></div>
                       </div>
