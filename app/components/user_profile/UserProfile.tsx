@@ -7,8 +7,9 @@ import { MapPin, CheckCircle, Briefcase,  Heart,
   Share,
   DollarSign,
   Eye,
-  ClockFading,
-  EllipsisVertical } from "lucide-react";
+  ClockFading, 
+  EllipsisVertical 
+} from "lucide-react";
 import { FaPlus } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useSearchParams } from "next/navigation";
@@ -18,6 +19,11 @@ import axios from "axios";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { humanify } from "@/app/components/utils/humanify";
+
+
+
+
 
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const [token, setToken] = useState<string | null | undefined>(undefined);
@@ -206,24 +212,29 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
               {/* ⭐ FOLLOWERS USING LOCAL STATE */}
               <div className="flex text-sm gap-4 mb-4">
                 <p>
-                  <span className="font-bold">{followersCount}</span> followers
+                  <span className="font-bold">{humanify(followersCount)}</span> followers
                 </p>
                 <p>
-                  <span className="font-bold">{user?.following ?? 0}</span>{" "}
+                  <span className="font-bold">{humanify(user?.following ?? 0)}</span>{" "}
                   following
                 </p>
               </div>
 
+
+                  {/* location */}
               <p className={theme === "dark" ? "text-gray-400 mb-2" : "text-gray-800 mb-2"}>
                 <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
                 {user?.location ?? "Unknown Location"}
               </p>
 
+
+                  {/* Organizarion */}
               <p className={theme === "dark" ? "text-gray-400" : "text-gray-800"}>
                 <Briefcase className="inline-block w-4 h-4 mr-1 mb-1" />
                 {user?.organization ?? "Organization"}
               </p>
 
+                  {/* Bio */}
               <p
                 className={
                   theme === "dark"
@@ -243,7 +254,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <p className="font-black">{user?.postsCount || 0}</p>
+                  <p className="font-black">{humanify(user?.postsCount || 0)}</p>
                   <p className="text-gray-400">Posts</p>
                 </div>
 
@@ -269,7 +280,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
                           <img
                             className="h-[55px] w-[70px] rounded-full"
-                            src={post.avatar || "https://i.pravatar.cc/300"}
+                            src={post.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"}
                             alt=""
                           />
                         </div>
@@ -539,7 +550,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         } hover:text-red-500 transition-colors`}
                       >
                         <Heart className="w-5 h-5" />
-                        <span className="font-semibold">{post.likes}</span>
+                        <span className="font-semibold">{humanify(post.likes)}</span>
                       </button>
                       <button
                         className={`flex items-center space-x-2 ${
@@ -547,7 +558,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         } hover:text-blue-500 transition-colors`}
                       >
                         <MessageSquare className="w-5 h-5" />
-                        <span className="font-semibold">{post.comments}</span>
+                        <span className="font-semibold">{humanify(post.comments)}</span>
                       </button>
                       <button
                         className={`flex items-center space-x-2 ${
@@ -555,7 +566,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         } hover:text-green-500 transition-colors`}
                       >
                         <Share className="w-5 h-5" />
-                        <span className="font-semibold">{post.shares}</span>
+                        <span className="font-semibold">{humanify(post.shares)}</span>
                       </button>
                     </div>
 

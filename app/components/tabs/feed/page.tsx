@@ -112,6 +112,37 @@ const FeedPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+ const likePost = async (postId: number) => {
+  try {
+    const res = await fetch("https://farmchain.onrender.com/post/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ postId }),
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message || "Failed to like post");
+
+    // 🔥 Update UI instantly
+    setData((prev) =>
+      prev.map((p) =>
+        p.id === postId
+          ? { ...p, likes: result.likes } 
+          : p
+      )
+    );
+
+    return result;
+  } catch (err: any) {
+    console.error("❌ Like error:", err.message);
+  }
+};
+
+
   const avatar =
     data[0]?.avatar ||
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
@@ -583,319 +614,3 @@ const FeedPage: React.FC = () => {
 };
 
 export default FeedPage;
-
-// const posts: Post[] = [
-//  // { // id: 1, // farmer: "Farmer",
-// // location: "Iowa, USA",
-//  // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s",
-//
-// time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://newwinerealty.com.ng/wp-content/uploads/2024/11/Farmland-in-Ibadan.jpg", // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ65z3xcwuEMLE8QeCnS2M_EhL8EkB21Ipvkw&s", // ], // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 2, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 1200, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 3, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // { // id: 4, // farmer: "Sarah Johnson", // location: "Iowa, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "2 hours ago", // verified: true, // farmSize: "50 acres", // content: // "BREAKTHROUGH HARVEST! My companion planting experiment yielded 40% more tomatoes than last season! Planting basil and marigolds alongside tomatoes not only increased yield but naturally repelled pests. Zero pesticides used! Who wants the detailed planting schedule?", // images: [ // "https://barbadostoday.bb/wp-content/uploads/2021/02/farmer-pic-1024x640.jpg", // "https://african.land/oc-content/plugins/blog/img/blog/698.jpg", // ], // likes: 142, // comments: 34, // shares: 18, // type: "success-story", // tags: [ // "#OrganicFarming", // "#CompanionPlanting", // "#SustainableAgriculture", // ], // category: "small-scale", // }, // { // id: 5, // farmer: "AgriTech Solutions", // location: "California, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "4 hours ago", // verified: true, // farmSize: "2,500 acres", // content: // "WEATHER ALERT: Severe drought conditions predicted for Central Valley next month. We're implementing advanced drip irrigation and moisture sensors across all fields. Sharing our water conservation protocol with the community - together we can overcome this challenge.", // video: [ // "https://cdn.pixabay.com/video/2019/03/18/22070-325253460_large.mp4", // "https://cdn.pixabay.com/video/2023/03/01/152740-803732906_large.mp4", // ], // likes: 289, // comments: 67, // shares: 45, // type: "alert", // tags: ["#DroughtAlert", "#WaterConservation", "#SmartFarming"], // category: "commercial", // }, // { // id: 6, // farmer: "Miguel Rodriguez", // location: "Texas, USA", // avatar: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s", // time: "8 hours ago", // verified: false, // farmSize: "15 acres", // content: // "TRADE OPPORTUNITY: 800 lbs of premium organic corn ready for harvest next week. Looking to trade for quality hay or small equipment rental. This corn tested 99% organic certified. Local Houston area preferred but willing to arrange transport for serious inquiries.", // likes: 67, // comments: 29, // shares: 12, // type: "trade", // price: "$1,200 value", // tags: ["#OrganicCorn", "#TradeOpportunity", "#Houston"], // category: "small-scale", // }, // ];
-
-// "use client";
-
-// import React, { useEffect, useState } from "react";
-// import Link from "next/link";
-// import Image from "next/image";
-// import {
-//   Heart,
-//   MessageSquare,
-//   Share,
-//   MapPin,
-//   DollarSign,
-//   Video,
-//   CheckCircle,
-//   Eye,
-//   Camera,
-//   Mic,
-//   Filter,
-//   Send,
-//   ClockFading,
-//   EllipsisVertical,
-// } from "lucide-react";
-// import { useTheme } from "next-themes";
-// import { useActiveTab } from "@/app/context/ActiveTabContext";
-// import axios from "axios";
-// import { useCurrentUser } from "@/app/components/currentUser";
-// import dayjs from "dayjs";
-// import relativeTime from "dayjs/plugin/relativeTime";
-// dayjs.extend(relativeTime);
-
-// type Post = {
-//   id: number;
-//   user_id: number;
-//   farmer: string;
-//   location: string;
-//   avatar: string;
-//   time: string;
-//   verified: boolean;
-//   farmSize?: string;
-//   content: string;
-//   images?: string[];
-//   video?: string[];
-//   likes: number;
-//   comments: number;
-//   shares: number;
-//   type: string;
-//   price?: string;
-//   tags?: string[];
-//   category: string;
-//   createdAt: string;
-// };
-
-// const FeedPage: React.FC = () => {
-//   const [data, setData] = useState<Post[]>([]);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
-
-//   const activeTabContext = useActiveTab();
-//   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
-//   const { theme } = useTheme();
-//   const { token } = useCurrentUser();
-
-//   const fetchPosts = async () => {
-//     setLoading(true);
-//     setError(null);
-//     try {
-//       const response = await axios.get("https://farmchain.onrender.com/post/all", {
-//         headers: token ? { Authorization: `Bearer ${token}` } : undefined,
-//       });
-//       const posts = response?.data?.posts ?? [];
-//       setData(Array.isArray(posts) ? posts : []);
-//     } catch (err: any) {
-//       console.error(err);
-//       setError(err?.message || "Failed to fetch posts");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchPosts();
-//   }, []);
-
-//   const avatar = data[0]?.avatar || "https://i.pravatar.cc/150";
-
-//   return (
-//     <div className="space-y-8 sm:px-6 md:px-0">
-//       {/* Header */}
-//       <div
-//         className={`relative rounded-3xl p-8 shadow-2xl overflow-hidden ${
-//           theme === "dark"
-//             ? "bg-gradient-to-br from-white/10 to-white/15 text-white border border-gray-700"
-//             : "bg-gradient-to-br from-green-600 to-green-900 text-white"
-//         }`}
-//       >
-//         <div className="absolute inset-0 bg-black/10"></div>
-//         <div className="relative z-10 flex justify-between items-center">
-//           <div>
-//             <h2 className="text-3xl font-black mb-2">Post Feed 📰</h2>
-//             <p className="text-lg text-pink-100">
-//               Discover the latest updates and stories from the community
-//             </p>
-//           </div>
-//           <div className="text-6xl opacity-20">🐄</div>
-//         </div>
-//       </div>
-
-//       {/* New Post Card */}
-//       <div
-//         className={`rounded-3xl shadow-xl border p-4 sm:p-6 ${
-//           theme === "dark" ? "bg-black text-white border-gray-700" : "bg-white text-gray-800 border-gray-200"
-//         }`}
-//       >
-//         <div className="flex space-x-4">
-//           <div
-//             onClick={() => setActiveTab("profile")}
-//             className="w-14 h-14 rounded-full overflow-hidden cursor-pointer"
-//           >
-//             <img className="w-full h-full object-cover" src={avatar} alt="avatar" />
-//           </div>
-//           <div className="flex-1 flex flex-col">
-//             <textarea
-//               placeholder="What's happening on your farm today?"
-//               rows={3}
-//               className={`w-full p-4 rounded-2xl resize-none ${
-//                 theme === "dark"
-//                   ? "bg-gray-900 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500"
-//                   : "bg-gray-100 text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500"
-//               }`}
-//             />
-//             <div className="flex flex-wrap justify-between items-center mt-4 gap-2">
-//               <div className="flex space-x-2">
-//                 {[{ icon: Camera, label: "Photo", color: "green" },
-//                   { icon: Video, label: "Video", color: "blue" },
-//                   { icon: Mic, label: "Audio", color: "red" },
-//                   { icon: MapPin, label: "Location", color: "purple" }].map((btn) => (
-//                   <button
-//                     key={btn.label}
-//                     className={`flex items-center space-x-1 px-3 py-1.5 rounded-xl text-xs sm:text-sm hover:bg-${btn.color}-50 transition-colors ${
-//                       theme === "dark" ? "text-white" : `text-gray-600 hover:text-${btn.color}-600`
-//                     }`}
-//                   >
-//                     <btn.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-//                     <span>{btn.label}</span>
-//                   </button>
-//                 ))}
-//               </div>
-//               <button className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2.5 px-6 rounded-xl font-bold hover:shadow-lg transition-transform hover:scale-95 flex items-center space-x-2 text-sm sm:text-base">
-//                 <Send className="w-4 h-4 sm:w-5 sm:h-5" />
-//                 <span>Share Post</span>
-//               </button>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Feed Header */}
-//       <div
-//         className={`flex justify-between items-center rounded-3xl shadow-xl border p-4 sm:p-6 ${
-//           theme === "dark" ? "text-white border-gray-700" : "bg-white border-gray-200"
-//         }`}
-//       >
-//         <h3 className="text-lg sm:text-xl font-bold">Community Feed</h3>
-//         <button className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl text-xs sm:text-sm ${
-//           theme === "dark" ? "text-white hover:text-green-400" : "text-gray-600 hover:text-green-600 hover:bg-green-50"
-//         }`}>
-//           <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
-//           <span className="font-semibold">Filter</span>
-//         </button>
-//       </div>
-
-//       {/* Posts */}
-//       <div className="space-y-8">
-//         {loading && <div className="text-center text-xl py-6">Loading posts...</div>}
-//         {error && <div className="text-center text-red-500 py-6">{error}</div>}
-//         {!loading && !error && data.length === 0 && <div className="text-center text-xl py-6">No posts to show</div>}
-
-//         {data.map((post) => (
-//           <div
-//             key={post.id}
-//             className={`rounded-3xl shadow-xl border overflow-hidden hover:shadow-2xl transition duration-300 ${
-//               theme === "dark" ? "bg-gray-900 border-gray-700 text-white" : "bg-white border-gray-200 text-gray-800"
-//             }`}
-//           >
-//             <div className="p-5 space-y-4">
-//               {/* User info */}
-//               <div className="flex items-start justify-between">
-//                 <div className="flex items-start space-x-4">
-//                   <Link href={{ pathname: "/main", query: { id: post.user_id } }}>
-//                     <div
-//                       onClick={() => setActiveTab("user_profile")}
-//                       className="w-14 h-14 rounded-full overflow-hidden cursor-pointer relative"
-//                     >
-//                       <img
-//                         src={post.avatar || avatar}
-//                         alt=""
-//                         className="w-full h-full object-cover"
-//                       />
-//                       {post.verified === false && (
-//                         <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
-//                       )}
-//                     </div>
-//                   </Link>
-//                   <div className="flex-1">
-//                     <div className="flex justify-between items-center mb-1">
-//                       <div className="flex items-center space-x-3 min-w-0">
-//                         <h3 className="font-bold text-lg truncate">{post.farmer}</h3>
-//                         <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">
-//                           {post.category}
-//                         </span>
-//                       </div>
-//                       <EllipsisVertical className="text-gray-500 hover:text-green-500 cursor-pointer" />
-//                     </div>
-//                     <div className="flex flex-wrap text-sm text-gray-500 space-x-3">
-//                       <div className="flex items-center">
-//                         <MapPin className="w-3 h-3 mr-1" />
-//                         {post.location}
-//                       </div>
-//                       <div className="flex items-center">
-//                         <ClockFading className="w-3 h-3 mr-1" />
-//                         {dayjs(post.createdAt).fromNow()}
-//                       </div>
-//                     </div>
-//                   </div>
-//                 </div>
-//               </div>
-
-//               {/* Content */}
-//               <p className={`${theme === "dark" ? "text-gray-100" : "text-gray-700"} leading-relaxed`}>
-//                 {post.content}
-//               </p>
-
-//               {/* Price */}
-//               {post.price && (
-//                 <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full font-bold">
-//                   <DollarSign className="w-4 h-4" />
-//                   <span>{post.price}</span>
-//                 </div>
-//               )}
-
-//               {/* Tags */}
-//               {post.tags && (
-//                 <div className="flex flex-wrap gap-2">
-//                   {post.tags.map((tag, idx) => (
-//                     <span
-//                       key={idx}
-//                       className="text-green-600 hover:text-green-700 font-semibold text-sm cursor-pointer hover:underline"
-//                     >
-//                       {tag}
-//                     </span>
-//                   ))}
-//                 </div>
-//               )}
-
-//               {/* Images */}
-//               {post.images && post.images.length > 0 && (
-//                 <div className="grid md:grid-cols-2 gap-3 rounded-xl overflow-hidden">
-//                   {post.images.map((img, i) => (
-//                     <div key={i} className="relative w-full h-60 rounded-xl overflow-hidden">
-//                       <Image src={img} alt="post image" fill className="object-cover" unoptimized />
-//                       <div className="absolute inset-0 bg-black/10"></div>
-//                     </div>
-//                   ))}
-//                 </div>
-//               )}
-
-//               {/* Video */}
-//               {post.video && post.video.length > 0 && (
-//                 <div className="grid md:grid-cols-2 gap-3 rounded-xl overflow-hidden">
-//                   {post.video.map((vid, i) => (
-//                     <video
-//                       key={i}
-//                       src={vid}
-//                       controls
-//                       muted
-//                       autoPlay
-//                       className="w-full h-60 object-cover rounded-xl"
-//                     />
-//                   ))}
-//                 </div>
-//               )}
-//             </div>
-
-//             {/* Actions */}
-//             <div className="border-t border-gray-200 px-5 py-3 flex justify-between items-center">
-//               <div className="flex items-center space-x-6">
-//                 <button className="flex items-center space-x-1 text-gray-600 hover:text-red-500 transition-colors">
-//                   <Heart className="w-5 h-5" /> <span>{post.likes}</span>
-//                 </button>
-//                 <button className="flex items-center space-x-1 text-gray-600 hover:text-blue-500 transition-colors">
-//                   <MessageSquare className="w-5 h-5" /> <span>{post.comments}</span>
-//                 </button>
-//                 <button className="flex items-center space-x-1 text-gray-600 hover:text-green-500 transition-colors">
-//                   <Share className="w-5 h-5" /> <span>{post.shares}</span>
-//                 </button>
-//               </div>
-//               <div className="text-sm text-gray-500 hover:text-green-500 transition-colors flex items-center">
-//                 <Eye className="w-4 h-4 mr-1" />
-//                 {post.likes + post.comments * 3} views
-//               </div>
-//             </div>
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default FeedPage;
