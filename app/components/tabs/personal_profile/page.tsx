@@ -20,7 +20,7 @@ import { useTheme } from "next-themes";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
-const humanify = require("humanify-numbers");
+import { humanify } from "@/app/components/utils/humanify";
 import { useCurrentUser } from "@/app/components/currentUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -396,11 +396,11 @@ const Profile = () => {
             {/* Followers / Following */}
             <div className="flex text-sm gap-4 mb-4">
               <p>
-                <span className="font-bold">{currentUserProfile?.data?.followers ?? 0}</span>{" "}
+                <span className="font-bold">{humanify(currentUserProfile?.data?.followers ?? 0)}</span>{" "}
                 followers
               </p>
               <p>
-                <span className="font-bold">{currentUserProfile?.data?.following ?? 0}</span>{" "}
+                <span className="font-bold">{humanify(currentUserProfile?.data?.following ?? 0)}</span>{" "}
                 following
               </p>
             </div>
@@ -442,7 +442,7 @@ const Profile = () => {
               </div>
 
               <div className=" flex flex-col items-center">
-                <p className="font-black">{currentUserProfile?.data?.totalPost ?? 0}</p>
+                <p className="font-black">{humanify(currentUserProfile?.data?.totalPost ?? 0)}</p>
                 <p className="text-gray-400">Posts</p>
               </div>
 
@@ -736,7 +736,7 @@ const Profile = () => {
                       } hover:text-red-500 transition-colors`}
                     >
                       <Heart className="w-5 h-5" />
-                      <span className="font-semibold">{post.likes}</span>
+                      <span className="font-semibold">{humanify(post.likes)}</span>
                     </button>
                     <button
                       className={`flex items-center space-x-2 ${
@@ -744,7 +744,7 @@ const Profile = () => {
                       } hover:text-blue-500 transition-colors`}
                     >
                       <MessageSquare className="w-5 h-5" />
-                      <span className="font-semibold">{post.comments}</span>
+                      <span className="font-semibold">{humanify(post.comments)}</span>
                     </button>
                     <button
                       className={`flex items-center space-x-2 ${
@@ -752,7 +752,7 @@ const Profile = () => {
                       } hover:text-green-500 transition-colors`}
                     >
                       <Share className="w-5 h-5" />
-                      <span className="font-semibold">{post.shares}</span>
+                      <span className="font-semibold">{humanify(post.shares)}</span>
                     </button>
                   </div>
 

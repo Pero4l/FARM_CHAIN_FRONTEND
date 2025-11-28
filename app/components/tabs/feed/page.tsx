@@ -27,6 +27,7 @@ import { useCurrentUser } from "@/app/components/currentUser";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { humanify } from "@/app/components/utils/humanify";
 
 
 
@@ -538,7 +539,7 @@ const FeedPage: React.FC = () => {
                       } hover:text-red-500 transition-colors`}
                     >
                       {like ? <FaHeart className="w-5 h-5 text-red-500 border-red-500" /> : <FiHeart className="w-5 h-5" />}
-                      <span className="font-semibold">{post.likes}</span>
+                      <span className="font-semibold">{humanify(post.likes)}</span>
                     </button>
 
                     {/* comment */}
@@ -548,7 +549,7 @@ const FeedPage: React.FC = () => {
                       } hover:text-blue-500 transition-colors`}
                     >
                       <MessageSquare className="w-5 h-5" />
-                      <span className="font-semibold">{post.comments}</span>
+                      <span className="font-semibold">{humanify(post.comments)}</span>
                     </button>
 
                     {/* share */}
@@ -558,7 +559,7 @@ const FeedPage: React.FC = () => {
                       } hover:text-green-500 transition-colors`}
                     >
                       <Share className="w-5 h-5" />
-                      <span className="font-semibold">{post.shares}</span>
+                      <span className="font-semibold">{humanify(post.shares)}</span>
                     </button>
                   </div>
 
