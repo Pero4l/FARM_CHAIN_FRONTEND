@@ -54,7 +54,8 @@ const FeedPage: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [edit, setEdit] = useState(false);
+  // const [edit, setEdit] = useState(false);
+  const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
@@ -525,14 +526,18 @@ const FeedPage: React.FC = () => {
               <div className="border-t border-gray-100 px-3 py-5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">
+                    {/* like */}
                     <button
+                    onClick={()=> setLike(!like)}
                       className={`flex items-center space-x-2 ${
                         theme === "dark" ? "" : "text-gray-600"
                       } hover:text-red-500 transition-colors`}
                     >
-                      <Heart className="w-5 h-5" />
+                      {like ? <Heart className="w-5 h-5 bg-red-500" /> : <Heart className="w-5 h-5" />}
                       <span className="font-semibold">{post.likes}</span>
                     </button>
+
+                    {/* comment */}
                     <button
                       className={`flex items-center space-x-2 ${
                         theme === "dark" ? "" : "text-gray-600"
@@ -541,6 +546,8 @@ const FeedPage: React.FC = () => {
                       <MessageSquare className="w-5 h-5" />
                       <span className="font-semibold">{post.comments}</span>
                     </button>
+
+                    {/* share */}
                     <button
                       className={`flex items-center space-x-2 ${
                         theme === "dark" ? "" : "text-gray-600"
@@ -551,6 +558,7 @@ const FeedPage: React.FC = () => {
                     </button>
                   </div>
 
+                          {/* views */}
                   <div
                     className={`text-sm ${
                       theme === "dark" ? "" : " text-gray-500"
