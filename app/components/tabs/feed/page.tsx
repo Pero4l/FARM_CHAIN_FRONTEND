@@ -18,6 +18,8 @@ import {
   ClockFading,
   EllipsisVertical,
 } from "lucide-react";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 import axios from "axios";
@@ -25,6 +27,8 @@ import { useCurrentUser } from "@/app/components/currentUser";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+
+
 
 // Keep your Post type as you defined it
 type Post = {
@@ -533,7 +537,7 @@ const FeedPage: React.FC = () => {
                         theme === "dark" ? "" : "text-gray-600"
                       } hover:text-red-500 transition-colors`}
                     >
-                      {like ? <Heart className="w-5 h-5 bg-red-500" /> : <Heart className="w-5 h-5" />}
+                      {like ? <FaHeart className="w-5 h-5 text-red-500 border-red-500" /> : <FiHeart className="w-5 h-5" />}
                       <span className="font-semibold">{post.likes}</span>
                     </button>
 
