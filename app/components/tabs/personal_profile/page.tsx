@@ -20,6 +20,7 @@ import { useTheme } from "next-themes";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+const humanify = require("humanify-numbers");
 import { useCurrentUser } from "@/app/components/currentUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -71,7 +72,7 @@ const Profile = () => {
   // Initialize previews and local form
   useEffect(() => {
     if (userProfile) {
-      setAvatarPreview(userProfile.avatar ?? "https://i.pravatar.cc/300");
+      setAvatarPreview(userProfile.avatar ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s");
       setCoverPreview(userProfile.cover_avatar ?? "/pexels-pixabay-209831.jpg");
       setProfile({
         bio: userProfile.bio ?? "",
@@ -181,6 +182,10 @@ const Profile = () => {
   
 
   // console.log(userProfile);
+
+//   console.log(humanify(1200));       
+// console.log(humanify(1530000));    
+// console.log(humanify(987654321)); 
 
   return (
     <div>
@@ -658,7 +663,7 @@ const Profile = () => {
     className={
       post.images?.length === 1
         ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
-        : "grid grid-cols-2 gap-3 mb-4"
+        : "grid grid-cols-1 gap-3 mb-4"
     }
   >
     {post.images?.map((img: string, i: number) => (

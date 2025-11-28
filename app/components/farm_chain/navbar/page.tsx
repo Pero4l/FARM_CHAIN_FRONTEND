@@ -7,10 +7,12 @@ import {
 } from "lucide-react";
 import { useTheme } from 'next-themes'
 import { useActiveTab } from "@/app/context/ActiveTabContext";
-import Link from 'next/link';
+import Link from 'next/link'; 
+import { useCurrentUser } from "@/app/components/currentUser";
 import { useRouter } from 'next/navigation';
 
 const MainNavPage = () => {
+    const { userProfile, setUserProfile} = useCurrentUser();
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
   const [notifications, setNotifications] = useState(2);
@@ -20,7 +22,8 @@ const MainNavPage = () => {
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const avatar = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
+  const avatar = userProfile?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
+
 
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -191,9 +194,9 @@ const MainNavPage = () => {
               <div className="relative hidden md:flex" ref={menuRef}>
                 <div
                   onClick={() => setUserOption(prev => !prev)}
-                  className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
+                  className="w-13 h-13 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
                 >
-                  <img className='rounded-full' src={avatar} alt="" />
+                  <img className='rounded-full w-13 h-13' src={avatar} alt="" />
                 </div>
 
                 {/* lg user */}
@@ -255,7 +258,7 @@ const MainNavPage = () => {
                 onClick={() => setUserOption(prev => !prev)}
                 className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
               >
-                <img className='rounded-full' src={avatar} alt="" />
+                <img className='rounded-full w-10 h-10' src={avatar} alt="" />
               </div>
 
               {userOption && (
