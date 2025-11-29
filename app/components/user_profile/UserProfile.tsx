@@ -7,9 +7,12 @@ import { MapPin, CheckCircle, Briefcase,  Heart,
   Share,
   DollarSign,
   Eye,
-  ClockFading,
-  EllipsisVertical } from "lucide-react";
+  ClockFading, 
+  EllipsisVertical 
+} from "lucide-react";
 import { FaPlus } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useSearchParams } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,6 +21,29 @@ import axios from "axios";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
+import { humanify } from "@/app/components/utils/humanify";
+
+
+interface Post {
+  id: number;
+  farmer: string;
+  content: string;
+  avatar?: string;
+  verified?: boolean;
+  category?: string;
+  location?: string;
+  createdAt: string;
+  tags?: string[];
+  images?: string[];
+  video?: string[];
+  price?: number;
+  likes?: number;
+  comments?: number;
+  shares?: number;
+  isLike?: boolean;
+}
+
+
 
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const [token, setToken] = useState<string | null | undefined>(undefined);
@@ -28,6 +54,8 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const [isFollowed, setIsFollowed] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [user, setUser] = useState<any>(null);
+const [posts, setPosts] = useState<Post[]>([]);
+
 
   // ⭐ NEW: Followers local state for instant update
   const [followersCount, setFollowersCount] = useState(0);
@@ -46,6 +74,11 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to fetch user");
+
+      console.log(data);
+      
+      
+      setPosts(data?.posts || []);   // ⭐ store posts separately
 
       return data;
     } catch (err: any) {
@@ -77,6 +110,43 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
     }
   };
 
+  
+  const likePost = async (postId: number) => {
+  try {
+    const res = await fetch("https://farmchain.onrender.com/post/like", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify({ postId }),
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.message || "Failed to like post");
+
+    // Update the posts state optimistically
+    setPosts((prev) =>
+      prev.map((p) =>
+        p.id === postId
+          ? {
+              ...p,
+              likes: result.likes ?? 0,
+              isLike: result.isLike ?? false,
+            }
+          : p
+      )
+    );
+  } catch (err) {
+    console.error("Like error:", err);
+    toast.error("Failed to like post!");
+  }
+};
+
+
+
+
+
   useEffect(() => {
     if (!userId) return;
     if (token === undefined) return;
@@ -94,6 +164,8 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
     setToken(t);
   }, []);
 
+  console.log(user);
+  
   return (
     <div>
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />
@@ -206,24 +278,29 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
               {/* ⭐ FOLLOWERS USING LOCAL STATE */}
               <div className="flex text-sm gap-4 mb-4">
                 <p>
-                  <span className="font-bold">{followersCount}</span> followers
+                  <span className="font-bold">{humanify(followersCount)}</span> followers
                 </p>
                 <p>
-                  <span className="font-bold">{user?.following ?? 0}</span>{" "}
+                  <span className="font-bold">{humanify(user?.following ?? 0)}</span>{" "}
                   following
                 </p>
               </div>
 
+
+                  {/* location */}
               <p className={theme === "dark" ? "text-gray-400 mb-2" : "text-gray-800 mb-2"}>
                 <MapPin className="inline-block w-4 h-4 mr-1 mb-1" />
                 {user?.location ?? "Unknown Location"}
               </p>
 
+
+                  {/* Organizarion */}
               <p className={theme === "dark" ? "text-gray-400" : "text-gray-800"}>
                 <Briefcase className="inline-block w-4 h-4 mr-1 mb-1" />
                 {user?.organization ?? "Organization"}
               </p>
 
+                  {/* Bio */}
               <p
                 className={
                   theme === "dark"
@@ -238,12 +315,12 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
               <div className="flex justify-between items-center mb-8">
 
                 <div className="flex flex-col items-center">
-                  <p className="font-black">72.89K</p>
+                  <p className="font-black">{humanify(user?.likesCount || 0)}</p>
                   <p className="text-gray-400">Likes</p>
                 </div>
 
                 <div className="flex flex-col items-center">
-                  <p className="font-black">{user?.postsCount || 0}</p>
+                  <p className="font-black">{humanify(user?.postsCount || 0)}</p>
                   <p className="text-gray-400">Posts</p>
                 </div>
 
@@ -254,7 +331,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
               </div>
 
               {/* POST */}
-               {user?.posts?.map((post: any) => (
+               {posts?.map((post: any) => (
               <div
                 key={post.id}
                 className={`${
@@ -268,8 +345,8 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         {/* profile post img */}
                         <div className="w-14 h-14 bg-gradient-to-r from-green-500 to-blue-500 rounded-full ">
                           <img
-                            className="h-[55px] w-[70px] rounded-full"
-                            src={post.avatar || "https://i.pravatar.cc/300"}
+                            className="h-full w-full rounded-full"
+                            src={post.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"}
                             alt=""
                           />
                         </div>
@@ -310,130 +387,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                               <EllipsisVertical />
                             </button> */}
 
-                            {/* Modal (hidden by default) */}
-                            <div
-                              id={`post-modal-${post.id}`}
-                              className=" hidden fixed inset-0 z-50 flex items-center justify-center"
-                              onClick={(e) => {
-                                // click on overlay closes modal
-                                if (e.target === e.currentTarget) {
-                                  const m = document.getElementById(
-                                    `post-modal-${post.id}`
-                                  );
-                                  m?.classList.add("hidden");
-                                }
-                              }}
-                            >
-                              <div className="absolute inset-0 bg-black/50" />
-
-                              <div
-                                className={`relative z-10 ${
-                                  theme === "dark"
-                                    ? "border-1 bg-black"
-                                    : " bg-white dark:bg-slate-900"
-                                } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <h4 className="text-lg font-bold mb-2">
-                                  Manage post
-                                </h4>
-
-                                {/* <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 truncate">
-                            {post.content}
-                          </p> */}
-
-                                <div className="flex justify-end gap-3">
-                                  {/* <button
-                            className="px-3 py-2 rounded-lg bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
-                            onClick={async (e) => {
-                              e.stopPropagation();
-                              // simple inline edit using prompt to avoid extra hooks/state
-                              const newContent = window.prompt(
-                              "Edit post content",
-                              post.content
-                              );
-                              if (newContent === null) return;
-                              try {
-                              await axios.patch(
-                                `https://farmchain.onrender.com/post/${post.id}`,
-                                { content: newContent },
-                                {
-                                headers: token
-                                  ? { Authorization: `Bearer ${token}` }
-                                  : undefined,
-                                }
-                              );
-                              // refresh posts list
-                              await fetchPosts();
-                              const m = document.getElementById(
-                                `post-modal-${post.id}`
-                              );
-                              m?.classList.add("hidden");
-                              } catch (err) {
-                              console.error(err);
-                              alert("Failed to update post");
-                              }
-                            }}
-                            >
-                            Edit
-                            </button> */}
-
-                                  <button
-                                    className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
-                                    onClick={async (e) => {
-                                      e.stopPropagation();
-                                      if (
-                                        !window.confirm(
-                                          "Are you sure you want to delete this post?"
-                                        )
-                                      )
-                                        return;
-
-                                      try {
-                                        await axios.delete(
-                                          `https://farmchain.onrender.com/post/delete`,
-                                          {
-                                            headers: token
-                                              ? {
-                                                  Authorization: `Bearer ${token}`,
-                                                }
-                                              : undefined,
-                                            data: { id: post.id },
-                                          }
-                                        );
-
-                                        toast.success(
-                                          "Post deleted successfully!"
-                                        );
-
-                                        const m = document.getElementById(
-                                          `post-modal-${post.id}`
-                                        );
-                                        m?.classList.add("hidden");
-                                      } catch (err) {
-                                        console.error(err);
-                                        alert("Failed to delete post");
-                                      }
-                                    }}
-                                  >
-                                    Delete
-                                  </button>
-
-                                  <button
-                                    className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      const m = document.getElementById(
-                                        `post-modal-${post.id}`
-                                      );
-                                      m?.classList.add("hidden");
-                                    }}
-                                  >
-                                    Cancel
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                          
                           </div>
                         </div>
 
@@ -533,21 +487,27 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                 <div className="border-t border-gray-100 px-3 py-5">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-6 lg:space-x-10">
-                      <button
-                        className={`flex items-center space-x-2 ${
-                          theme === "dark" ? "" : "text-gray-600"
-                        } hover:text-red-500 transition-colors`}
-                      >
-                        <Heart className="w-5 h-5" />
-                        <span className="font-semibold">{post.likes}</span>
-                      </button>
+
+                        <button
+  onClick={() => likePost(post.id)}
+  className="flex items-center space-x-2"
+>
+  {post.isLike ? (
+    <FaHeart className="w-5 h-5 text-red-500" />
+  ) : (
+    <FiHeart className="w-5 h-5" />
+  )}
+  <span className="font-semibold">{humanify(post.likes ?? 0)}</span>
+</button>
+
+
                       <button
                         className={`flex items-center space-x-2 ${
                           theme === "dark" ? "" : "text-gray-600"
                         } hover:text-blue-500 transition-colors`}
                       >
                         <MessageSquare className="w-5 h-5" />
-                        <span className="font-semibold">{post.comments}</span>
+                        <span className="font-semibold">{humanify(post.comments)}</span>
                       </button>
                       <button
                         className={`flex items-center space-x-2 ${
@@ -555,7 +515,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                         } hover:text-green-500 transition-colors`}
                       >
                         <Share className="w-5 h-5" />
-                        <span className="font-semibold">{post.shares}</span>
+                        <span className="font-semibold">{humanify(post.shares)}</span>
                       </button>
                     </div>
 
