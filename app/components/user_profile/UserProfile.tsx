@@ -111,7 +111,20 @@ const [posts, setPosts] = useState<Post[]>([]);
   };
 
   
-  const likePost = async (postId: number) => {
+const likePost = async (postId: number) => {
+  // Optimistically update the UI first
+  setPosts(prev =>
+    prev.map(post =>
+      post.id === postId
+        ? {
+            ...post,
+            isLike: !post.isLike,
+            likes: post.isLike ? post.likes! - 1 : post.likes! + 1, // increment/decrement
+          }
+        : post
+    )
+  );
+
   try {
     const res = await fetch("https://farmchain.onrender.com/post/like", {
       method: "POST",
@@ -125,23 +138,38 @@ const [posts, setPosts] = useState<Post[]>([]);
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || "Failed to like post");
 
-    // Update the posts state optimistically
-    setPosts((prev) =>
-      prev.map((p) =>
-        p.id === postId
+    // Sync the backend response in case it differs
+    setPosts(prev =>
+      prev.map(post =>
+        post.id === postId
           ? {
-              ...p,
-              likes: result.likes ?? 0,
-              isLike: result.isLike ?? false,
+              ...post,
+              likes: result.likes ?? post.likes,
+              isLike: result.isLike ?? post.isLike,
             }
-          : p
+          : post
       )
     );
   } catch (err) {
     console.error("Like error:", err);
+
+    // Revert UI if backend fails
+    setPosts(prev =>
+      prev.map(post =>
+        post.id === postId
+          ? {
+              ...post,
+              isLike: !post.isLike,
+              likes: post.isLike ? post.likes! - 1 : post.likes! + 1,
+            }
+          : post
+      )
+    );
+
     toast.error("Failed to like post!");
   }
 };
+
 
 
 
