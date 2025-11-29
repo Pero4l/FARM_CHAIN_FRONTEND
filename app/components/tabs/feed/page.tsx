@@ -52,6 +52,8 @@ type Post = {
   tags?: string[];
   category: string;
   createdAt: string;
+  isLike?: boolean;
+
 };
 
 const FeedPage: React.FC = () => {
@@ -60,7 +62,7 @@ const FeedPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   // const [edit, setEdit] = useState(false);
-  const [like, setLike] = useState(false);
+  // const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
@@ -113,7 +115,8 @@ const FeedPage: React.FC = () => {
   }, []);
 
 
- const likePost = async (postId: number) => {
+
+const likePost = async (postId: number) => {
   try {
     const res = await fetch("https://farmchain.onrender.com/post/like", {
       method: "POST",
@@ -127,20 +130,20 @@ const FeedPage: React.FC = () => {
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || "Failed to like post");
 
-    // 🔥 Update UI instantly
+    // Update UI instantly — store the like state PER POST
     setData((prev) =>
       prev.map((p) =>
         p.id === postId
-          ? { ...p, likes: result.likes } 
+          ? { ...p, likes: result.likes, isLike: result.isLike }
           : p
       )
     );
-
-    return result;
-  } catch (err: any) {
-    console.error("❌ Like error:", err.message);
+  } catch (err) {
+    console.error("Like error:", err);
   }
 };
+
+
 
 
   const avatar =
@@ -563,15 +566,22 @@ const FeedPage: React.FC = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">
                     {/* like */}
-                    <button
-                    onClick={()=> setLike(!like)}
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-red-500 transition-colors`}
-                    >
-                      {like ? <FaHeart className="w-5 h-5 text-red-500 border-red-500" /> : <FiHeart className="w-5 h-5" />}
-                      <span className="font-semibold">{humanify(post.likes)}</span>
-                    </button>
+               <button
+  onClick={() => likePost(post.id)}
+  className={`flex items-center space-x-2 ${
+    theme === "dark" ? "" : "text-gray-600"
+  } hover:text-red-500 transition-colors`}
+>
+  {post.isLike ? (
+    <FaHeart className="w-5 h-5 text-red-500" />
+  ) : (
+    <FiHeart className="w-5 h-5" />
+  )}
+
+  <span className="font-semibold">{humanify(post.likes)}</span>
+</button>
+
+
 
                     {/* comment */}
                     <button
