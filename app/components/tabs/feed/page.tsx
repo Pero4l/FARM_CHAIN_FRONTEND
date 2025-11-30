@@ -132,12 +132,17 @@ const likePost = async (postId: number) => {
 
     // Update UI instantly — store the like state PER POST
     setData((prev) =>
-      prev.map((p) =>
-        p.id === postId
-          ? { ...p, likes: result.likes, isLike: result.isLike }
-          : p
-      )
-    );
+  prev.map((p) =>
+    p.id === postId
+      ? {
+          ...p,
+          likes: p.isLike ? p.likes - 1 : p.likes + 1,
+          isLike: !p.isLike, 
+        }
+      : p
+  )
+);
+
   } catch (err) {
     console.error("Like error:", err);
   }
