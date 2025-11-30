@@ -16,6 +16,8 @@ import {
   EllipsisVertical,
 } from "lucide-react";
 import { SlSettings } from "react-icons/sl";
+import { FiHeart } from "react-icons/fi";
+import { FaHeart } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -25,7 +27,6 @@ import { useCurrentUser } from "@/app/components/currentUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-
 
 interface EditData {
   bio: string;
@@ -39,9 +40,28 @@ interface UserProfile {
     following: number;
     posts: any[];
     totalPost: number;
+    totalLikes: number;
   };
 }
 
+interface Post {
+  id: number;
+  farmer: string;
+  content: string;
+  avatar?: string;
+  verified?: boolean;
+  category?: string;
+  location?: string;
+  createdAt: string;
+  tags?: string[];
+  images?: string[];
+  video?: string[];
+  price?: number;
+  likes: number;
+  comments: number;
+  shares: number;
+  isLike?: boolean;
+}
 
 // interface Post {
 //   id: number;
@@ -61,9 +81,9 @@ const Profile = () => {
     organization: "",
   });
 
-  const [currentUserProfile, setCurrentUserProfile] = useState<UserProfile | null>(null);
-
-
+  const [currentUserProfile, setCurrentUserProfile] =
+    useState<UserProfile | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   // Live preview
   const [avatarPreview, setAvatarPreview] = useState("");
@@ -72,7 +92,10 @@ const Profile = () => {
   // Initialize previews and local form
   useEffect(() => {
     if (userProfile) {
-      setAvatarPreview(userProfile.avatar ?? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s");
+      setAvatarPreview(
+        userProfile.avatar ??
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"
+      );
       setCoverPreview(userProfile.cover_avatar ?? "/pexels-pixabay-209831.jpg");
       setProfile({
         bio: userProfile.bio ?? "",
@@ -81,38 +104,32 @@ const Profile = () => {
     }
   }, [userProfile]);
 
-
   useEffect(() => {
-  if (!token) return; // only run when token is ready
+    if (!token) return; // only run when token is ready
 
-  const getCurrentUserProfile = async () => {
+    const getCurrentUserProfile = async () => {
+      try {
+        setLoading(!loading);
+        const response = await axios.get(
+          "https://farmchain.onrender.com/user/profile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setCurrentUserProfile(response.data);
+        setPosts(response.data?.data?.posts || []);
+      } catch (error) {
+        console.error("Error fetching current user profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    
+    getCurrentUserProfile();
+  }, [token]); // ⬅ runs once when token is available
 
-    try {
-      setLoading(!loading);
-      const response = await axios.get(
-        "https://farmchain.onrender.com/user/profile",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCurrentUserProfile(response.data);
-    } catch (error) {
-      console.error("Error fetching current user profile:", error);
-    }finally {
-      setLoading(false);
-    }
-  };
-
-  getCurrentUserProfile();
-}, [token]); // ⬅ runs once when token is available
-
-// console.log(currentUserProfile);
-
-  
   // Handle file selection and preview
   const handleAvatarChange = (file: File | null) => {
     setAvatarFile(file);
@@ -179,13 +196,70 @@ const Profile = () => {
     }
   };
 
-  
+  const likePost = async (postId: number) => {
+    // Optimistically update the UI first
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              isLike: !post.isLike,
+              likes: post.isLike ? post.likes! - 1 : post.likes! + 1, // increment/decrement
+            }
+          : post
+      )
+    );
 
-  // console.log(userProfile);
+    try {
+      const res = await fetch("https://farmchain.onrender.com/post/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ postId }),
+      });
 
-//   console.log(humanify(1200));       
-// console.log(humanify(1530000));    
-// console.log(humanify(987654321)); 
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message || "Failed to like post");
+
+      // Sync the backend response in case it differs
+      setPosts((prev) =>
+        prev.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                likes: result.likes ?? post.likes,
+                isLike: result.isLike ?? post.isLike,
+              }
+            : post
+        )
+      );
+    } catch (err) {
+      console.error("Like error:", err);
+
+      // Revert UI if backend fails
+      setPosts((prev) =>
+        prev.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                isLike: !post.isLike,
+                likes: post.isLike ? post.likes! - 1 : post.likes! + 1,
+              }
+            : post
+        )
+      );
+
+      toast.error("Failed to like post!");
+    }
+  };
+
+  console.log("USER PROFILE", userProfile);
+
+  console.log("CURRENT USER PROFILE", currentUserProfile);
+  // console.log(humanify(1530000));
+  // console.log(humanify(987654321));
 
   return (
     <div>
@@ -223,7 +297,10 @@ const Profile = () => {
             {/* Avatar */}
             <div className="absolute bottom-0 translate-y-1/4 translate-x-7 w-40 h-40  rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
               <img
-                src={avatarPreview || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"}
+                src={
+                  avatarPreview ||
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"
+                }
                 alt="Avatar"
                 className="w-full h-full rounded-full object-cover"
               />
@@ -396,11 +473,15 @@ const Profile = () => {
             {/* Followers / Following */}
             <div className="flex text-sm gap-4 mb-4">
               <p>
-                <span className="font-bold">{humanify(currentUserProfile?.data?.followers ?? 0)}</span>{" "}
+                <span className="font-bold">
+                  {humanify(currentUserProfile?.data?.followers ?? 0)}
+                </span>{" "}
                 followers
               </p>
               <p>
-                <span className="font-bold">{humanify(currentUserProfile?.data?.following ?? 0)}</span>{" "}
+                <span className="font-bold">
+                  {humanify(currentUserProfile?.data?.following ?? 0)}
+                </span>{" "}
                 following
               </p>
             </div>
@@ -434,15 +515,19 @@ const Profile = () => {
 
             {/*  */}
 
-              {/* STATS */}
+            {/* STATS */}
             <div className="flex justify-between items-center mb-8">
               <div className=" flex flex-col items-center">
-                <p className="font-black">72.89K</p>
+                <p className="font-black">
+                  {humanify(currentUserProfile?.data?.totalLikes ?? 0)}
+                </p>
                 <p className="text-gray-400">Likes</p>
               </div>
 
               <div className=" flex flex-col items-center">
-                <p className="font-black">{humanify(currentUserProfile?.data?.totalPost ?? 0)}</p>
+                <p className="font-black">
+                  {humanify(currentUserProfile?.data?.totalPost ?? 0)}
+                </p>
                 <p className="text-gray-400">Posts</p>
               </div>
 
@@ -452,7 +537,6 @@ const Profile = () => {
               </div>
             </div>
 
-
             {/* POSTS */}
             <div>
               <h1 className="text-center text-5xl pt-5 mb-10 underline">
@@ -460,11 +544,15 @@ const Profile = () => {
               </h1>
             </div>
 
-              {/*  */}
-                       <div className="space-y-8">
-          {loading && <div className="text-center text-4xl py-6">Loading posts...</div>}
+            {/*  */}
+            <div className="space-y-8">
+              {loading && (
+                <div className="text-center text-4xl py-6">
+                  Loading posts...
+                </div>
+              )}
 
-          {/* {error && (
+              {/* {error && (
             <div className="text-center text-red-500 py-6">{error}</div>
           )}
 
@@ -472,303 +560,329 @@ const Profile = () => {
             <div className="text-center text-4xl py-6">No posts to show</div>
           )} */}
 
-          {currentUserProfile?.data.posts?.map((post) => (
-            <div
-              key={post.id}
-              className={`${
-                theme === "dark" ? "" : "bg-white"
-              } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
-            >
-              <div className="p-3 py-5">
-                <div className="flex items-start justify-between mb-4 w-full">
-  <div className="flex items-start space-x-4 w-full">
-    {/* Avatar / Profile */}
-      <div className="relative">
-        <div
-          className="w-14 h-14 rounded-full overflow-hidden"
-        >
-          <img
-            className="h-full w-full object-cover rounded-full"
-            src={post.avatar }
-            alt=""
-          />
-        </div>
+              {posts?.map((post) => (
+                <div
+                  key={post.id}
+                  className={`${
+                    theme === "dark" ? "" : "bg-white"
+                  } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
+                >
+                  <div className="p-3 py-5">
+                    <div className="flex items-start justify-between mb-4 w-full">
+                      <div className="flex items-start space-x-4 w-full">
+                        {/* Avatar / Profile */}
+                        <div className="relative">
+                          <div className="w-14 h-14 rounded-full overflow-hidden">
+                            <img
+                              className="h-full w-full object-cover rounded-full"
+                              src={post.avatar}
+                              alt=""
+                            />
+                          </div>
 
-        {post.verified === false && (
-          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
-        )}
-      </div>
+                          {post.verified === false && (
+                            <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-blue-500 bg-white rounded-full" />
+                          )}
+                        </div>
 
-    {/* Main Content */}
-    <div className="flex-1 min-w-0">
+                        {/* Main Content */}
+                        <div className="flex-1 min-w-0">
+                          {/* Name + Category + Menu Button */}
+                          <div className="flex items-start w-full">
+                            {/* Name + Category */}
+                            <div className="flex items-center space-x-3 flex-1 min-w-0">
+                              <h3
+                                className={`font-bold text-lg truncate ${
+                                  theme === "dark" ? "" : "text-gray-900"
+                                }`}
+                              >
+                                {post.farmer}
+                              </h3>
 
-      {/* Name + Category + Menu Button */}
-      <div className="flex items-start w-full">
-        {/* Name + Category */}
-        <div className="flex items-center space-x-3 flex-1 min-w-0">
-          <h3
-            className={`font-bold text-lg truncate ${
-              theme === "dark" ? "" : "text-gray-900"
-            }`}
-          >
-            {post.farmer}
-          </h3>
+                              <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold whitespace-nowrap">
+                                {post.category}
+                              </span>
+                            </div>
 
-          <span className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold whitespace-nowrap">
-            {post.category}
-          </span>
-        </div>
+                            {/* Menu button (push to the right with ml-auto) */}
+                            <div className="ml-auto flex items-center">
+                              <button
+                                className={`p-1 ${
+                                  theme === "dark"
+                                    ? "text-gray-100 hover:text-gray-400"
+                                    : "text-gray-600 hover:text-gray-500"
+                                } rounded-full`}
+                                aria-label="more"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const m = document.getElementById(
+                                    `post-modal-${post.id}`
+                                  );
+                                  m?.classList.remove("hidden");
+                                }}
+                              >
+                                <EllipsisVertical />
+                              </button>
+                            </div>
 
-        {/* Menu button (push to the right with ml-auto) */}
-        <div className="ml-auto flex items-center">
-          <button
-            className={`p-1 ${
-              theme === "dark"
-                ? "text-gray-100 hover:text-gray-400"
-                : "text-gray-600 hover:text-gray-500"
-            } rounded-full`}
-            aria-label="more"
-            onClick={(e) => {
-              e.stopPropagation();
-              const m = document.getElementById(`post-modal-${post.id}`);
-              m?.classList.remove("hidden");
-            }}
-          >
-            <EllipsisVertical />
-          </button>
-        </div>
+                            {/* Modal */}
+                            <div
+                              id={`post-modal-${post.id}`}
+                              className="hidden fixed inset-0 z-50 flex items-center justify-center"
+                              onClick={(e) => {
+                                if (e.target === e.currentTarget) {
+                                  document
+                                    .getElementById(`post-modal-${post.id}`)
+                                    ?.classList.add("hidden");
+                                }
+                              }}
+                            >
+                              <div className="absolute inset-0 bg-black/50" />
 
-        {/* Modal */}
-        <div
-          id={`post-modal-${post.id}`}
-          className="hidden fixed inset-0 z-50 flex items-center justify-center"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              document
-                .getElementById(`post-modal-${post.id}`)
-                ?.classList.add("hidden");
-            }
-          }}
-        >
-          <div className="absolute inset-0 bg-black/50" />
+                              <div
+                                className={`relative z-10 ${
+                                  theme === "dark"
+                                    ? "bg-black border"
+                                    : "bg-white"
+                                } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <h4 className="text-lg font-bold mb-4">
+                                  Manage post
+                                </h4>
 
-          <div
-            className={`relative z-10 ${
-              theme === "dark" ? "bg-black border" : "bg-white"
-            } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h4 className="text-lg font-bold mb-4">Manage post</h4>
+                                <div className="flex justify-end gap-3">
+                                  <button
+                                    className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
+                                    onClick={async (e) => {
+                                      e.stopPropagation();
+                                      if (
+                                        !window.confirm(
+                                          "Are you sure you want to delete this post?"
+                                        )
+                                      )
+                                        return;
 
-            <div className="flex justify-end gap-3">
-              <button
-                className="px-3 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"
-                onClick={async (e) => {
-                  e.stopPropagation();
-                  if (!window.confirm("Are you sure you want to delete this post?"))
-                    return;
+                                      await axios.delete(
+                                        `https://farmchain.onrender.com/post/delete`,
+                                        {
+                                          headers: token
+                                            ? {
+                                                Authorization: `Bearer ${token}`,
+                                              }
+                                            : undefined,
+                                          data: { id: post.id },
+                                        }
+                                      );
 
-                  await axios.delete(
-                    `https://farmchain.onrender.com/post/delete`,
-                    {
-                      headers: token
-                        ? { Authorization: `Bearer ${token}` }
-                        : undefined,
-                      data: { id: post.id },
-                    }
-                  );
+                                      document
+                                        .getElementById(`post-modal-${post.id}`)
+                                        ?.classList.add("hidden");
+                                    }}
+                                  >
+                                    Delete
+                                  </button>
 
-                  
-                  document
-                    .getElementById(`post-modal-${post.id}`)
-                    ?.classList.add("hidden");
-                }}
-              >
-                Delete
-              </button>
+                                  <button
+                                    className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      document
+                                        .getElementById(`post-modal-${post.id}`)
+                                        ?.classList.add("hidden");
+                                    }}
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
-              <button
-                className="px-3 py-2 rounded-lg bg-green-400 hover:bg-green-800"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  document
-                    .getElementById(`post-modal-${post.id}`)
-                    ?.classList.add("hidden");
-                }}
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+                          {/* Location + Time */}
+                          <div
+                            className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
+                              theme === "dark" ? "" : "text-gray-500"
+                            }`}
+                          >
+                            <div className="flex items-center">
+                              <MapPin className="w-3 h-3 mr-1" />
+                              {post.location}
+                            </div>
 
-      {/* Location + Time */}
-      <div
-        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
-          theme === "dark" ? "" : "text-gray-500"
-        }`}
-      >
-        <div className="flex items-center">
-          <MapPin className="w-3 h-3 mr-1" />
-          {post.location}
-        </div>
-
-        <div className="flex items-center">
-          <ClockFading className="w-3 h-3 mr-1" />
-          {dayjs(post.createdAt).fromNow()}
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-                <div className="mb-4">
-                  <p
-                    className={` leading-relaxed ${
-                      theme === "dark" ? "" : "text-gray-700"
-                    }`}
-                  >
-                    {post.content}
-                  </p>
-
-                  {/* PRICE */}
-                  {post.price && (
-                    <div className="mt-3 inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
-                      <DollarSign className="w-4 h-4" />
-                      <span>{post.price}</span>
+                            <div className="flex items-center">
+                              <ClockFading className="w-3 h-3 mr-1" />
+                              {dayjs(post.createdAt).fromNow()}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                </div>
 
-                {/* TAGS */}
-                {post.tags && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {post.tags.map((tag: string, idx: number) => (
-                      <span
-                        key={idx}
-                        className="text-green-600 hover:text-green-700 font-semibold text-sm cursor-pointer hover:underline"
+                    <div className="mb-4">
+                      <p
+                        className={` leading-relaxed ${
+                          theme === "dark" ? "" : "text-gray-700"
+                        }`}
                       >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                        {post.content}
+                      </p>
 
-                {/* IMAGE */}
-{/* IMAGE */}
-{(post.images?.length ?? 0) > 0 && (
-  <div
-    className={
-      post.images?.length === 1
-        ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
-        : "grid grid-cols-1 gap-3 mb-4"
-    }
-  >
-    {post.images?.map((img: string, i: number) => (
-      <div
-        key={i}
-        className={
-          post.images?.length === 1
-            ? "w-full h-full"
-            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
-        }
-      >
-        <Image
-          src={img}
-          width={800}
-          height={800}
-          alt="Images"
-          className={
-            post.images?.length === 1
-              ? "object-cover w-full h-full rounded-2xl"
-              : "object-cover w-full h-full"
-          }
-          unoptimized
-        />
-        <div className="absolute inset-0 pointer-events-none "></div>
-      </div>
-    ))}
-  </div>
-)}
+                      {/* PRICE */}
+                      {post.price && (
+                        <div className="mt-3 inline-flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
+                          <DollarSign className="w-4 h-4" />
+                          <span>{post.price}</span>
+                        </div>
+                      )}
+                    </div>
 
-{/* VIDEO */}
-{post.videos && post.videos.length > 0 && (
-  <div className="grid gap-3 mb-4">
-    {post.videos.map((vid: string, i: number) => (
-      <div
-        key={i}
-        className="relative w-full rounded-2xl overflow-hidden bg-black"
-      >
-        <video
-          controls
-          playsInline
-          src={vid}
-          className="w-full h-auto max-h-[600px] object-contain"
-          onLoadedMetadata={(e) => {
-            const video = e.target as HTMLVideoElement;
-            const isPortrait = video.videoHeight > video.videoWidth;
+                    {/* TAGS */}
+                    {post.tags && (
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {post.tags.map((tag: string, idx: number) => (
+                          <span
+                            key={idx}
+                            className="text-green-600 hover:text-green-700 font-semibold text-sm cursor-pointer hover:underline"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-            if (isPortrait) {
-              video.classList.remove("object-cover");
-              video.classList.add("object-contain", "max-h-[600px]");
-            } else {
-              video.classList.remove("object-contain");
-              video.classList.add("object-cover", "h-[450px]");
-            }
-          }}
-        />
-      </div>
-    ))}
-  </div>
-)}
+                    {/* IMAGE */}
+                    {/* IMAGE */}
+                    {(post.images?.length ?? 0) > 0 && (
+                      <div
+                        className={
+                          post.images?.length === 1
+                            ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
+                            : "grid grid-cols-1 gap-3 mb-4"
+                        }
+                      >
+                        {post.images?.map((img: string, i: number) => (
+                          <div
+                            key={i}
+                            className={
+                              post.images?.length === 1
+                                ? "w-full h-full"
+                                : "rounded-2xl w-full h-[250px] relative overflow-hidden"
+                            }
+                          >
+                            <Image
+                              src={img}
+                              width={800}
+                              height={800}
+                              alt="Images"
+                              className={
+                                post.images?.length === 1
+                                  ? "object-cover w-full h-full rounded-2xl"
+                                  : "object-cover w-full h-full"
+                              }
+                              unoptimized
+                            />
+                            <div className="absolute inset-0 pointer-events-none "></div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
 
-              </div>
+                    {/* VIDEO */}
+                    {post.video && post.video.length > 0 && (
+                      <div className="grid gap-3 mb-4">
+                        {post.video.map((vid: string, i: number) => (
+                          <div
+                            key={i}
+                            className="relative w-full rounded-2xl overflow-hidden bg-black"
+                          >
+                            <video
+                              controls
+                              playsInline
+                              src={vid}
+                              className="w-full h-auto max-h-[600px] object-contain"
+                              onLoadedMetadata={(e) => {
+                                const video = e.target as HTMLVideoElement;
+                                const isPortrait =
+                                  video.videoHeight > video.videoWidth;
 
-              {/* Action btn */}
-              <div className="border-t border-gray-100 px-3 py-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-6 lg:space-x-10">
-                    <button
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-red-500 transition-colors`}
-                    >
-                      <Heart className="w-5 h-5" />
-                      <span className="font-semibold">{humanify(post.likes)}</span>
-                    </button>
-                    <button
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-blue-500 transition-colors`}
-                    >
-                      <MessageSquare className="w-5 h-5" />
-                      <span className="font-semibold">{humanify(post.comments)}</span>
-                    </button>
-                    <button
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-green-500 transition-colors`}
-                    >
-                      <Share className="w-5 h-5" />
-                      <span className="font-semibold">{humanify(post.shares)}</span>
-                    </button>
+                                if (isPortrait) {
+                                  video.classList.remove("object-cover");
+                                  video.classList.add(
+                                    "object-contain",
+                                    "max-h-[600px]"
+                                  );
+                                } else {
+                                  video.classList.remove("object-contain");
+                                  video.classList.add(
+                                    "object-cover",
+                                    "h-[450px]"
+                                  );
+                                }
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
-                  <div
-                    className={`text-sm ${
-                      theme === "dark" ? "" : " text-gray-500"
-                    } hover:text-green-500 transition-colors`}
-                  >
-                    <Eye className="w-4 h-4 inline mr-1" />
-                    {post.likes + post.comments * 3} views
+                  {/* Action btn */}
+                  <div className="border-t border-gray-100 px-3 py-5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-6 lg:space-x-10">
+                        <button
+                          onClick={() => likePost(post.id)}
+                          className="flex items-center space-x-2"
+                        >
+                          {post.isLike ? (
+                            <FaHeart className="w-5 h-5 text-red-500" />
+                          ) : (
+                            <FiHeart className="w-5 h-5" />
+                          )}
+                          <span className="font-semibold">
+                            {humanify(post.likes ?? 0)}
+                          </span>
+                        </button>
+
+                        {/*  */}
+                        <button
+                          className={`flex items-center space-x-2 ${
+                            theme === "dark" ? "" : "text-gray-600"
+                          } hover:text-blue-500 transition-colors`}
+                        >
+                          <MessageSquare className="w-5 h-5" />
+                          <span className="font-semibold">
+                            {humanify(post.comments)}
+                          </span>
+                        </button>
+
+                        {/*  */}
+                        <button
+                          className={`flex items-center space-x-2 ${
+                            theme === "dark" ? "" : "text-gray-600"
+                          } hover:text-green-500 transition-colors`}
+                        >
+                          <Share className="w-5 h-5" />
+                          <span className="font-semibold">
+                            {humanify(post.shares)}
+                          </span>
+                        </button>
+                      </div>
+
+                      <div
+                        className={`text-sm ${
+                          theme === "dark" ? "" : " text-gray-500"
+                        } hover:text-green-500 transition-colors`}
+                      >
+                        <Eye className="w-4 h-4 inline mr-1" />
+                        {post.likes ?? +post.comments * 3} views
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
             {/*  */}
           </div>
         </div>

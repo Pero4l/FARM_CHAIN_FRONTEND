@@ -130,7 +130,7 @@ const likePost = async (postId: number) => {
     const result = await res.json();
     if (!res.ok) throw new Error(result.message || "Failed to like post");
 
-    // Update UI instantly — store the like state PER POST
+    // c — store the like state PER POST
     setData((prev) =>
   prev.map((p) =>
     p.id === postId
