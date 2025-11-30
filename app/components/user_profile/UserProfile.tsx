@@ -75,10 +75,10 @@ const [posts, setPosts] = useState<Post[]>([]);
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to fetch user");
 
-      console.log(data);
+      // console.log(data);
       
       
-      setPosts(data?.posts || []);   // ⭐ store posts separately
+      setPosts(data?.posts || []);  
 
       return data;
     } catch (err: any) {
@@ -359,6 +359,13 @@ const likePost = async (postId: number) => {
               </div>
 
               {/* POST */}
+               {/* POSTS */}
+            <div>
+              <h1 className="text-center text-5xl pt-5 mb-10 underline">
+                Posts
+              </h1>
+            </div>
+            
                {posts?.map((post: any) => (
               <div
                 key={post.id}
