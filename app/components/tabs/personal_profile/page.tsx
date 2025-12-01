@@ -255,9 +255,9 @@ const Profile = () => {
     }
   };
 
-  console.log("USER PROFILE", userProfile);
+  // console.log("USER PROFILE", userProfile);
 
-  console.log("CURRENT USER PROFILE", currentUserProfile);
+  // console.log("CURRENT USER PROFILE", currentUserProfile);
   // console.log(humanify(1530000));
   // console.log(humanify(987654321));
 
