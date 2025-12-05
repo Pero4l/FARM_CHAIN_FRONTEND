@@ -177,14 +177,14 @@ const NotificationCenter = () => {
         </div>
 
         {/* NOTIFICATION LIST */}
-        <div className={`${theme === 'dark' ? "" : "bg-white"} rounded-3xl shadow-xl border border-gray-100 p-6 space-y-6`}>
-          <div className="divide-y divide-gray-100">
+        <div className={`${theme === 'dark' ? "" : "bg-white"} rounded-3xl shadow-xl border border-gray-100 p-1 space-y-6`}>
+          <div className="divide-y divide-gray-100 rounded-2xl overflow-hidden">
             {notificationList.map((notification) => {
               const colorClasses = getColorClasses(notification.color);
               return (
                 <div
                   key={notification.id}
-                  className={`p-6 hover:bg-gradient-to-r ${theme === 'dark' ? "hover:from-white/15" : "hover:from-gray-50"} hover:to-transparent cursor-pointer transition-all group ${notification.unread ? "bg-blue-100/40" : ""}`}
+                  className={`p-4 py-5 hover:bg-gradient-to-r ${theme === 'dark' ? "hover:from-white/15" : "hover:from-gray-50"} hover:to-transparent cursor-pointer transition-all group ${notification.unread ? "bg-blue-100/40" : ""}`}
                   onClick={() => markAsRead(notification.id)}
                 >
                   <div className="flex items-start space-x-4">

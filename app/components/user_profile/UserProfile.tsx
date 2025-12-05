@@ -192,7 +192,7 @@ const likePost = async (postId: number) => {
     setToken(t);
   }, []);
 
-  console.log(user);
+  // console.log(user);
   
   return (
     <div>
