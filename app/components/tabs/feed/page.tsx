@@ -29,8 +29,6 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { humanify } from "@/app/components/utils/humanify";
 
-
-
 // Keep your Post type as you defined it
 type Post = {
   id: number;
@@ -53,7 +51,6 @@ type Post = {
   category: string;
   createdAt: string;
   isLike?: boolean;
-
 };
 
 const FeedPage: React.FC = () => {
@@ -114,42 +111,36 @@ const FeedPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const likePost = async (postId: number) => {
+    try {
+      const res = await fetch("https://farmchain.onrender.com/post/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({ postId }),
+      });
 
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.message || "Failed to like post");
 
-const likePost = async (postId: number) => {
-  try {
-    const res = await fetch("https://farmchain.onrender.com/post/like", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
-      body: JSON.stringify({ postId }),
-    });
-
-    const result = await res.json();
-    if (!res.ok) throw new Error(result.message || "Failed to like post");
-
-    // c — store the like state PER POST
-    setData((prev) =>
-  prev.map((p) =>
-    p.id === postId
-      ? {
-          ...p,
-          likes: p.isLike ? p.likes - 1 : p.likes + 1,
-          isLike: !p.isLike, 
-        }
-      : p
-  )
-);
-
-  } catch (err) {
-    console.error("Like error:", err);
-  }
-};
-
-
-
+      // c — store the like state PER POST
+      setData((prev) =>
+        prev.map((p) =>
+          p.id === postId
+            ? {
+                ...p,
+                likes: p.isLike ? p.likes - 1 : p.likes + 1,
+                isLike: !p.isLike,
+              }
+            : p
+        )
+      );
+    } catch (err) {
+      console.error("Like error:", err);
+    }
+  };
 
   const avatar =
     data[0]?.avatar ||
@@ -515,14 +506,12 @@ const likePost = async (postId: number) => {
                       >
                         <img
                           src={img}
-                         
                           alt="Images"
                           className={
                             post.images?.length === 1
                               ? "object-cover w-full h-full rounded-2xl"
                               : "object-cover w-full h-full"
                           }
-                          
                         />
                         <div className="absolute inset-0 pointer-events-none"></div>
                       </div>
@@ -571,22 +560,22 @@ const likePost = async (postId: number) => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-6 lg:space-x-10">
                     {/* like */}
-               <button
-  onClick={() => likePost(post.id)}
-  className={`flex items-center space-x-2 ${
-    theme === "dark" ? "" : "text-gray-600"
-  } hover:text-red-500 transition-colors`}
->
-  {post.isLike ? (
-    <FaHeart className="w-5 h-5 text-red-500" />
-  ) : (
-    <FiHeart className="w-5 h-5" />
-  )}
+                    <button
+                      onClick={() => likePost(post.id)}
+                      className={`flex items-center space-x-2 ${
+                        theme === "dark" ? "" : "text-gray-600"
+                      } hover:text-red-500 transition-colors`}
+                    >
+                      {post.isLike ? (
+                        <FaHeart className="w-5 h-5 text-red-500" />
+                      ) : (
+                        <FiHeart className="w-5 h-5" />
+                      )}
 
-  <span className="font-semibold">{humanify(post.likes)}</span>
-</button>
-
-
+                      <span className="font-semibold">
+                        {humanify(post.likes)}
+                      </span>
+                    </button>
 
                     {/* comment */}
                     <button
@@ -595,7 +584,9 @@ const likePost = async (postId: number) => {
                       } hover:text-blue-500 transition-colors`}
                     >
                       <MessageSquare className="w-5 h-5" />
-                      <span className="font-semibold">{humanify(post.comments)}</span>
+                      <span className="font-semibold">
+                        {humanify(post.comments)}
+                      </span>
                     </button>
 
                     {/* share */}
@@ -605,11 +596,13 @@ const likePost = async (postId: number) => {
                       } hover:text-green-500 transition-colors`}
                     >
                       <Share className="w-5 h-5" />
-                      <span className="font-semibold">{humanify(post.shares)}</span>
+                      <span className="font-semibold">
+                        {humanify(post.shares)}
+                      </span>
                     </button>
                   </div>
 
-                          {/* views */}
+                  {/* views */}
                   <div
                     className={`text-sm ${
                       theme === "dark" ? "" : " text-gray-500"

@@ -753,40 +753,37 @@ const Profile = () => {
 
                     {/* IMAGE */}
                     {/* IMAGE */}
-                    {(post.images?.length ?? 0) > 0 && (
+                  {(post.images?.length ?? 0) > 0 && (
+                  <div
+                    className={
+                      post.images?.length === 1
+                        ? "w- h- mb-4 rounded-2xl overflow-hidden object-cover"
+                        : "grid grid-cols-1 md:grid-cols-2 gap-3 mb-4"
+                    }
+                  >
+                    {post.images?.map((img: string, i: number) => (
                       <div
+                        key={i}
                         className={
                           post.images?.length === 1
-                            ? "w-full h-[450px] mb-4 rounded-2xl overflow-hidden"
-                            : "grid grid-cols-1 gap-3 mb-4"
+                            ? "w-full h-full"
+                            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
                         }
                       >
-                        {post.images?.map((img: string, i: number) => (
-                          <div
-                            key={i}
-                            className={
-                              post.images?.length === 1
-                                ? "w-full h-full"
-                                : "rounded-2xl w-full h-[250px] relative overflow-hidden"
-                            }
-                          >
-                            <Image
-                              src={img}
-                              width={800}
-                              height={800}
-                              alt="Images"
-                              className={
-                                post.images?.length === 1
-                                  ? "object-cover w-full h-full rounded-2xl"
-                                  : "object-cover w-full h-full"
-                              }
-                              unoptimized
-                            />
-                            <div className="absolute inset-0 pointer-events-none "></div>
-                          </div>
-                        ))}
+                        <img
+                          src={img}
+                          alt="Images"
+                          className={
+                            post.images?.length === 1
+                              ? "object-cover w-full h-full rounded-2xl"
+                              : "object-cover w-full h-full"
+                          }
+                        />
+                        <div className="absolute inset-0 pointer-events-none"></div>
                       </div>
-                    )}
+                    ))}
+                  </div>
+                )}
 
                     {/* VIDEO */}
                     {post.video && post.video.length > 0 && (
@@ -825,6 +822,40 @@ const Profile = () => {
                         ))}
                       </div>
                     )}
+
+                       {/* {post.videos && post.videos.length > 0 && (
+                  <div className="grid gap-3 mb-4">
+                    {post.videos.map((vid: string, i: number) => (
+                      <div
+                        key={i}
+                        className="relative w-full rounded-2xl overflow-hidden bg-black"
+                      >
+                        <video
+                          controls
+                          playsInline
+                          src={vid}
+                          className="w-full h-auto max-h-[600px] object-contain"
+                          onLoadedMetadata={(e) => {
+                            const video = e.target as HTMLVideoElement;
+                            const isPortrait =
+                              video.videoHeight > video.videoWidth;
+
+                            if (isPortrait) {
+                              video.classList.remove("object-cover");
+                              video.classList.add(
+                                "object-contain",
+                                "max-h-[600px]"
+                              );
+                            } else {
+                              video.classList.remove("object-contain");
+                              video.classList.add("object-cover", "h-[450px]");
+                            }
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )} */}
                   </div>
 
                   {/* Action btn */}
