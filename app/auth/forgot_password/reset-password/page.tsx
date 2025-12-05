@@ -16,7 +16,7 @@ export default function ResetPassword() {
 
 
   useEffect(() => {
-      if (!email) window.location.href = "/forgot-password";
+      if (!email) window.location.href = "/auth/login";
     }, [email]);
   
   const handleReset = async () => {
@@ -42,11 +42,12 @@ export default function ResetPassword() {
 
       if (data.success) {
         toast.success("Password reset successfully!");
-        localStorage.removeItem("fc-reset-token");
-        localStorage.removeItem("fc-email");
-        setTimeout(() => {
+         setTimeout(() => {
           window.location.href = "/auth/login";
         }, 2000);
+        localStorage.removeItem("fc-reset-token");
+        localStorage.removeItem("fc-email");
+       
       } else {
         setMessage(data.message || "Something went wrong.");
       }
