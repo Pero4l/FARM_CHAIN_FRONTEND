@@ -212,7 +212,8 @@ const user = useCurrentUser();
                   alt="Profile"
                   className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-xl sm:rounded-2xl border-4 border-white/50 shadow-2xl object-cover transition-transform group-hover:scale-105"
                 />
-                {preview && (
+                
+                {/* {preview && (
                   <button
                     onClick={() => {
                       URL.revokeObjectURL(preview);
@@ -222,7 +223,7 @@ const user = useCurrentUser();
                   >
                     <X className="w-3 h-3 sm:w-4 sm:h-4" />
                   </button>
-                )}
+                )} */}
 
                 {/* <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 rounded-xl sm:rounded-2xl transition-opacity flex items-center justify-center">
                   <Camera className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
