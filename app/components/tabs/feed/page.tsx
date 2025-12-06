@@ -58,7 +58,7 @@ const FeedPage: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // const [edit, setEdit] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   // const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
@@ -579,6 +579,7 @@ const FeedPage: React.FC = () => {
 
                     {/* comment */}
                     <button
+                      onClick={()=> setIsOpen(!isOpen)}
                       className={`flex items-center space-x-2 ${
                         theme === "dark" ? "" : "text-gray-600"
                       } hover:text-blue-500 transition-colors`}
@@ -613,6 +614,32 @@ const FeedPage: React.FC = () => {
                   </div>
                 </div>
               </div>
+
+
+              {/*  */}
+
+
+             
+              {isOpen && (
+              <div className="border-t border-gray-100 mt-4">
+                <div className="p-4">
+                  <div className="flex gap-2 items-end">
+                    <textarea
+                      className={`flex-1 p-3 border rounded-2xl resize-none focus:outline-none focus:ring-2 ${
+                        theme === "dark"
+                          ? " border-gray-500 text-white focus:ring-green-500"
+                          : "border-gray-300 text-gray-900 focus:ring-green-500"
+                      }`}
+                      placeholder="Write a comment....."
+                      rows={3}
+                    />
+                    <button className="bg-green-600 text-white px-4 py-3 rounded-xl hover:bg-green-700 transition-colors flex-shrink-0 h-fit">
+                      <Send className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              )}
             </div>
           ))}
         </div>

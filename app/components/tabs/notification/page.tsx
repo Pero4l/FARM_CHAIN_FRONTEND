@@ -204,7 +204,7 @@ const NotificationCenter = () => {
                           {notification.title}
                         </h4>
 
-                        <div className="flex items-center space-x-2 ml-4">
+                        <div className="flex items-center -space-x-9 lg:space-x-3 ml-4">
                           <span className={`text-sm ${theme === 'dark' ? "text-white" : "text-gray-500"} whitespace-nowrap`}>
                             {notification.time}
                           </span>
@@ -213,7 +213,7 @@ const NotificationCenter = () => {
                               e.stopPropagation();
                               deleteNotification(notification.id);
                             }}
-                            className="opacity-0 group-hover:opacity-100 p-1 hover:bg-gray-200 rounded-lg transition-all"
+                            className="opacity-0 group-hover:opacity-100 p-1 hover:bg-white/30 rounded-lg transition-all"
                           >
                             <X className="w-4 h-4 text-gray-200" />
                           </button>
