@@ -10,12 +10,14 @@ import { useActiveTab } from "@/app/context/ActiveTabContext";
 import Link from 'next/link'; 
 import { useCurrentUser } from "@/app/components/currentUser";
 import { useRouter } from 'next/navigation';
+import { data } from 'autoprefixer';
 
 const MainNavPage = () => {
     const { userProfile, setUserProfile} = useCurrentUser();
+      const { token } = useCurrentUser();
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
-  const [notifications, setNotifications] = useState(2);
+  const [notifications, setNotifications] = useState(0);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,6 +33,38 @@ const MainNavPage = () => {
     setMounted(true);
   }, []);
 
+
+const fetchNotifications = async () => {
+  try {
+    const res = await fetch("https://farmchain.onrender.com/user/notification", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const result = await res.json();
+   
+
+  
+    if (Array.isArray(result.data)) {
+      setNotifications(result.data.length);
+    } else {
+      setNotifications(0);
+    }
+  } catch (error) {
+    console.error("Failed to fetch notifications:", error);
+  }
+};
+
+
+useEffect(() => {
+  if (token) fetchNotifications();
+}, [token]);
+
+  
+
+  
   // useEffect(() => {
   //   function handleClickOutside(event: MouseEvent) {
   //     if (
@@ -47,6 +81,8 @@ const MainNavPage = () => {
   // }, []);
 
   if (!mounted) return null;
+
+  
 
   return (
     <>

@@ -69,7 +69,7 @@ const NotificationCenter = () => {
       });
 
       const data = await res.json();
-      console.log("Notification Response:", data);
+      // console.log("Notification Response:", data);
 
       const mapped = Array.isArray(data.data)
         ? data.data.map((n: any) => {

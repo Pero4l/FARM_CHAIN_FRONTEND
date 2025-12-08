@@ -23,6 +23,7 @@ type UserProfile = {
   following: number;
   totalPost: number;
   posts: Array<any>;
+  unreadNotifications:number
 };
 
 type UserContextType = {
