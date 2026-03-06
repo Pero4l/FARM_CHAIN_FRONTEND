@@ -7,6 +7,7 @@ import { useState, ChangeEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCurrentUser } from "@/app/components/currentUser";
+import { API_BASE_URL } from "@/app/config/api";
 
 interface LoginData {
   user: string;
@@ -37,7 +38,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("https://farmchain.onrender.com/user/login", {
+      const res = await fetch(`${API_BASE_URL}/user/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -99,11 +100,10 @@ const LoginPage = () => {
 
         {message && (
           <div
-            className={`mb-5 -mt-5 text-sm text-center p-3 rounded-lg ${
-              message.startsWith("✅")
+            className={`mb-5 -mt-5 text-sm text-center p-3 rounded-lg ${message.startsWith("✅")
                 ? "bg-green-100 text-green-800"
                 : "bg-red-100 text-red-800"
-            }`}
+              }`}
           >
             {message}
           </div>
@@ -154,15 +154,15 @@ const LoginPage = () => {
               <input type="checkbox" className="rounded border-gray-300" />
               <span className="text-gray-600">Remember me</span>
             </label>
-          
-          <Link href="/auth/forgot_password/forgot-password">
-            <button
-              type="button"
-              className="text-green-600 hover:text-green-700 font-medium"
-            >
-              Forgot password?
-            </button>
-          </Link>
+
+            <Link href="/auth/forgot_password/forgot-password">
+              <button
+                type="button"
+                className="text-green-600 hover:text-green-700 font-medium"
+              >
+                Forgot password?
+              </button>
+            </Link>
           </div>
 
           <button

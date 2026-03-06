@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCurrentUser } from "@/app/components/currentUser";
+import { API_BASE_URL } from "@/app/config/api";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
@@ -27,7 +28,7 @@ type Notification = {
   message: string;
   time: string;
   unread: boolean;
-  icon: React.ReactNode; 
+  icon: React.ReactNode;
   color: string;
 };
 
@@ -64,7 +65,7 @@ const NotificationCenter = () => {
 
   const fetchNotifications = async () => {
     try {
-      const res = await fetch("https://farmchain.onrender.com/user/notification", {
+      const res = await fetch(`${API_BASE_URL}/user/notification`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -73,18 +74,18 @@ const NotificationCenter = () => {
 
       const mapped = Array.isArray(data.data)
         ? data.data.map((n: any) => {
-            const cfg = typeConfig[n.type] || typeConfig["alert"];
-            return {
-              id: n.id,
-              type: n.type,
-              title: cfg.title,
-              message: n.notification || "",
-              time: dayjs(n.createdAt).fromNow(),
-              unread: !n.is_read,
-              icon: cfg.icon,
-              color: cfg.color,
-            };
-          })
+          const cfg = typeConfig[n.type] || typeConfig["alert"];
+          return {
+            id: n.id,
+            type: n.type,
+            title: cfg.title,
+            message: n.notification || "",
+            time: dayjs(n.createdAt).fromNow(),
+            unread: !n.is_read,
+            icon: cfg.icon,
+            color: cfg.color,
+          };
+        })
         : [];
 
       setNotificationList(mapped);
@@ -99,7 +100,7 @@ const NotificationCenter = () => {
 
   const deleteNotification = async (id: number) => {
     try {
-      const res = await fetch(`https://farmchain.onrender.com/user/notification/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/user/notification/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

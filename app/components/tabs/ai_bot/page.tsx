@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import ReactMarkdown from 'react-markdown';
-
+import { API_BASE_URL } from '@/app/config/api';
 
 type Message = {
   id: number;
@@ -46,7 +46,7 @@ const AIChat: React.FC = () => {
     try {
       const token = localStorage.getItem("farmchain_token");
 
-      const res = await fetch('https://farmchain.onrender.com/ai', {
+      const res = await fetch(`${API_BASE_URL}/ai`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,15 +67,15 @@ const AIChat: React.FC = () => {
       aiText = aiText.replace(/\d+\.\s+/g, '• ');
 
       // Split text into separate bubbles on bullets or paragraph breaks
-        const messagesToAdd = aiText
-      .split(/\n(?=\• )|\n\n/)
-      .map((text: string) => text.trim())   // ← explicitly type text
-      .filter((text: string) => text.length > 0)
-      .map((text: string, index: number) => ({
-        id: Date.now() + index,
-        text,
-        sender: 'ai' as const,
-  }));
+      const messagesToAdd = aiText
+        .split(/\n(?=\• )|\n\n/)
+        .map((text: string) => text.trim())   // ← explicitly type text
+        .filter((text: string) => text.length > 0)
+        .map((text: string, index: number) => ({
+          id: Date.now() + index,
+          text,
+          sender: 'ai' as const,
+        }));
 
 
       setMessages((prev) => [...prev, ...messagesToAdd]);
@@ -98,11 +98,10 @@ const AIChat: React.FC = () => {
     <div className="flex flex-col h-[80vh] border-1">
       {/* Header */}
       <div
-        className={`${
-          theme === 'dark'
-            ? 'bg-gradient-to-br from-white/10 to-white/20 text-white border-1'
-            : 'bg-gradient-to-br from-green-600 via-green-400 to-green-600 text-white'
-        } rounded-b-3xl shadow-2xl p-8 relative overflow-hidden`}
+        className={`${theme === 'dark'
+          ? 'bg-gradient-to-br from-white/10 to-white/20 text-white border-1'
+          : 'bg-gradient-to-br from-green-600 via-green-400 to-green-600 text-white'
+          } rounded-b-3xl shadow-2xl p-8 relative overflow-hidden`}
       >
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative z-10">
@@ -125,11 +124,10 @@ const AIChat: React.FC = () => {
         {messages.map((msg) => (
           <div
             key={msg.id}
-            className={`max-w-[70%] p-3 rounded-xl break-words ${
-              msg.sender === 'user'
-                ? 'bg-green-500 text-white self-end'
-                : 'bg-gray-200 text-gray-800 self-start'
-            }`}
+            className={`max-w-[70%] p-3 rounded-xl break-words ${msg.sender === 'user'
+              ? 'bg-green-500 text-white self-end'
+              : 'bg-gray-200 text-gray-800 self-start'
+              }`}
           >
             <ReactMarkdown>{msg.text}</ReactMarkdown>
           </div>

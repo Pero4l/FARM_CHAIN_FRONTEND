@@ -6,17 +6,17 @@ import {
   Bell, Search, User, Settings, LogOut, Award, Bookmark, MessageCircle, Menu, X, Home, TrendingUp, Store, Cloud, BarChart3, PlusCircle, Bot
 } from "lucide-react";
 import { useTheme } from 'next-themes'
+import { API_BASE_URL } from '@/app/config/api';
 import { useActiveTab } from "@/app/context/ActiveTabContext";
-import Link from 'next/link'; 
+import Link from 'next/link';
 import { useCurrentUser } from "@/app/components/currentUser";
 import { useRouter } from 'next/navigation';
-import { data } from 'autoprefixer';
 
 const MainNavPage = () => {
-    const { userProfile, setUserProfile} = useCurrentUser();
-      const { token } = useCurrentUser();
+  const { userProfile, setUserProfile } = useCurrentUser();
+  const { token } = useCurrentUser();
   const activeTabContext = useActiveTab();
-  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const [notifications, setNotifications] = useState(0);
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
@@ -26,63 +26,38 @@ const MainNavPage = () => {
   const router = useRouter();
   const avatar = userProfile?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s";
 
-
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/user/notification`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-const fetchNotifications = async () => {
-  try {
-    const res = await fetch("https://farmchain.onrender.com/user/notification", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+      const result = await res.json();
 
-    const result = await res.json();
-   
-
-  
-    if (Array.isArray(result.data)) {
-      setNotifications(result.data.length);
-    } else {
-      setNotifications(0);
+      if (Array.isArray(result.data)) {
+        setNotifications(result.data.length);
+      } else {
+        setNotifications(0);
+      }
+    } catch (error) {
+      console.error("Failed to fetch notifications:", error);
     }
-  } catch (error) {
-    console.error("Failed to fetch notifications:", error);
-  }
-};
+  };
 
-
-useEffect(() => {
-  if (token) fetchNotifications();
-}, [token]);
-
-  
-
-  
-  // useEffect(() => {
-  //   function handleClickOutside(event: MouseEvent) {
-  //     if (
-  //       menuRef.current &&
-  //       event.target instanceof Node &&
-  //       !menuRef.current.contains(event.target)
-  //     ) {
-  //       setUserOption(false);
-  //     }
-  //   }
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
+  useEffect(() => {
+    if (token) fetchNotifications();
+  }, [token]);
 
   if (!mounted) return null;
-
-  
 
   return (
     <>
@@ -101,7 +76,7 @@ useEffect(() => {
 
                   <div className="flex items-center gap-2">
                     <div>
-                      <h1 onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}  className="text-3xl md:text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                      <h1 onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }} className="text-3xl md:text-2xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
                         FarmChain
                       </h1>
                       <p className="hidden lg:flex text-xs text-gray-500 font-semibold">Revolutionizing Agriculture Together</p>
@@ -177,7 +152,7 @@ useEffect(() => {
                     </label>
 
 
-                        <label
+                    <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("AI_bot"); setIsMenuOpen(false); }}
                       className={`px-3 py-2 rounded-md ${theme === 'dark' ? 'hover:bg-white/15' : 'hover:bg-gray-100'} cursor-pointer text-sm flex items-center`}
@@ -218,7 +193,7 @@ useEffect(() => {
               </button>
 
               <button onClick={() => { setActiveTab("notification"); setIsMenuOpen(false); }} className={`relative p-3 ${theme === 'dark' ? 'hover:bg-white/20' : 'hover:bg-gray-100'} rounded-xl transition-colors`} title="Notifications">
-                <Bell className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} /> 
+                <Bell className={`w-6 h-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`} />
                 {notifications > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
                     {notifications}
@@ -226,7 +201,7 @@ useEffect(() => {
                 )}
               </button>
 
-                {/*  */}
+              {/*  */}
               <div className="relative hidden md:flex" ref={menuRef}>
                 <div
                   onClick={() => setUserOption(prev => !prev)}
@@ -257,7 +232,7 @@ useEffect(() => {
                       </button>
 
                       <hr className="my-2" />
-                      <button onClick={()=> router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-100 rounded-xl transition-colors text-left">
+                      <button onClick={() => router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-100 rounded-xl transition-colors text-left">
                         <LogOut className="w-4 h-4 text-red-600" />
                         <span className="text-sm font-medium text-red-600">Logout</span>
                       </button>
@@ -269,25 +244,25 @@ useEffect(() => {
           </div>
 
 
-                {/* Mobile */}
+          {/* Mobile */}
           <div className='lg:hidden flex gap-2'>
-          <label
-            htmlFor="mobile-menu-toggle"
-            className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-[87%] md:w-[100%] "
-          >
-            <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
-              {isMenuOpen ? <X /> : <Menu />}
-            </span>
+            <label
+              htmlFor="mobile-menu-toggle"
+              className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-[87%] md:w-[100%] "
+            >
+              <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
+                {isMenuOpen ? <X /> : <Menu />}
+              </span>
 
-            <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-4 md:px-6 py-2.5 w-full min-w-0">
-              <Search className="w-5 h-5 text-gray-500 mr-3" />
-              <input
-                type="text"
-                placeholder="Search farmers, products, insights..."
-                className="bg-transparent flex-1 min-w-0 outline-none text-gray-700 placeholder-gray-400"
-              />
-            </div>
-          </label>
+              <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-4 md:px-6 py-2.5 w-full min-w-0">
+                <Search className="w-5 h-5 text-gray-500 mr-3" />
+                <input
+                  type="text"
+                  placeholder="Search farmers, products, insights..."
+                  className="bg-transparent flex-1 min-w-0 outline-none text-gray-700 placeholder-gray-400"
+                />
+              </div>
+            </label>
 
             <div className="relative md:hidden bottom-2" ref={menuRef}>
               <div
@@ -319,7 +294,7 @@ useEffect(() => {
                     </button>
                     <hr className="my-2" />
 
-                    <button onClick={()=> router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
+                    <button onClick={() => router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
                       <LogOut className="w-4 h-4 text-red-600" />
                       <span className="text-sm font-medium text-red-600">Logout</span>
                     </button>
