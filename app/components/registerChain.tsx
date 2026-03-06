@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState, ChangeEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_BASE_URL } from '@/app/config/api';
 
 interface FormData {
   first_name: string;
@@ -66,7 +67,7 @@ interface FormData {
 
     setLoading(true);
     try {
-      const res = await fetch('https://farmchain.onrender.com/user/register', {
+      const res = await fetch(`${API_BASE_URL}/user/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

@@ -17,10 +17,11 @@ import { useActiveTab } from "@/app/context/ActiveTabContext";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_BASE_URL } from "@/app/config/api";
 
 const CreatePost: React.FC = () => {
-   const activeTabContext = useActiveTab();
-  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
+  const activeTabContext = useActiveTab();
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
 
   const [content, setContent] = useState("");
   const [farmSize, setFarmSize] = useState("");
@@ -51,43 +52,43 @@ const CreatePost: React.FC = () => {
     setImagePreviews(newFiles.map((f) => URL.createObjectURL(f)));
   };
 
- // -----------------------------
-// VIDEO UPLOAD + THUMBNAIL FIXED
-// -----------------------------
-const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const files = Array.from(e.target.files || []).slice(0, 4); // max 4
-  setVideos(files);
+  // -----------------------------
+  // VIDEO UPLOAD + THUMBNAIL FIXED
+  // -----------------------------
+  const handleVideoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || []).slice(0, 4); // max 4
+    setVideos(files);
 
-  // Generate thumbnails reliably
-  const previews: string[] = [];
-  for (const file of files) {
-    previews.push(await generateVideoThumbnail(file));
-  }
-  setVideoPreviews(previews);
-};
+    // Generate thumbnails reliably
+    const previews: string[] = [];
+    for (const file of files) {
+      previews.push(await generateVideoThumbnail(file));
+    }
+    setVideoPreviews(previews);
+  };
 
-const generateVideoThumbnail = (file: File) => {
-  return new Promise<string>((resolve) => {
-    const video = document.createElement("video");
-    video.preload = "metadata";
-    video.muted = true;
-    video.src = URL.createObjectURL(file);
+  const generateVideoThumbnail = (file: File) => {
+    return new Promise<string>((resolve) => {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+      video.muted = true;
+      video.src = URL.createObjectURL(file);
 
-    video.onloadedmetadata = () => {
-      video.currentTime = Math.min(1, video.duration / 2); // safer frame
-    };
+      video.onloadedmetadata = () => {
+        video.currentTime = Math.min(1, video.duration / 2); // safer frame
+      };
 
-    video.onseeked = () => {
-      const canvas = document.createElement("canvas");
-      canvas.width = 320;
-      canvas.height = 180;
-      const ctx = canvas.getContext("2d");
-      if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      URL.revokeObjectURL(video.src); // free memory
-      resolve(canvas.toDataURL("image/jpeg"));
-    };
-  });
-};
+      video.onseeked = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 320;
+        canvas.height = 180;
+        const ctx = canvas.getContext("2d");
+        if (ctx) ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(video.src); // free memory
+        resolve(canvas.toDataURL("image/jpeg"));
+      };
+    });
+  };
 
 
   // -----------------------------
@@ -134,7 +135,7 @@ const generateVideoThumbnail = (file: File) => {
 
     try {
       const res = await axios.post(
-        "https://farmchain.onrender.com/post/create",
+        `${API_BASE_URL}/post/create`,
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -157,8 +158,8 @@ const generateVideoThumbnail = (file: File) => {
         setProgress(0);
         setLoading(false)
 
-        setTimeout(()=> {
-            setActiveTab("feed")
+        setTimeout(() => {
+          setActiveTab("feed")
         }, 2000)
 
       } else {
@@ -177,7 +178,7 @@ const generateVideoThumbnail = (file: File) => {
   return (
     <div className="max-w-2xl md:max-w-full">
       <ToastContainer />
-       <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
+      <div className={`${theme === 'dark' ? 'bg-gradient-to-br from-white/10 to-white/15 border-1 text-white' : 'bg-gradient-to-br from-green-700 to-emerald-500 text-white'} rounded-3xl shadow-xl p-8 py-10 mb-5 relative overflow-hidden`}>
         <div className="absolute inset-0 bg-black/10"></div>
 
         <div className="relative z-10">
@@ -247,11 +248,11 @@ const generateVideoThumbnail = (file: File) => {
             onChange={(e) => setCategory(e.target.value)}
             className={`w-full border border-gray-300 rounded-xl p-3 focus:ring-2 focus:ring-green-500 outline-none ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}
           >
-           <option value="general">General</option>
-<option value="crop">Crop</option>
-<option value="livestock">Livestock</option>
-<option value="equipment">Equipment</option>
-<option value="market">Market</option>
+            <option value="general">General</option>
+            <option value="crop">Crop</option>
+            <option value="livestock">Livestock</option>
+            <option value="equipment">Equipment</option>
+            <option value="market">Market</option>
 
           </select>
         </div>
@@ -285,53 +286,53 @@ const generateVideoThumbnail = (file: File) => {
                 Upload Videos (max 4)
               </span>
               <input
-              id="videoInput"
-              type="file"
-              accept="video/*"
-              multiple
-              hidden
-              onChange={handleVideoChange}
-            />
+                id="videoInput"
+                type="file"
+                accept="video/*"
+                multiple
+                hidden
+                onChange={handleVideoChange}
+              />
             </label>
           </div>
 
-         {/* PREVIEWS */}
-{(imagePreviews.length > 0 || videoPreviews.length > 0) && (
-  <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
-    {imagePreviews.map((src, i) => (
-      <div key={i} className="relative group">
-        <img
-          src={src}
-          className="w-full h-24 object-cover rounded-xl shadow"
-        />
-        <button
-          type="button"
-          onClick={() => removeImage(i)}
-          className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-    ))}
+          {/* PREVIEWS */}
+          {(imagePreviews.length > 0 || videoPreviews.length > 0) && (
+            <div className="mt-4 grid grid-cols-3 sm:grid-cols-4 gap-3">
+              {imagePreviews.map((src, i) => (
+                <div key={i} className="relative group">
+                  <img
+                    src={src}
+                    className="w-full h-24 object-cover rounded-xl shadow"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(i)}
+                    className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
 
-    {videos.map((file, i) => (
-      <div key={i} className="relative group">
-        <video
-          src={URL.createObjectURL(file)} // <-- FIXED: use the File directly
-          controls
-          className="w-full h-24 object-cover rounded-xl shadow"
-        />
-        <button
-          type="button"
-          onClick={() => removeVideo(i)}
-          className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
-        >
-          <X className="w-4 h-4" />
-        </button>
-      </div>
-    ))}
-  </div>
-)}
+              {videos.map((file, i) => (
+                <div key={i} className="relative group">
+                  <video
+                    src={URL.createObjectURL(file)} // <-- FIXED: use the File directly
+                    controls
+                    className="w-full h-24 object-cover rounded-xl shadow"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeVideo(i)}
+                    className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
 
         </div>
 
@@ -344,22 +345,22 @@ const generateVideoThumbnail = (file: File) => {
           <span>{loading ? "Uploading...." : "Post Update"}</span>
         </button>
 
-          {progress > 0 && (
-        <div className="w-full bg-gray-300 h-2 rounded mt-2">
-          <div className="bg-green-500 h-2 rounded" style={{ width: `${progress}%` }} />
-        </div>
-      )}
+        {progress > 0 && (
+          <div className="w-full bg-gray-300 h-2 rounded mt-2">
+            <div className="bg-green-500 h-2 rounded" style={{ width: `${progress}%` }} />
+          </div>
+        )}
 
-      <button
-        type="button"
-        onClick={handleCancel}
-        className={`bg-red-500 text-white px-4 py-2 rounded mt- w-full ${loading ? "" : "hidden "}`}
-      >
-        Cancel Upload
-      </button>
+        <button
+          type="button"
+          onClick={handleCancel}
+          className={`bg-red-500 text-white px-4 py-2 rounded mt- w-full ${loading ? "" : "hidden "}`}
+        >
+          Cancel Upload
+        </button>
       </form>
-    
-      
+
+
     </div>
   );
 };

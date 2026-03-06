@@ -27,6 +27,7 @@ import { useCurrentUser } from "@/app/components/currentUser";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { API_BASE_URL } from "@/app/config/api";
 
 interface EditData {
   bio: string;
@@ -94,7 +95,7 @@ const Profile = () => {
     if (userProfile) {
       setAvatarPreview(
         userProfile.avatar ??
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"
       );
       setCoverPreview(userProfile.cover_avatar ?? "/pexels-pixabay-209831.jpg");
       setProfile({
@@ -111,7 +112,7 @@ const Profile = () => {
       try {
         setLoading(!loading);
         const response = await axios.get(
-          "https://farmchain.onrender.com/user/profile",
+          `${API_BASE_URL}/user/profile`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -164,7 +165,7 @@ const Profile = () => {
       if (avatarFile) form.append("avatar", avatarFile);
       if (coverFile) form.append("cover_avatar", coverFile);
 
-      const res = await fetch(`https://farmchain.onrender.com/profile/update`, {
+      const res = await fetch(`${API_BASE_URL}/profile/update`, {
         method: "PUT",
         headers: { Authorization: `Bearer ${token}` },
         body: form,
@@ -202,16 +203,16 @@ const Profile = () => {
       prev.map((post) =>
         post.id === postId
           ? {
-              ...post,
-              isLike: !post.isLike,
-              likes: post.isLike ? post.likes! - 1 : post.likes! + 1, // increment/decrement
-            }
+            ...post,
+            isLike: !post.isLike,
+            likes: post.isLike ? post.likes! - 1 : post.likes! + 1, // increment/decrement
+          }
           : post
       )
     );
 
     try {
-      const res = await fetch("https://farmchain.onrender.com/post/like", {
+      const res = await fetch(`${API_BASE_URL}/post/like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -228,10 +229,10 @@ const Profile = () => {
         prev.map((post) =>
           post.id === postId
             ? {
-                ...post,
-                likes: result.likes ?? post.likes,
-                isLike: result.isLike ?? post.isLike,
-              }
+              ...post,
+              likes: result.likes ?? post.likes,
+              isLike: result.isLike ?? post.isLike,
+            }
             : post
         )
       );
@@ -243,10 +244,10 @@ const Profile = () => {
         prev.map((post) =>
           post.id === postId
             ? {
-                ...post,
-                isLike: !post.isLike,
-                likes: post.isLike ? post.likes! - 1 : post.likes! + 1,
-              }
+              ...post,
+              isLike: !post.isLike,
+              likes: post.isLike ? post.likes! - 1 : post.likes! + 1,
+            }
             : post
         )
       );
@@ -277,9 +278,8 @@ const Profile = () => {
       />
       <div className="flex justify-center lg:mt-2 mb-2 md:mb-3">
         <div
-          className={`${
-            theme === "dark" ? "border-1" : "bg-white"
-          } shadow-2xl rounded-2xl pb-5 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px]`}
+          className={`${theme === "dark" ? "border-1" : "bg-white"
+            } shadow-2xl rounded-2xl pb-5 w-full sm:max-w-[20rem] md:h-fit md:max-w-full lg:max-w-[1230px]`}
         >
           <div className="relative">
             {/* Cover */}
@@ -334,18 +334,16 @@ const Profile = () => {
                 />
                 <form
                   onSubmit={handleSubmit}
-                  className={`relative w-full max-w-xl ${
-                    theme === "dark" ? "bg-black border-1" : "bg-white"
-                  } rounded-2xl p-6 shadow-lg z-10 mx-5 mt-20`}
+                  className={`relative w-full max-w-xl ${theme === "dark" ? "bg-black border-1" : "bg-white"
+                    } rounded-2xl p-6 shadow-lg z-10 mx-5 mt-20`}
                 >
                   <h3 className="text-lg font-bold mb-3">Edit Profile</h3>
 
                   {/* Avatar */}
                   <label className="mb-3">
                     <span
-                      className={`text-sm pt-2 pb-2 ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-900"
-                      }`}
+                      className={`text-sm pt-2 pb-2 ${theme === "dark" ? "text-gray-300" : "text-gray-900"
+                        }`}
                     >
                       Profile Picture
                     </span>
@@ -375,9 +373,8 @@ const Profile = () => {
                   {/* Cover */}
                   <label className="mb-3">
                     <span
-                      className={`text-sm pb-2 ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-900"
-                      }`}
+                      className={`text-sm pb-2 ${theme === "dark" ? "text-gray-300" : "text-gray-900"
+                        }`}
                     >
                       Cover Picture
                     </span>
@@ -407,9 +404,8 @@ const Profile = () => {
                   {/* Organization */}
                   <label className="block mb-3 mt-5">
                     <span
-                      className={`text-sm ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-900"
-                      }`}
+                      className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-900"
+                        }`}
                     >
                       Organization
                     </span>
@@ -429,9 +425,8 @@ const Profile = () => {
                   {/* Bio */}
                   <label className="block mb-4">
                     <span
-                      className={`text-sm ${
-                        theme === "dark" ? "text-gray-300" : "text-gray-900"
-                      }`}
+                      className={`text-sm ${theme === "dark" ? "text-gray-300" : "text-gray-900"
+                        }`}
                     >
                       Bio
                     </span>
@@ -448,11 +443,10 @@ const Profile = () => {
                   <div className="flex items-center justify-end space-x-3">
                     <button
                       type="button"
-                      className={`px-4 py-2 rounded-lg ${
-                        theme === "dark"
+                      className={`px-4 py-2 rounded-lg ${theme === "dark"
                           ? "bg-gray-700 text-white"
                           : "bg-gray-200 text-black"
-                      }`}
+                        }`}
                       onClick={() => setEdit(false)}
                     >
                       Cancel
@@ -563,9 +557,8 @@ const Profile = () => {
               {posts?.map((post) => (
                 <div
                   key={post.id}
-                  className={`${
-                    theme === "dark" ? "" : "bg-white"
-                  } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
+                  className={`${theme === "dark" ? "" : "bg-white"
+                    } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
                 >
                   <div className="p-3 py-5">
                     <div className="flex items-start justify-between mb-4 w-full">
@@ -592,9 +585,8 @@ const Profile = () => {
                             {/* Name + Category */}
                             <div className="flex items-center space-x-3 flex-1 min-w-0">
                               <h3
-                                className={`font-bold text-lg truncate ${
-                                  theme === "dark" ? "" : "text-gray-900"
-                                }`}
+                                className={`font-bold text-lg truncate ${theme === "dark" ? "" : "text-gray-900"
+                                  }`}
                               >
                                 {post.farmer}
                               </h3>
@@ -607,11 +599,10 @@ const Profile = () => {
                             {/* Menu button (push to the right with ml-auto) */}
                             <div className="ml-auto flex items-center">
                               <button
-                                className={`p-1 ${
-                                  theme === "dark"
+                                className={`p-1 ${theme === "dark"
                                     ? "text-gray-100 hover:text-gray-400"
                                     : "text-gray-600 hover:text-gray-500"
-                                } rounded-full`}
+                                  } rounded-full`}
                                 aria-label="more"
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -640,11 +631,10 @@ const Profile = () => {
                               <div className="absolute inset-0 bg-black/50" />
 
                               <div
-                                className={`relative z-10 ${
-                                  theme === "dark"
+                                className={`relative z-10 ${theme === "dark"
                                     ? "bg-black border"
                                     : "bg-white"
-                                } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+                                  } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
                                 onClick={(e) => e.stopPropagation()}
                               >
                                 <h4 className="text-lg font-bold mb-4">
@@ -664,12 +654,12 @@ const Profile = () => {
                                         return;
 
                                       await axios.delete(
-                                        `https://farmchain.onrender.com/post/delete`,
+                                        `${API_BASE_URL}/post/delete`,
                                         {
                                           headers: token
                                             ? {
-                                                Authorization: `Bearer ${token}`,
-                                              }
+                                              Authorization: `Bearer ${token}`,
+                                            }
                                             : undefined,
                                           data: { id: post.id },
                                         }
@@ -701,9 +691,8 @@ const Profile = () => {
 
                           {/* Location + Time */}
                           <div
-                            className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
-                              theme === "dark" ? "" : "text-gray-500"
-                            }`}
+                            className={`flex flex-wrap gap-x-6 text-xs mt-1 ${theme === "dark" ? "" : "text-gray-500"
+                              }`}
                           >
                             <div className="flex items-center">
                               <MapPin className="w-3 h-3 mr-1" />
@@ -721,9 +710,8 @@ const Profile = () => {
 
                     <div className="mb-4">
                       <p
-                        className={` leading-relaxed ${
-                          theme === "dark" ? "" : "text-gray-700"
-                        }`}
+                        className={` leading-relaxed ${theme === "dark" ? "" : "text-gray-700"
+                          }`}
                       >
                         {post.content}
                       </p>
@@ -753,37 +741,37 @@ const Profile = () => {
 
                     {/* IMAGE */}
                     {/* IMAGE */}
-                  {(post.images?.length ?? 0) > 0 && (
-                  <div
-                    className={
-                      post.images?.length === 1
-                        ? "w- h- mb-4 rounded-2xl overflow-hidden object-cover"
-                        : "grid grid-cols-1 md:grid-cols-2 gap-3 mb-4"
-                    }
-                  >
-                    {post.images?.map((img: string, i: number) => (
+                    {(post.images?.length ?? 0) > 0 && (
                       <div
-                        key={i}
                         className={
                           post.images?.length === 1
-                            ? "w-full h-full"
-                            : "rounded-2xl w-full h-[250px] relative overflow-hidden"
+                            ? "w- h- mb-4 rounded-2xl overflow-hidden object-cover"
+                            : "grid grid-cols-1 md:grid-cols-2 gap-3 mb-4"
                         }
                       >
-                        <img
-                          src={img}
-                          alt="Images"
-                          className={
-                            post.images?.length === 1
-                              ? "object-cover w-full h-full rounded-2xl"
-                              : "object-cover w-full h-full"
-                          }
-                        />
-                        <div className="absolute inset-0 pointer-events-none"></div>
+                        {post.images?.map((img: string, i: number) => (
+                          <div
+                            key={i}
+                            className={
+                              post.images?.length === 1
+                                ? "w-full h-full"
+                                : "rounded-2xl w-full h-[250px] relative overflow-hidden"
+                            }
+                          >
+                            <img
+                              src={img}
+                              alt="Images"
+                              className={
+                                post.images?.length === 1
+                                  ? "object-cover w-full h-full rounded-2xl"
+                                  : "object-cover w-full h-full"
+                              }
+                            />
+                            <div className="absolute inset-0 pointer-events-none"></div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
-                )}
+                    )}
 
                     {/* VIDEO */}
                     {post.video && post.video.length > 0 && (
@@ -823,7 +811,7 @@ const Profile = () => {
                       </div>
                     )}
 
-                       {/* {post.videos && post.videos.length > 0 && (
+                    {/* {post.videos && post.videos.length > 0 && (
                   <div className="grid gap-3 mb-4">
                     {post.videos.map((vid: string, i: number) => (
                       <div
@@ -878,9 +866,8 @@ const Profile = () => {
 
                         {/*  */}
                         <button
-                          className={`flex items-center space-x-2 ${
-                            theme === "dark" ? "" : "text-gray-600"
-                          } hover:text-blue-500 transition-colors`}
+                          className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
+                            } hover:text-blue-500 transition-colors`}
                         >
                           <MessageSquare className="w-5 h-5" />
                           <span className="font-semibold">
@@ -890,9 +877,8 @@ const Profile = () => {
 
                         {/*  */}
                         <button
-                          className={`flex items-center space-x-2 ${
-                            theme === "dark" ? "" : "text-gray-600"
-                          } hover:text-green-500 transition-colors`}
+                          className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
+                            } hover:text-green-500 transition-colors`}
                         >
                           <Share className="w-5 h-5" />
                           <span className="font-semibold">
@@ -902,9 +888,8 @@ const Profile = () => {
                       </div>
 
                       <div
-                        className={`text-sm ${
-                          theme === "dark" ? "" : " text-gray-500"
-                        } hover:text-green-500 transition-colors`}
+                        className={`text-sm ${theme === "dark" ? "" : " text-gray-500"
+                          } hover:text-green-500 transition-colors`}
                       >
                         <Eye className="w-4 h-4 inline mr-1" />
                         {post.likes ?? +post.comments * 3} views

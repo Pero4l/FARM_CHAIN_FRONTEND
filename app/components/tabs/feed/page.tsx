@@ -24,10 +24,13 @@ import { useTheme } from "next-themes";
 import { useActiveTab } from "@/app/context/ActiveTabContext";
 import axios from "axios";
 import { useCurrentUser } from "@/app/components/currentUser";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { humanify } from "@/app/components/utils/humanify";
+import { API_BASE_URL } from "@/app/config/api";
 
 // Keep your Post type as you defined it
 type Post = {
@@ -62,7 +65,7 @@ const FeedPage: React.FC = () => {
   // const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
-  const setActiveTab = activeTabContext?.setActiveTab ?? (() => {});
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const { theme } = useTheme();
   const { token } = useCurrentUser();
   const id = useCurrentUser()?.user?.userId;
@@ -79,12 +82,12 @@ const FeedPage: React.FC = () => {
 
     try {
       const response = await axios.get(
-        "https://farmchain.onrender.com/post/all",
+        `${API_BASE_URL}/post/all`,
         {
           headers: token
             ? {
-                Authorization: `Bearer ${token}`,
-              }
+              Authorization: `Bearer ${token}`,
+            }
             : undefined,
         }
       );
@@ -113,7 +116,7 @@ const FeedPage: React.FC = () => {
 
   const likePost = async (postId: number) => {
     try {
-      const res = await fetch("https://farmchain.onrender.com/post/like", {
+      const res = await fetch(`${API_BASE_URL}/post/like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,10 +133,10 @@ const FeedPage: React.FC = () => {
         prev.map((p) =>
           p.id === postId
             ? {
-                ...p,
-                likes: p.isLike ? p.likes - 1 : p.likes + 1,
-                isLike: !p.isLike,
-              }
+              ...p,
+              likes: p.isLike ? p.likes - 1 : p.likes + 1,
+              isLike: !p.isLike,
+            }
             : p
         )
       );
@@ -149,13 +152,13 @@ const FeedPage: React.FC = () => {
   // console.log("Posts data:", data);
   return (
     <div>
+      <ToastContainer position="top-right" autoClose={3000} theme="colored" />
       <div className="space-y-8 sm:px-6 md:px-0">
         <div
-          className={` ${
-            theme === "dark"
-              ? "bg-gradient-to-br from-white/10 to-white/15 text-white border-1"
-              : "bg-gradient-to-br from-green-600 via- to-green-900"
-          } rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}
+          className={` ${theme === "dark"
+            ? "bg-gradient-to-br from-white/10 to-white/15 text-white border-1"
+            : "bg-gradient-to-br from-green-600 via- to-green-900"
+            } rounded-3xl shadow-2xl text-white p-8 relative overflow-hidden`}
         >
           {/* subtle overlay */}
           <div className="absolute inset-0 bg-black/10"></div>
@@ -175,9 +178,8 @@ const FeedPage: React.FC = () => {
 
         {/* Post input card */}
         <div
-          className={`${
-            theme === "dark" ? "bg-black text-white" : "bg-white"
-          } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
+          className={`${theme === "dark" ? "bg-black text-white" : "bg-white"
+            } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6`}
         >
           <div className="flex items-start space-x-4">
             {/* top img */}
@@ -196,43 +198,38 @@ const FeedPage: React.FC = () => {
             <div className="flex-1">
               <textarea
                 placeholder="What's happening on your farm today?"
-                className={`w-full p-3 sm:p-4 border border-gray-100 rounded-2xl resize-none  ${
-                  theme === "dark"
-                    ? "focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-100"
-                    : "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent border-2 border-gray-300 text-gray-700 placeholder-gray-400"
-                } text-sm sm:text-base`}
+                className={`w-full p-3 sm:p-4 border border-gray-100 rounded-2xl resize-none  ${theme === "dark"
+                  ? "focus:outline-none focus:ring-2 focus:border-transparent text-white placeholder-gray-100"
+                  : "focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent border-2 border-gray-300 text-gray-700 placeholder-gray-400"
+                  } text-sm sm:text-base`}
                 rows={3}
               />
               <div className="flex flex-wrap justify-between items-center mt-4 gap-2 sm:gap-4">
                 <div className="flex flex-wrap space-x-2 sm:space-x-4">
                   <button
-                    className={`flex items-center space-x-1 sm:space-x-2  ${
-                      theme === "dark" ? "text-white" : "text-gray-600"
-                    } hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}
+                    className={`flex items-center space-x-1 sm:space-x-2  ${theme === "dark" ? "text-white" : "text-gray-600"
+                      } hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}
                   >
                     <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Photo</span>
                   </button>
                   <button
-                    className={`flex items-center space-x-1 sm:space-x-2  ${
-                      theme === "dark" ? "text-white" : "text-gray-600"
-                    } hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap`}
+                    className={`flex items-center space-x-1 sm:space-x-2  ${theme === "dark" ? "text-white" : "text-gray-600"
+                      } hover:text-blue-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-blue-50 text-xs sm:text-sm whitespace-nowrap`}
                   >
                     <Video className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Video</span>
                   </button>
                   <button
-                    className={`flex items-center space-x-1 sm:space-x-2  ${
-                      theme === "dark" ? "text-white" : "text-gray-600"
-                    } hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap`}
+                    className={`flex items-center space-x-1 sm:space-x-2  ${theme === "dark" ? "text-white" : "text-gray-600"
+                      } hover:text-red-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-red-50 text-xs sm:text-sm whitespace-nowrap`}
                   >
                     <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Audio</span>
                   </button>
                   <button
-                    className={`flex items-center space-x-1 sm:space-x-2  ${
-                      theme === "dark" ? "text-white" : "text-gray-600"
-                    } hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap`}
+                    className={`flex items-center space-x-1 sm:space-x-2  ${theme === "dark" ? "text-white" : "text-gray-600"
+                      } hover:text-purple-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-purple-50 text-xs sm:text-sm whitespace-nowrap`}
                   >
                     <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                     <span>Location</span>
@@ -250,21 +247,18 @@ const FeedPage: React.FC = () => {
 
         {/* Community Feed header */}
         <div
-          className={`${
-            theme === "dark" ? "text-white" : "bg-white"
-          } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center`}
+          className={`${theme === "dark" ? "text-white" : "bg-white"
+            } rounded-3xl shadow-xl border border-gray-100 p-4 sm:p-6 flex justify-between items-center`}
         >
           <h3
-            className={`text-lg sm:text-xl font-bold  ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
+            className={`text-lg sm:text-xl font-bold  ${theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
           >
             Community Feed
           </h3>
           <button
-            className={`flex items-center space-x-1 sm:space-x-2 ${
-              theme === "dark" ? "text-white" : "text-gray-600"
-            } hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}
+            className={`flex items-center space-x-1 sm:space-x-2 ${theme === "dark" ? "text-white" : "text-gray-600"
+              } hover:text-green-600 transition-colors px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl hover:bg-green-50 text-xs sm:text-sm whitespace-nowrap`}
           >
             <Filter className="w-4 h-4 sm:w-5 sm:h-5" />
             <span className="font-semibold">Filter</span>
@@ -288,9 +282,8 @@ const FeedPage: React.FC = () => {
           {data.map((post) => (
             <div
               key={post.id}
-              className={`${
-                theme === "dark" ? "" : "bg-white"
-              } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
+              className={`${theme === "dark" ? "" : "bg-white"
+                } rounded-3xl shadow-xl border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300`}
             >
               <div className="p-3 py-5">
                 <div className="flex items-start justify-between mb-4 w-full">
@@ -327,9 +320,8 @@ const FeedPage: React.FC = () => {
                         {/* Name + Category */}
                         <div className="flex items-center space-x-3 flex-1 min-w-0">
                           <h3
-                            className={`font-bold text-lg truncate ${
-                              theme === "dark" ? "" : "text-gray-900"
-                            }`}
+                            className={`font-bold text-lg truncate ${theme === "dark" ? "" : "text-gray-900"
+                              }`}
                           >
                             {post.farmer}
                           </h3>
@@ -342,13 +334,11 @@ const FeedPage: React.FC = () => {
                         {/* Menu button (push to the right with ml-auto) */}
                         <div className="ml-auto flex items-center">
                           <button
-                            className={`p-1 ${
-                              theme === "dark"
-                                ? "text-gray-100 hover:text-gray-400"
-                                : "text-gray-600 hover:text-gray-500"
-                            } rounded-full ${
-                              post.user_id == id ? "" : "hidden"
-                            }`}
+                            className={`p-1 ${theme === "dark"
+                              ? "text-gray-100 hover:text-gray-400"
+                              : "text-gray-600 hover:text-gray-500"
+                              } rounded-full ${post.user_id == id ? "" : "hidden"
+                              }`}
                             aria-label="more"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -377,9 +367,8 @@ const FeedPage: React.FC = () => {
                           <div className="absolute inset-0 bg-black/50" />
 
                           <div
-                            className={`relative z-10 ${
-                              theme === "dark" ? "bg-black border" : "bg-white"
-                            } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
+                            className={`relative z-10 ${theme === "dark" ? "bg-black border" : "bg-white"
+                              } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
                             onClick={(e) => e.stopPropagation()}
                           >
                             <h4 className="text-lg font-bold mb-4">
@@ -399,7 +388,7 @@ const FeedPage: React.FC = () => {
                                     return;
 
                                   await axios.delete(
-                                    `https://farmchain.onrender.com/post/delete`,
+                                    `${API_BASE_URL}/post/delete`,
                                     {
                                       headers: token
                                         ? { Authorization: `Bearer ${token}` }
@@ -435,9 +424,8 @@ const FeedPage: React.FC = () => {
 
                       {/* Location + Time */}
                       <div
-                        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${
-                          theme === "dark" ? "" : "text-gray-500"
-                        }`}
+                        className={`flex flex-wrap gap-x-6 text-xs mt-1 ${theme === "dark" ? "" : "text-gray-500"
+                          }`}
                       >
                         <div className="flex items-center">
                           <MapPin className="w-3 h-3 mr-1" />
@@ -455,9 +443,8 @@ const FeedPage: React.FC = () => {
 
                 <div className="mb-4">
                   <p
-                    className={` leading-relaxed ${
-                      theme === "dark" ? "" : "text-gray-700"
-                    }`}
+                    className={` leading-relaxed ${theme === "dark" ? "" : "text-gray-700"
+                      }`}
                   >
                     {post.content}
                   </p>
@@ -562,9 +549,8 @@ const FeedPage: React.FC = () => {
                     {/* like */}
                     <button
                       onClick={() => likePost(post.id)}
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-red-500 transition-colors`}
+                      className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
+                        } hover:text-red-500 transition-colors`}
                     >
                       {post.isLike ? (
                         <FaHeart className="w-5 h-5 text-red-500" />
@@ -579,10 +565,9 @@ const FeedPage: React.FC = () => {
 
                     {/* comment */}
                     <button
-                      onClick={()=> setIsOpen(!isOpen)}
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-blue-500 transition-colors`}
+                      onClick={() => setIsOpen(!isOpen)}
+                      className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
+                        } hover:text-blue-500 transition-colors`}
                     >
                       <MessageSquare className="w-5 h-5" />
                       <span className="font-semibold">
@@ -592,9 +577,8 @@ const FeedPage: React.FC = () => {
 
                     {/* share */}
                     <button
-                      className={`flex items-center space-x-2 ${
-                        theme === "dark" ? "" : "text-gray-600"
-                      } hover:text-green-500 transition-colors`}
+                      className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
+                        } hover:text-green-500 transition-colors`}
                     >
                       <Share className="w-5 h-5" />
                       <span className="font-semibold">
@@ -605,9 +589,8 @@ const FeedPage: React.FC = () => {
 
                   {/* views */}
                   <div
-                    className={`text-sm ${
-                      theme === "dark" ? "" : " text-gray-500"
-                    } hover:text-green-500 transition-colors`}
+                    className={`text-sm ${theme === "dark" ? "" : " text-gray-500"
+                      } hover:text-green-500 transition-colors`}
                   >
                     <Eye className="w-4 h-4 inline mr-1" />
                     {post.likes + post.comments * 3} views
@@ -619,26 +602,61 @@ const FeedPage: React.FC = () => {
               {/*  */}
 
 
-             
+
               {isOpen && (
-              <div className="border-t border-gray-100 mt-4">
-                <div className="p-4">
-                  <div className="flex gap-2 items-end">
-                    <textarea
-                      className={`flex-1 p-3 border rounded-2xl resize-none focus:outline-none focus:ring-2 ${
-                        theme === "dark"
+                <div className="border-t border-gray-100 mt-4">
+                  <div className="p-4">
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        const form = e.target as HTMLFormElement;
+                        const comment = (form.elements.namedItem('comment') as HTMLTextAreaElement).value;
+                        if (!comment) return;
+
+                        try {
+                          const res = await fetch(`${API_BASE_URL}/post/comment/add`, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+                            },
+                            body: JSON.stringify({ postId: post.id, comment }),
+                          });
+
+                          const result = await res.json();
+                          if (!res.ok) throw new Error(result.message || 'Failed to add comment');
+
+                          toast.success('Comment added!');
+                          form.reset();
+                          setIsOpen(false);
+                          // Refresh posts to show updated comment count
+                          fetchPosts();
+                        } catch (err: any) {
+                          console.error('Comment error:', err);
+                          toast.error(err.message);
+                        }
+                      }}
+                      className="flex gap-2 items-end"
+                    >
+                      <textarea
+                        name="comment"
+                        className={`flex-1 p-3 border rounded-2xl resize-none focus:outline-none focus:ring-2 ${theme === "dark"
                           ? " border-gray-500 text-white focus:ring-green-500"
                           : "border-gray-300 text-gray-900 focus:ring-green-500"
-                      }`}
-                      placeholder="Write a comment....."
-                      rows={3}
-                    />
-                    <button className="bg-green-600 text-white px-4 py-3 rounded-xl hover:bg-green-700 transition-colors flex-shrink-0 h-fit">
-                      <Send className="w-4 h-4" />
-                    </button>
+                          }`}
+                        placeholder="Write a comment....."
+                        rows={3}
+                        required
+                      />
+                      <button
+                        type="submit"
+                        className="bg-green-600 text-white px-4 py-3 rounded-xl hover:bg-green-700 transition-colors flex-shrink-0 h-fit"
+                      >
+                        <Send className="w-4 h-4" />
+                      </button>
+                    </form>
                   </div>
                 </div>
-              </div>
               )}
             </div>
           ))}

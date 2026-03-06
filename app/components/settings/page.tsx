@@ -232,11 +232,11 @@ const user = useCurrentUser();
                 
 
               </div>
-              <label className="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm font-bold bg-white/20 backdrop-blur-md px-3 py-2 sm:px-5 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition cursor-pointer shadow-lg">
+              {/* <label className="flex items-center space-x-1.5 sm:space-x-2 text-xs sm:text-sm font-bold bg-white/20 backdrop-blur-md px-3 py-2 sm:px-5 sm:py-3 rounded-xl sm:rounded-2xl hover:bg-white/30 transition cursor-pointer shadow-lg">
                 <Camera className="w-4 h-4 sm:w-5 sm:h-5" />
                 <span className=" xs:inline">Change</span>
                 <input type="file" accept="image/*" hidden onChange={handleImageUpload} />
-              </label>
+              </label> */}
             </div>
           </div>
         </div>
