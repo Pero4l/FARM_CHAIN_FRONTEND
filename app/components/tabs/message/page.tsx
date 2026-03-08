@@ -30,7 +30,7 @@ const MessagesPage = () => {
   const [loading, setLoading] = useState(false);
   const [messageText, setMessageText] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [showChat, setShowChat] = useState(false); // New state for mobile
+  const [showChat, setShowChat] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -50,9 +50,9 @@ const MessagesPage = () => {
 
     setSocket(newSocket);
 
-    newSocket.on("receiveMessage", (message) => {
+    newSocket.on("receive_message", (message) => {
       // Check if the message belongs to the current active chat
-      if (activeChat && (message.conversationId === activeChat.id)) {
+      if (activeChat && (message.conversation_id === activeChat.id || message.conversationId === activeChat.id)) {
         setMessages((prev) => [...prev, message]);
       }
       fetchConversations();
@@ -114,7 +114,11 @@ const MessagesPage = () => {
       setMessageText("");
 
       if (socket) {
-        socket.emit("sendMessage", newMessage);
+        socket.emit("send_message", {
+          conversationId: activeChat.id,
+          senderId: user?.userId,
+          content: messageText
+        });
       }
 
       fetchConversations();
@@ -154,6 +158,9 @@ const MessagesPage = () => {
                   setActiveChat(chat);
                   fetchMessages(chat.id);
                   setShowChat(true); // Show chat on mobile
+                  if (socket) {
+                    socket.emit("join_chat", chat.id);
+                  }
                 }}
                 className={`flex items-center space-x-4 p-4 cursor-pointer transition-all duration-300 border-b border-gray-50 dark:border-white/5 ${activeChat?.id === chat.id
                   ? "bg-green-600/10 border-l-4 border-l-green-600"

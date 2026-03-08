@@ -69,8 +69,8 @@ const FeedPage: React.FC = () => {
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const { theme } = useTheme();
-  const { token } = useCurrentUser();
-  const id = useCurrentUser()?.user?.userId;
+  const { token, user, userProfile } = useCurrentUser();
+  const id = user?.userId;
 
   // Fetch posts
   async function fetchPosts() {

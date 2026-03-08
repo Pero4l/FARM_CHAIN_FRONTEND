@@ -11,6 +11,7 @@ import { useActiveTab } from "@/app/context/ActiveTabContext";
 import Link from 'next/link';
 import { useCurrentUser } from "@/app/components/currentUser";
 import { useRouter } from 'next/navigation';
+import axios from "axios";
 
 const MainNavPage = () => {
   const { userProfile, setUserProfile } = useCurrentUser();
@@ -72,7 +73,7 @@ const MainNavPage = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         const filtered = res.data.filter((u: any) =>
-          `${u.first_name} ${u.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
+          `${u.first_name} ${u.last_name} ${u.state} ${u.country}`.toLowerCase().includes(searchQuery.toLowerCase())
         );
         setSearchResults(filtered);
       } catch (err) {
@@ -113,7 +114,7 @@ const MainNavPage = () => {
                   </div>
 
                   {/* Mobile nav search and add btn */}
-                  <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-17 w-44 md:w-60 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-40`}>
+                  <div className={`hidden peer-checked:flex flex-col absolute left-0 md:-left-12 top-full mt-2 w-full md:w-60 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'} rounded-2xl shadow-lg border border-gray-100 p-2 md:p-5 z-[100]`}>
                     <label
                       htmlFor="mobile-menu-toggle"
                       onClick={() => { setActiveTab("dashboard"); setIsMenuOpen(false); }}
@@ -314,7 +315,7 @@ const MainNavPage = () => {
                 {isMenuOpen ? <X /> : <Menu />}
               </span>
 
-              <div className="flex-1 flex items-center bg-green-100/50 rounded-2xl px-4 py-2 w-full min-w-0">
+              <div className="flex-1 flex items-center bg-green-100/50 rounded-2xl px-4 py-2 w-full min-w-0 border border-green-200">
                 <Search className="w-5 h-5 text-gray-500 mr-3" />
                 <input
                   type="text"
@@ -328,7 +329,7 @@ const MainNavPage = () => {
 
             {/* Mobile Search Results */}
             {searchQuery.length >= 2 && (
-              <div className={`absolute top-full left-0 right-0 mt-[-8px] rounded-2xl shadow-xl border ${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-100'} z-50 max-h-80 overflow-y-auto p-2`}>
+              <div className={`absolute top-full left-0 right-0 mt-[-8px] rounded-2xl shadow-xl border ${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-100'} z-[101] max-h-80 overflow-y-auto p-2`}>
                 {isSearching ? (
                   <div className="p-4 text-center text-sm opacity-50">Searching...</div>
                 ) : searchResults.length === 0 ? (
