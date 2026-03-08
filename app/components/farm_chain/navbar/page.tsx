@@ -21,6 +21,9 @@ const MainNavPage = () => {
   const [message, setMessage] = useState(5);
   const [userOption, setUserOption] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
   const { theme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
@@ -56,6 +59,32 @@ const MainNavPage = () => {
   useEffect(() => {
     if (token) fetchNotifications();
   }, [token]);
+
+  useEffect(() => {
+    const handleSearch = async () => {
+      if (searchQuery.length < 2) {
+        setSearchResults([]);
+        return;
+      }
+      setIsSearching(true);
+      try {
+        const res = await axios.get(`${API_BASE_URL}/auth/all`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const filtered = res.data.filter((u: any) =>
+          `${u.first_name} ${u.last_name}`.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setSearchResults(filtered);
+      } catch (err) {
+        console.error("Search error:", err);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    const timeoutId = setTimeout(handleSearch, 300);
+    return () => clearTimeout(timeoutId);
+  }, [searchQuery, token]);
 
   if (!mounted) return null;
 
@@ -168,13 +197,44 @@ const MainNavPage = () => {
                 </div>
               </div>
 
-              <div className="hidden lg:flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96">
-                <Search className="w-5 h-5 text-gray-400 mr-3" />
-                <input
-                  type="text"
-                  placeholder="Search farmers, products, insights..."
-                  className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
-                />
+              <div className="hidden lg:flex flex-col relative">
+                <div className="flex items-center bg-gray-100 rounded-2xl px-4 py-2.5 w-96 font-normal">
+                  <Search className="w-5 h-5 text-gray-400 mr-3" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search farmers, products, insights..."
+                    className="bg-transparent flex-1 outline-none text-gray-700 placeholder-gray-400"
+                  />
+                </div>
+
+                {/* Search Results Dropdown */}
+                {searchQuery.length >= 2 && (
+                  <div className={`absolute top-full mt-2 w-full rounded-2xl shadow-2xl border ${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-100'} z-50 max-h-96 overflow-y-auto overflow-x-hidden p-2`}>
+                    {isSearching ? (
+                      <div className="p-4 text-center text-sm opacity-50">Searching...</div>
+                    ) : searchResults.length === 0 ? (
+                      <div className="p-4 text-center text-sm opacity-50">No farmers found</div>
+                    ) : (
+                      searchResults.map((u) => (
+                        <div key={u.id} className={`flex items-center justify-between p-3 rounded-xl ${theme === 'dark' ? 'hover:bg-white/5' : 'hover:bg-gray-50'} transition-colors cursor-pointer`}>
+                          <div className="flex items-center space-x-3" onClick={() => {
+                            router.push(`/main?id=${u.id}`);
+                            setActiveTab("user_profile");
+                            setSearchQuery("");
+                          }}>
+                            <img src={u.Profile?.avatar || avatar} className="w-10 h-10 rounded-full object-cover" alt="" />
+                            <div>
+                              <p className="font-bold text-sm">{u.first_name} {u.last_name}</p>
+                              <p className="text-[10px] opacity-50">{u.state}, {u.country}</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                )}
               </div>
             </div>
 
@@ -245,68 +305,92 @@ const MainNavPage = () => {
 
 
           {/* Mobile */}
-          <div className='lg:hidden flex gap-2'>
+          <div className='lg:hidden flex flex-col w-full relative'>
             <label
               htmlFor="mobile-menu-toggle"
-              className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-[87%] md:w-[100%] "
+              className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-full"
             >
               <span onClick={() => setIsMenuOpen(!isMenuOpen)} className={`w-6 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
                 {isMenuOpen ? <X /> : <Menu />}
               </span>
 
-              <div className="flex-1 flex items-center bg-green-100 rounded-2xl px-4 md:px-6 py-2.5 w-full min-w-0">
+              <div className="flex-1 flex items-center bg-green-100/50 rounded-2xl px-4 py-2 w-full min-w-0">
                 <Search className="w-5 h-5 text-gray-500 mr-3" />
                 <input
                   type="text"
-                  placeholder="Search farmers, products, insights..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search..."
                   className="bg-transparent flex-1 min-w-0 outline-none text-gray-700 placeholder-gray-400"
                 />
               </div>
             </label>
 
-            <div className="relative md:hidden bottom-2" ref={menuRef}>
-              <div
-                onClick={() => setUserOption(prev => !prev)}
-                className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
-              >
-                <img className='rounded-full w-10 h-10' src={avatar} alt="" />
+            {/* Mobile Search Results */}
+            {searchQuery.length >= 2 && (
+              <div className={`absolute top-full left-0 right-0 mt-[-8px] rounded-2xl shadow-xl border ${theme === 'dark' ? 'bg-black border-white/10' : 'bg-white border-gray-100'} z-50 max-h-80 overflow-y-auto p-2`}>
+                {isSearching ? (
+                  <div className="p-4 text-center text-sm opacity-50">Searching...</div>
+                ) : searchResults.length === 0 ? (
+                  <div className="p-4 text-center text-sm opacity-50">No results</div>
+                ) : (
+                  searchResults.map((u) => (
+                    <div key={u.id} className="flex items-center p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-white/5" onClick={() => {
+                      router.push(`/main?id=${u.id}`);
+                      setActiveTab("user_profile");
+                      setSearchQuery("");
+                    }}>
+                      <img src={u.Profile?.avatar || avatar} className="w-8 h-8 rounded-full mr-3" alt="" />
+                      <span className="text-sm font-medium">{u.first_name} {u.last_name}</span>
+                    </div>
+                  ))
+                )}
               </div>
+            )}
+          </div>
 
-              {userOption && (
-                <div className={`absolute right-0 top-14 w-52 rounded-2xl shadow-xl border border-gray-100 z-50 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
-                  <div className="p-3 space-y-1">
-                    <button
-                      onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
-                      className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left"
-                    >
-                      <User className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
-                      <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Profile</span>
-                    </button>
-
-                    <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                      <Award className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
-                      <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Achievements</span>
-                    </button>
-
-                    <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
-                      <Settings className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
-                      <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Settings</span>
-                    </button>
-                    <hr className="my-2" />
-
-                    <button onClick={() => router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
-                      <LogOut className="w-4 h-4 text-red-600" />
-                      <span className="text-sm font-medium text-red-600">Logout</span>
-                    </button>
-                  </div>
-                </div>
-              )}
+          <div className="relative md:hidden bottom-2" ref={menuRef}>
+            <div
+              onClick={() => setUserOption(prev => !prev)}
+              className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full cursor-pointer hover:scale-110 transition-transform"
+            >
+              <img className='rounded-full w-10 h-10' src={avatar} alt="" />
             </div>
+
+            {userOption && (
+              <div className={`absolute right-0 top-14 w-52 rounded-2xl shadow-xl border border-gray-100 z-50 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+                <div className="p-3 space-y-1">
+                  <button
+                    onClick={() => { setActiveTab("profile"); setUserOption(false); setIsMenuOpen(false); }}
+                    className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left"
+                  >
+                    <User className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Profile</span>
+                  </button>
+
+                  <button className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                    <Award className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Achievements</span>
+                  </button>
+
+                  <button onClick={() => { setActiveTab("settings"); setUserOption(false) }} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-gray-50 rounded-xl transition-colors text-left">
+                    <Settings className={`w-4 h-4 ${theme === 'dark' ? 'text-white' : 'text-gray-600'}`} />
+                    <span className={`${theme === 'dark' ? 'text-white text-sm font-medium' : 'text-sm font-medium text-gray-700'}`}>Settings</span>
+                  </button>
+                  <hr className="my-2" />
+
+                  <button onClick={() => router.push('/')} className="w-full flex items-center space-x-3 px-3 py-2 hover:bg-red-50 rounded-xl transition-colors text-left">
+                    <LogOut className="w-4 h-4 text-red-600" />
+                    <span className="text-sm font-medium text-red-600">Logout</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </header>
     </>
   );
-}
+};
 
 export default MainNavPage;

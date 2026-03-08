@@ -16,6 +16,7 @@ import { FiHeart } from "react-icons/fi";
 import { FaHeart } from "react-icons/fa";
 import { useTheme } from "next-themes";
 import { useSearchParams } from "next/navigation";
+import { useActiveTab } from "@/app/context/ActiveTabContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -50,6 +51,8 @@ interface Post {
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const { theme } = useTheme();
+  const activeTabContext = useActiveTab();
+  const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const searchParams = useSearchParams();
   const userId = propUserId ?? searchParams.get("id") ?? undefined;
 
@@ -109,6 +112,23 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
       return data;
     } catch (err: any) {
       console.error("❌", err.message);
+    }
+  };
+
+  const startChat = async () => {
+    if (!userId || !token) return;
+    try {
+      const res = await axios.post(`${API_BASE_URL}/chat/conversation`,
+        { receiverId: Number(userId) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.data.success) {
+        setActiveTab("messages");
+      }
+      toast.success("Starting conversation...");
+    } catch (err) {
+      console.error("Start chat error:", err);
+      toast.error("Failed to start chat");
     }
   };
 
@@ -270,6 +290,15 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
                   {!loading && !isFollowed && (
                     <FaPlus className="font-bold" size={10} />
                   )}
+                </button>
+
+                {/* ⭐ MESSAGE BUTTON */}
+                <button
+                  onClick={startChat}
+                  className="bg-blue-600 text-white flex gap-2 items-center py-1.5 px-4 rounded-full hover:bg-blue-700 mt-2"
+                >
+                  <MessageSquare className="w-4 h-4" />
+                  <p className="text-sm font-bold">Message</p>
                 </button>
               </div>
 

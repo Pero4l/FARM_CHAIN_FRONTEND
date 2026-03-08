@@ -10,6 +10,7 @@ import {
   MoreVertical,
   Search,
   MessageSquare,
+  ArrowLeft
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useCurrentUser } from "@/app/components/currentUser";
@@ -29,6 +30,7 @@ const MessagesPage = () => {
   const [loading, setLoading] = useState(false);
   const [messageText, setMessageText] = useState("");
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [showChat, setShowChat] = useState(false); // New state for mobile
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -124,7 +126,7 @@ const MessagesPage = () => {
   return (
     <div className={`flex h-[calc(100vh-120px)] rounded-3xl overflow-hidden shadow-2xl border ${theme === 'dark' ? 'border-white/10 bg-black/20' : 'border-gray-100 bg-white'}`}>
       {/* SIDEBAR: CONVERSATIONS */}
-      <div className={`w-full md:w-80 lg:w-96 flex flex-col border-r ${theme === 'dark' ? 'border-white/10' : 'border-gray-100'}`}>
+      <div className={`${showChat ? "hidden md:flex" : "flex"} w-full md:w-80 lg:w-96 flex-col border-r ${theme === 'dark' ? 'border-white/10' : 'border-gray-100'}`}>
         <div className="p-6 border-b border-gray-100 dark:border-white/10">
           <h2 className="text-2xl font-black mb-4">Messages 💬</h2>
           <div className="relative">
@@ -151,6 +153,7 @@ const MessagesPage = () => {
                 onClick={() => {
                   setActiveChat(chat);
                   fetchMessages(chat.id);
+                  setShowChat(true); // Show chat on mobile
                 }}
                 className={`flex items-center space-x-4 p-4 cursor-pointer transition-all duration-300 border-b border-gray-50 dark:border-white/5 ${activeChat?.id === chat.id
                   ? "bg-green-600/10 border-l-4 border-l-green-600"
@@ -187,12 +190,18 @@ const MessagesPage = () => {
       </div>
 
       {/* MAIN CHAT AREA */}
-      <div className="flex-1 flex flex-col relative">
+      <div className={`${!showChat ? "hidden md:flex" : "flex"} flex-1 flex flex-col relative`}>
         {activeChat ? (
           <>
             {/* CHAT HEADER */}
             <div className={`p-4 border-b flex items-center justify-between z-10 ${theme === 'dark' ? 'border-white/10 bg-black/40' : 'border-gray-100 bg-white/80'} backdrop-blur-md`}>
               <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => setShowChat(false)}
+                  className="md:hidden p-2 -ml-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </button>
                 <div className="w-10 h-10 rounded-full overflow-hidden border border-green-500/20">
                   <img
                     src={activeChat.participant?.avatar || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-k83MyoiH43lpI6Y-TY17A2JCPudD_7Av9A&s"}
