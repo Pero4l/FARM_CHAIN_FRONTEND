@@ -48,6 +48,7 @@ interface Post {
 
 
 
+
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   const [token, setToken] = useState<string | null | undefined>(undefined);
   const { theme } = useTheme();
