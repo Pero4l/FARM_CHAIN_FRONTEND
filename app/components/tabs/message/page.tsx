@@ -104,6 +104,7 @@ const MessagesPage = () => {
         `${API_BASE_URL}/chat/send`,
         {
           receiverId,
+          conversationId: activeChat.id,
           message: messageText,
         },
         { headers: { Authorization: `Bearer ${token}` } }
@@ -117,7 +118,15 @@ const MessagesPage = () => {
         socket.emit("send_message", {
           conversationId: activeChat.id,
           senderId: user?.userId,
-          content: messageText
+          content: messageText,
+          id: newMessage.id,
+          createdAt: newMessage.createdAt,
+          user: {
+            id: user?.userId,
+            first_name: user?.currentUser?.split(' ')[0] || "User",
+            last_name: user?.currentUser?.split(' ')[1] || "",
+            Profile: { avatar: userProfile?.avatar }
+          }
         });
       }
 
@@ -187,7 +196,7 @@ const MessagesPage = () => {
                     </span>
                   </div>
                   <p className="text-xs truncate opacity-60">
-                    {chat.lastMessage?.message || "Start a conversation"}
+                    {chat.lastMessage?.content || chat.lastMessage?.message || "Start a conversation"}
                   </p>
                 </div>
               </div>
@@ -241,16 +250,16 @@ const MessagesPage = () => {
                 <div className="flex items-center justify-center h-full opacity-50 text-sm">No messages yet. Say hi! 👋</div>
               ) : (
                 messages.map((msg, idx) => {
-                  const isMe = msg.senderId === user?.userId;
+                  const isMe = msg.senderId === user?.userId || msg.sender_id === user?.userId;
                   return (
                     <div key={idx} className={`flex ${isMe ? "justify-end" : "justify-start animate-in fade-in slide-in-from-left-4 duration-300"}`}>
                       <div className={`max-w-[75%] px-4 py-2.5 rounded-2xl text-sm shadow-sm ${isMe
                         ? "bg-green-600 text-white rounded-tr-none shadow-green-600/10"
                         : `${theme === 'dark' ? 'bg-white/10' : 'bg-white'} rounded-tl-none`
                         }`}>
-                        <p className="leading-relaxed">{msg.message}</p>
+                        <p className="leading-relaxed">{msg.content || msg.message}</p>
                         <span className={`text-[9px] mt-1 block opacity-50 text-right`}>
-                          {dayjs(msg.createdAt).format('HH:mm')}
+                          {dayjs(msg.createdAt || new Date()).format('HH:mm')}
                         </span>
                       </div>
                     </div>

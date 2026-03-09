@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
-  userId: number;
+  userId: string;
   currentUser: string;
   location: string;
   email: string;

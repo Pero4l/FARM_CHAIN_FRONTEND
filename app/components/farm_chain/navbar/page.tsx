@@ -306,7 +306,7 @@ const MainNavPage = () => {
 
 
           {/* Mobile */}
-          <div className='lg:hidden flex flex-col w-full relative'>
+          <div className='lg:hidden flex flex-row w-full relative'>
             <label
               htmlFor="mobile-menu-toggle"
               className="flex items-center gap-2 cursor-pointer select-none mb-3 -mt-2 lg:hidden w-full"

@@ -25,6 +25,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 import { humanify } from "@/app/components/utils/humanify";
+import { useCurrentUser } from "@/app/components/currentUser";
 
 
 interface Post {
@@ -49,12 +50,12 @@ interface Post {
 
 
 const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
-  const [token, setToken] = useState<string | null | undefined>(undefined);
+  const { token, user: currentUser } = useCurrentUser();
   const { theme } = useTheme();
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const searchParams = useSearchParams();
-  const userId = propUserId ?? searchParams.get("id") ?? undefined;
+  const userId = propUserId ?? searchParams.get("id") ?? 'd4672213-cd4f-44f4-8c23-40ebf70daae0';
 
   const [isFollowed, setIsFollowed] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -101,7 +102,10 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
           "Content-Type": "application/json",
           ...(token ? { Authorization: `Bearer ${token}` } : {}),
         },
-        body: JSON.stringify({ followed_id: Number(id) }),
+        body: JSON.stringify({
+          followed_id: id,
+          followedId: id // Defensive: send both versions
+        }),
       });
 
       const data = await res.json();
@@ -111,7 +115,8 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
 
       return data;
     } catch (err: any) {
-      console.error("❌", err.message);
+      console.error("❌ FollowUser error details:", err.response?.data || err.message);
+      toast.error(err.response?.data?.message || "Failed to follow user");
     }
   };
 
@@ -119,16 +124,19 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
     if (!userId || !token) return;
     try {
       const res = await axios.post(`${API_BASE_URL}/chat/conversation`,
-        { receiverId: Number(userId) },
+        {
+          receiverId: userId,
+          otherUserId: userId // Defensive: send both versions
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      if (res.data.success) {
+      if (res.data.success || res.status === 200 || res.status === 201) {
         setActiveTab("messages");
+        toast.success("Starting conversation...");
       }
-      toast.success("Starting conversation...");
-    } catch (err) {
-      console.error("Start chat error:", err);
-      toast.error("Failed to start chat");
+    } catch (err: any) {
+      console.error("Start chat error details:", err.response?.data || err.message);
+      toast.error(err.response?.data?.message || "Failed to start chat");
     }
   };
 
@@ -199,7 +207,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
 
   useEffect(() => {
     if (!userId) return;
-    if (token === undefined) return;
+    if (token === null || token === undefined) return;
 
     getUserById(userId).then((data) => {
       setUser(data);
@@ -207,12 +215,6 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
       setFollowersCount(data?.followers ?? 0); // ⭐ sync followers
     });
   }, [userId, token]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const t = localStorage.getItem("farmchain_token");
-    setToken(t);
-  }, []);
 
   // console.log(user);
 
