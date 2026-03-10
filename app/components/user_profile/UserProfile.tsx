@@ -29,7 +29,7 @@ import { useCurrentUser } from "@/app/components/currentUser";
 
 
 interface Post {
-  id: number;
+  id: string;
   farmer: string;
   content: string;
   avatar?: string;
@@ -141,7 +141,7 @@ const UserProfile: React.FC<{ userId?: string }> = ({ userId: propUserId }) => {
   };
 
 
-  const likePost = async (postId: number) => {
+  const likePost = async (postId: string) => {
     // Optimistically update the UI first
     setPosts(prev =>
       prev.map(post =>

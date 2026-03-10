@@ -46,7 +46,7 @@ interface UserProfile {
 }
 
 interface Post {
-  id: number;
+  id: string;
   farmer: string;
   content: string;
   avatar?: string;
@@ -197,7 +197,7 @@ const Profile = () => {
     }
   };
 
-  const likePost = async (postId: number) => {
+  const likePost = async (postId: string) => {
     // Optimistically update the UI first
     setPosts((prev) =>
       prev.map((post) =>
@@ -444,8 +444,8 @@ const Profile = () => {
                     <button
                       type="button"
                       className={`px-4 py-2 rounded-lg ${theme === "dark"
-                          ? "bg-gray-700 text-white"
-                          : "bg-gray-200 text-black"
+                        ? "bg-gray-700 text-white"
+                        : "bg-gray-200 text-black"
                         }`}
                       onClick={() => setEdit(false)}
                     >
@@ -600,8 +600,8 @@ const Profile = () => {
                             <div className="ml-auto flex items-center">
                               <button
                                 className={`p-1 ${theme === "dark"
-                                    ? "text-gray-100 hover:text-gray-400"
-                                    : "text-gray-600 hover:text-gray-500"
+                                  ? "text-gray-100 hover:text-gray-400"
+                                  : "text-gray-600 hover:text-gray-500"
                                   } rounded-full`}
                                 aria-label="more"
                                 onClick={(e) => {
@@ -632,8 +632,8 @@ const Profile = () => {
 
                               <div
                                 className={`relative z-10 ${theme === "dark"
-                                    ? "bg-black border"
-                                    : "bg-white"
+                                  ? "bg-black border"
+                                  : "bg-white"
                                   } rounded-xl shadow-lg p-6 w-[90%] max-w-md`}
                                 onClick={(e) => e.stopPropagation()}
                               >

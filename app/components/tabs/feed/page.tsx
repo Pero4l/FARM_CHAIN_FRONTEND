@@ -34,8 +34,8 @@ import { API_BASE_URL } from "@/app/config/api";
 
 // Keep your Post type as you defined it
 type Post = {
-  id: number;
-  user_id: number;
+  id: string;
+  user_id: string;
   farmer: string;
   location: string;
   avatar: string;
@@ -61,9 +61,9 @@ const FeedPage: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [openPostId, setOpenPostId] = useState<number | null>(null);
-  const [commentsData, setCommentsData] = useState<{ [key: number]: any[] }>({});
-  const [commentsLoading, setCommentsLoading] = useState<{ [key: number]: boolean }>({});
+  const [openPostId, setOpenPostId] = useState<string | null>(null);
+  const [commentsData, setCommentsData] = useState<{ [key: string]: any[] }>({});
+  const [commentsLoading, setCommentsLoading] = useState<{ [key: string]: boolean }>({});
   // const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
@@ -116,7 +116,7 @@ const FeedPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const likePost = async (postId: number) => {
+  const likePost = async (postId: string) => {
     try {
       const res = await fetch(`${API_BASE_URL}/post/like`, {
         method: "POST",
@@ -147,7 +147,7 @@ const FeedPage: React.FC = () => {
     }
   };
 
-  const fetchComments = async (postId: number) => {
+  const fetchComments = async (postId: string) => {
     if (commentsData[postId]) return; // Already fetched
 
     setCommentsLoading((prev) => ({ ...prev, [postId]: true }));
@@ -163,7 +163,7 @@ const FeedPage: React.FC = () => {
     }
   };
 
-  const toggleComments = (postId: number) => {
+  const toggleComments = (postId: string) => {
     if (openPostId === postId) {
       setOpenPostId(null);
     } else {
