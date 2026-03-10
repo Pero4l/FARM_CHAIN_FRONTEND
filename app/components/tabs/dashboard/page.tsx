@@ -10,7 +10,7 @@ import {
   Clock,
 } from "lucide-react";
 import { useTheme } from 'next-themes'
-import {useCurrentUser} from '@/app/components/currentUser';
+import { useCurrentUser } from '@/app/components/currentUser';
 
 type Insight = {
   title: string;
@@ -20,7 +20,7 @@ type Insight = {
 };
 
 type Post = {
-  id: number;
+  id: string;
   farmer: string;
   location: string;
   avatar: string;
@@ -68,7 +68,7 @@ const farmingInsights: Insight[] = [
 
 const posts: Post[] = [
   {
-    id: 1,
+    id: "1",
     farmer: "Sarah Johnson",
     location: "Iowa, USA",
     avatar: "SJ",
@@ -89,7 +89,7 @@ const posts: Post[] = [
     category: "small-scale",
   },
   {
-    id: 2,
+    id: "2",
     farmer: "AgriTech Solutions",
     location: "California, USA",
     avatar: "AS",
@@ -107,7 +107,7 @@ const posts: Post[] = [
     category: "commercial",
   },
   {
-    id: 3,
+    id: "3",
     farmer: "Miguel Rodriguez",
     location: "Texas, USA",
     avatar: "MR",
@@ -125,7 +125,7 @@ const posts: Post[] = [
     category: "small-scale",
   },
   {
-    id: 4,
+    id: "4",
     farmer: "Sarah Johnson",
     location: "Iowa, USA",
     avatar: "SJ",
@@ -146,7 +146,7 @@ const posts: Post[] = [
     category: "small-scale",
   },
   {
-    id: 5,
+    id: "5",
     farmer: "AgriTech Solutions",
     location: "California, USA",
     avatar: "AS",
@@ -164,7 +164,7 @@ const posts: Post[] = [
     category: "commercial",
   },
   {
-    id: 6,
+    id: "6",
     farmer: "Miguel Rodriguez",
     location: "Texas, USA",
     avatar: "MR",
@@ -185,9 +185,9 @@ const posts: Post[] = [
 
 const dashboard = () => {
   const user = useCurrentUser();
-  
 
-const { theme, setTheme } = useTheme();
+
+  const { theme, setTheme } = useTheme();
 
   return (
     <div>
@@ -214,7 +214,7 @@ const { theme, setTheme } = useTheme();
 
 
 
-    {/* insights */}
+        {/* insights */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {farmingInsights.map((insight, idx) => (
             <div
@@ -243,7 +243,7 @@ const { theme, setTheme } = useTheme();
 
         <div className={`${theme === 'dark' ? 'text-white bg-black' : 'bg-white'} rounded-3xl shadow-xl border border-gray-100 p-5`}>
           <h3 className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'} mb-6 flex items-center`}>
-            <Clock className={`w-7 h-7 mr-3 ${theme === 'dark' ? 'text-white' : 'text-green-500'}`}  />
+            <Clock className={`w-7 h-7 mr-3 ${theme === 'dark' ? 'text-white' : 'text-green-500'}`} />
             Recent Activity
           </h3>
           <div className="space-y-4">
@@ -257,11 +257,11 @@ const { theme, setTheme } = useTheme();
                 </div>
                 <div className="flex-1">
                   <h4 className={`font-semibold ${theme === 'dark' ? 'text-white ' : 'text-gray-900'}`}>{post.farmer}</h4>
-                  <p className={`text-sm ${theme === 'dark' ? 'text-white ' :  'text-gray-600'}`}>
+                  <p className={`text-sm ${theme === 'dark' ? 'text-white ' : 'text-gray-600'}`}>
                     {post.content.substring(0, 60)}...
                   </p>
                 </div>
-                <span className={`text-sm ${theme === 'dark' ? 'text-white ' :  'text-gray-500'}`}>{post.time}</span>
+                <span className={`text-sm ${theme === 'dark' ? 'text-white ' : 'text-gray-500'}`}>{post.time}</span>
               </div>
             ))}
           </div>

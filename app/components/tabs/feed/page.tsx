@@ -34,8 +34,8 @@ import { API_BASE_URL } from "@/app/config/api";
 
 // Keep your Post type as you defined it
 type Post = {
-  id: number;
-  user_id: number;
+  id: string;
+  user_id: string;
   farmer: string;
   location: string;
   avatar: string;
@@ -61,14 +61,16 @@ const FeedPage: React.FC = () => {
   const [data, setData] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [openPostId, setOpenPostId] = useState<string | null>(null);
+  const [commentsData, setCommentsData] = useState<{ [key: string]: any[] }>({});
+  const [commentsLoading, setCommentsLoading] = useState<{ [key: string]: boolean }>({});
   // const [like, setLike] = useState(false);
 
   const activeTabContext = useActiveTab();
   const setActiveTab = activeTabContext?.setActiveTab ?? (() => { });
   const { theme } = useTheme();
-  const { token } = useCurrentUser();
-  const id = useCurrentUser()?.user?.userId;
+  const { token, user, userProfile } = useCurrentUser();
+  const id = user?.userId;
 
   // Fetch posts
   async function fetchPosts() {
@@ -114,7 +116,7 @@ const FeedPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const likePost = async (postId: number) => {
+  const likePost = async (postId: string) => {
     try {
       const res = await fetch(`${API_BASE_URL}/post/like`, {
         method: "POST",
@@ -142,6 +144,31 @@ const FeedPage: React.FC = () => {
       );
     } catch (err) {
       console.error("Like error:", err);
+    }
+  };
+
+  const fetchComments = async (postId: string) => {
+    if (commentsData[postId]) return; // Already fetched
+
+    setCommentsLoading((prev) => ({ ...prev, [postId]: true }));
+    try {
+      const res = await axios.get(`${API_BASE_URL}/post/comment/${postId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      setCommentsData((prev) => ({ ...prev, [postId]: res.data.comments || [] }));
+    } catch (err) {
+      console.error("Fetch comments error:", err);
+    } finally {
+      setCommentsLoading((prev) => ({ ...prev, [postId]: false }));
+    }
+  };
+
+  const toggleComments = (postId: string) => {
+    if (openPostId === postId) {
+      setOpenPostId(null);
+    } else {
+      setOpenPostId(postId);
+      fetchComments(postId);
     }
   };
 
@@ -565,7 +592,7 @@ const FeedPage: React.FC = () => {
 
                     {/* comment */}
                     <button
-                      onClick={() => setIsOpen(!isOpen)}
+                      onClick={() => toggleComments(post.id)}
                       className={`flex items-center space-x-2 ${theme === "dark" ? "" : "text-gray-600"
                         } hover:text-blue-500 transition-colors`}
                     >
@@ -603,37 +630,79 @@ const FeedPage: React.FC = () => {
 
 
 
-              {isOpen && (
+              {openPostId === post.id && (
                 <div className="border-t border-gray-100 mt-4">
-                  <div className="p-4">
+                  {/* Comments List */}
+                  <div className="p-4 space-y-4 max-h-60 overflow-y-auto custom-scrollbar">
+                    {commentsLoading[post.id] ? (
+                      <div className="text-center text-sm opacity-50">Loading comments...</div>
+                    ) : commentsData[post.id]?.length === 0 ? (
+                      <div className="text-center text-sm opacity-50">No comments yet.</div>
+                    ) : (
+                      commentsData[post.id]?.map((comment) => (
+                        <div key={comment.id} className="flex space-x-3">
+                          <img
+                            src={comment.user?.Profile?.avatar || avatar}
+                            className="w-8 h-8 rounded-full object-cover"
+                            alt="avatar"
+                          />
+                          <div className={`flex-1 p-3 rounded-2xl text-sm ${theme === 'dark' ? 'bg-white/5' : 'bg-gray-50'}`}>
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="font-bold">
+                                {comment.user?.first_name} {comment.user?.last_name}
+                              </span>
+                              <span className="text-[10px] opacity-50">
+                                {dayjs(comment.createdAt).fromNow()}
+                              </span>
+                            </div>
+                            <p>{comment.content}</p>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+
+                  <div className="p-4 pt-0">
                     <form
                       onSubmit={async (e) => {
                         e.preventDefault();
                         const form = e.target as HTMLFormElement;
-                        const comment = (form.elements.namedItem('comment') as HTMLTextAreaElement).value;
-                        if (!comment) return;
+                        const content = (form.elements.namedItem('comment') as HTMLTextAreaElement).value;
+                        if (!content) return;
 
                         try {
-                          const res = await fetch(`${API_BASE_URL}/post/comment/add`, {
-                            method: 'POST',
-                            headers: {
-                              'Content-Type': 'application/json',
-                              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                            },
-                            body: JSON.stringify({ postId: post.id, comment }),
-                          });
-
-                          const result = await res.json();
-                          if (!res.ok) throw new Error(result.message || 'Failed to add comment');
+                          const res = await axios.post(`${API_BASE_URL}/post/comment/add`,
+                            { postId: post.id, content },
+                            {
+                              headers: {
+                                Authorization: `Bearer ${token}`,
+                              },
+                            }
+                          );
 
                           toast.success('Comment added!');
                           form.reset();
-                          setIsOpen(false);
-                          // Refresh posts to show updated comment count
-                          fetchPosts();
+
+                          // Add new comment to local state instantly
+                          const newComment = {
+                            ...res.data.comment,
+                            user: {
+                              first_name: userProfile?.name.split(' ')[0] || user?.currentUser,
+                              last_name: userProfile?.name.split(' ')[1] || "",
+                              Profile: { avatar: userProfile?.avatar }
+                            }
+                          };
+                          setCommentsData(prev => ({
+                            ...prev,
+                            [post.id]: [newComment, ...(prev[post.id] || [])]
+                          }));
+
+                          // Update post comment count
+                          setData(prev => prev.map(p => p.id === post.id ? { ...p, comments: p.comments + 1 } : p));
+
                         } catch (err: any) {
                           console.error('Comment error:', err);
-                          toast.error(err.message);
+                          toast.error(err.response?.data?.message || "Failed to add comment");
                         }
                       }}
                       className="flex gap-2 items-end"
@@ -641,11 +710,11 @@ const FeedPage: React.FC = () => {
                       <textarea
                         name="comment"
                         className={`flex-1 p-3 border rounded-2xl resize-none focus:outline-none focus:ring-2 ${theme === "dark"
-                          ? " border-gray-500 text-white focus:ring-green-500"
-                          : "border-gray-300 text-gray-900 focus:ring-green-500"
+                          ? " border-gray-500 text-white focus:ring-green-500 bg-white/5"
+                          : "border-gray-300 text-gray-900 focus:ring-green-500 bg-white"
                           }`}
                         placeholder="Write a comment....."
-                        rows={3}
+                        rows={1}
                         required
                       />
                       <button
